@@ -1,0 +1,169 @@
+package com.android.photoalbum.utils;
+
+import com.android.photoalbum.R;
+//import com.android.photoalbum.netinfo.SearchWebsiteInfo.ProductInfo;
+import com.android.photoalbum.netinfo.ClassificationWebSiteInfo.ProductInfo;
+import com.android.photoalbum.netinfo.WebsiteInfo;
+import com.android.photoalbum.view.ImageLayout;
+import com.android.photoalbum.view.MainTabActivity;
+
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+    public class ListViewAdapter extends BaseAdapter implements View.OnClickListener {  
+    	private Context mContext;  
+    	public WebsiteInfo mWebsiteInfo = null;
+    	private LayoutInflater mInflater;
+    	private LoadImageTask mLoadImageTask = null;
+    	private ContentResolver mResolver;
+    	private int mImageWidth; 
+    	private int mImageHeigth; 
+    	private Resources mResources;
+    	private int mLineCount;
+    	private boolean mShowButton = false;
+          
+        public ListViewAdapter(Context a, WebsiteInfo websiteinfo, int linecount, int width, int length) {  
+        	mContext = a;  
+        	mWebsiteInfo = websiteinfo;
+        	mInflater = (LayoutInflater)mContext.getSystemService("layout_inflater");
+        	mResolver = mContext.getContentResolver();
+        	
+        	mResources = mContext.getResources();
+    	    mImageWidth = width;
+    	    mImageHeigth = length;
+    	    
+    	    mLineCount = linecount;
+        }  
+          
+        public int getCount() {
+    		return mWebsiteInfo.getProductsCount()/mLineCount + 1;
+        }  
+  
+        public Object getItem(int position) {  
+    		return null;
+        }  
+  
+        public long getItemId(int position) {  
+            return position;  
+        }  
+  
+        public View getView(int position, View convertView, ViewGroup parent) {
+    	    if (MainTabActivity.mCurrentPage == 2) {
+    	    	mShowButton = true;
+    	    } else {
+    	    	mShowButton = false;
+    	    }
+    	    
+        	LinearLayout lineLayout = (LinearLayout)mInflater.inflate(R.layout.linear_layout, null);
+        	ProductInfo productInfo = null;
+        	int productCount = mWebsiteInfo.getProductsCount();
+        	int index = position*mLineCount;
+        	ImageLayout imageLayout = null;
+    		ImageView imageView = null; 
+    		ProgressBar probar = null;
+    		boolean needDownload = false;
+    		Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.default_image);
+			bmp = Utils.getResizedBitmap(bmp, mImageWidth, mImageHeigth);
+        	productCount = index + mLineCount < productCount ? index + mLineCount : productCount;
+        	for (; index < productCount; index++) {
+        		productInfo = (ProductInfo)mWebsiteInfo.getProductInfo(index);
+        		
+        		imageLayout = new ImageLayout(mContext, null, productInfo, mShowButton);
+        		imageView = (ImageView)imageLayout.findViewById(R.id.image);
+        		probar = (ProgressBar)imageLayout.findViewById(R.id.progressbar);
+    			if (productInfo.photobitmap != null) {
+    				probar.setVisibility(View.GONE);
+    				imageView.setImageBitmap(productInfo.photobitmap);
+    			} else {
+    				imageView.setImageBitmap(bmp);
+    				probar.setVisibility(View.VISIBLE);
+    				needDownload = true;
+    			}
+    			
+    			((LinearLayout)lineLayout).addView(imageLayout);
+        	}
+        	
+    		if (needDownload && mLoadImageTask == null) {
+    			mLoadImageTask = new LoadImageTask(mContext, mWebsiteInfo);
+    			mLoadImageTask.execute();
+    		}
+        	
+        	if (true) {
+        		return lineLayout;
+        	}
+        	
+    		convertView = mInflater.inflate(R.layout.list_item, null);
+        	WebsiteInfo websiteInfo = (WebsiteInfo)getItem(position);
+        	
+			TextView tv = (TextView)convertView.findViewById(R.id.title);
+			tv.setOnClickListener(this);
+			tv.setText(websiteInfo.mBaseInfo.classname);
+//			Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.default_image);
+			bmp = Utils.getResizedBitmap(bmp, mImageWidth, mImageHeigth);
+    		productCount = websiteInfo.getProductsCount();
+//    		boolean needDownload = false;
+//    		ProductInfo productInfo = null;
+//    		ImageLayout imageLayout = null;
+//    		ImageView imageView = null; 
+//    		ProgressBar probar = null;
+    		for (int i = 0; i < productCount; i++) {
+    			productInfo = (ProductInfo)websiteInfo.getProductInfo(i);
+        		imageLayout = new ImageLayout(mContext, null, productInfo, false);
+//        		imageLayout.setProductInfo(productInfo);
+        		imageView = (ImageView)imageLayout.findViewById(R.id.image);
+        		probar = (ProgressBar)imageLayout.findViewById(R.id.progressbar);
+    			if (productInfo.photobitmap != null) {
+    				probar.setVisibility(View.GONE);
+    				imageView.setImageBitmap(productInfo.photobitmap);
+    			} else {
+    				imageView.setImageBitmap(bmp);
+    				probar.setVisibility(View.VISIBLE);
+    				needDownload = true;
+    			}
+    			
+    			((LinearLayout)convertView).addView(imageLayout, i + 1);
+    		}
+    		
+    		if (needDownload && mLoadImageTask == null) {
+    			mLoadImageTask = new LoadImageTask(mContext, mWebsiteInfo);
+    			mLoadImageTask.execute();
+    		}
+
+            return convertView;  
+        }  
+        
+		public void onClick(View v) {
+			Log.d("zheng", "onClick");
+//			if (v instanceof TextView) {
+//				Log.d("zheng", "get class:" + ((TextView) v).getText().toString());
+//				WebsiteInfo websiteInfo = mWebsiteInfo.getClassInfo(((TextView) v).getText().toString());
+//		    	if (websiteInfo instanceof ParentClassInfo) {
+//		    		Intent intent = new Intent(mContext, HomeActivity.class);
+//		    		intent.putExtra("classid", websiteInfo.mBaseInfo.classid);
+//		    		intent.putExtra("optype", WebsiteParser.PARENTCLASS);
+//		    		mContext.startActivity(intent);
+//		    	} else if (websiteInfo instanceof ConclassInfo) {
+//		    		Intent intent = new Intent(mContext, HomeConclassActivity.class);
+//		    		intent.putExtra("classid", websiteInfo.mBaseInfo.classid);
+//		    		intent.putExtra("optype", WebsiteParser.SINGLE);
+//		    		intent.putExtra("parentid", mWebsiteInfo.mBaseInfo.classid);
+//		    		mContext.startActivity(intent);
+//		    	}
+//			} else if (v instanceof ImageView) {
+//				
+//			}
+		}
+    }  
+//}

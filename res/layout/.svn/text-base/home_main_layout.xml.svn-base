@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#FFF4F4F4">
+        
+    <include android:id="@+id/title" layout="@layout/titlebar"/>
+<!--     <ScrollView  -->
+<!--     android:layout_width="fill_parent" -->
+<!--     android:layout_height="fill_parent" -->
+<!--     android:scrollbars="none"> -->
+    <ListView
+	    android:id="@+id/list_view"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:paddingTop="0dp"
+	    android:cacheColorHint="#FFF4F4F4"
+	    android:orientation="vertical"
+	    android:background="#FFF4F4F4">
+    </ListView>
+<!--     </ScrollView> -->
+    <RelativeLayout
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:gravity="center_horizontal"
+    	android:visibility="gone"
+		android:paddingLeft="20dp"
+		android:paddingRight="20dp"
+		android:paddingTop="10dp"
+		android:paddingBottom="5dp">
+    	<TextView
+    		android:id="@+id/message"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingLeft="2dp"
+    		android:paddingRight="2dp"
+    		android:textSize="12dp"
+  	  	 	android:textStyle="bold"
+  	  	 	android:textColor="#1874CD"
+  	  	 	android:layout_gravity="top|left"
+  	  	 	android:text="精品彩信"/>
+    	<TextView
+    		android:id="@+id/festival"
+    		android:layout_toRightOf="@id/message"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingLeft="2dp"
+    		android:paddingRight="2dp"
+    		android:textSize="12dp"
+  	  	 	android:textStyle="bold"
+  	  	 	android:textColor="#1874CD"
+  	  	 	android:layout_gravity="top|left"
+  	  	 	android:text="节日专区"/>
+    	<TextView
+    	    android:id="@+id/humous"
+    		android:layout_toRightOf="@id/festival"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingLeft="2dp"
+    		android:paddingRight="2dp"
+    		android:textSize="12dp"
+  	  	 	android:textStyle="bold"
+  	  	 	android:textColor="#1874CD"
+  	  	 	android:layout_gravity="top|left"
+  	  	 	android:text="幽默搞笑"/>
+    	<TextView
+    	    android:id="@+id/subject"
+    		android:layout_toRightOf="@id/humous"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingLeft="2dp"
+    		android:paddingRight="2dp"
+    		android:textSize="12dp"
+  	  	 	android:textStyle="bold"
+  	  	 	android:textColor="#1874CD"
+  	  	 	android:layout_gravity="top|left"
+  	  	 	android:text="精彩专题"/>
+    	<TextView
+    	    android:id="@+id/template"
+    		android:layout_toRightOf="@id/subject"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingLeft="2dp"
+    		android:paddingRight="2dp"
+    		android:textSize="12dp"
+  	  	 	android:textStyle="bold"
+  	  	 	android:textColor="#1874CD"
+  	  	 	android:layout_gravity="top|left"
+  	  	 	android:text="模板创意"/>
+
+
+    	<TextView
+    		android:id="@+id/message_factory"
+    		android:layout_below="@id/message"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingLeft="2dp"
+    		android:paddingRight="2dp"
+    		android:textSize="12dp"
+  	  	 	android:textStyle="bold"
+  	  	 	android:textColor="#1874CD"
+  	  	 	android:layout_gravity="top|left"
+  	  	 	android:text="彩信工厂"/>
+    	<TextView
+    		android:id="@+id/original_created"
+    		android:layout_toRightOf="@id/message_factory"
+    		android:layout_below="@id/message"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingLeft="2dp"
+    		android:paddingRight="2dp"
+    		android:textSize="12dp"
+  	  	 	android:textStyle="bold"
+  	  	 	android:textColor="#1874CD"
+  	  	 	android:layout_gravity="top|left"
+  	  	 	android:text="会员原创"/>
+    	<TextView
+    	    android:id="@+id/message_channel"
+    		android:layout_toRightOf="@id/original_created"
+    		android:layout_below="@id/message"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingLeft="2dp"
+    		android:paddingRight="2dp"
+    		android:textSize="12dp"
+  	  	 	android:textStyle="bold"
+  	  	 	android:textColor="#1874CD"
+  	  	 	android:layout_gravity="top|left"
+  	  	 	android:text="短信频道"/>
+    	<TextView
+    	    android:id="@+id/free_try"
+    		android:layout_toRightOf="@id/message_channel"
+    		android:layout_below="@id/message"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingLeft="2dp"
+    		android:paddingRight="2dp"
+    		android:textSize="12dp"
+  	  	 	android:textStyle="bold"
+  	  	 	android:textColor="#1874CD"
+  	  	 	android:layout_gravity="top|left"
+  	  	 	android:text="免费体验"/>
+    	<TextView
+    	    android:id="@+id/help"
+    		android:layout_toRightOf="@id/free_try"
+    		android:layout_below="@id/message"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingLeft="2dp"
+    		android:paddingRight="2dp"
+    		android:textSize="12dp"
+  	  	 	android:textStyle="bold"
+  	  	 	android:textColor="#1874CD"
+  	  	 	android:layout_gravity="top|left"
+  	  	 	android:text="用户帮助"/>
+    </RelativeLayout>
+    <LinearLayout
+         android:orientation="vertical"
+         android:background="#FFF4F4F4"
+         android:visibility="gone"
+         android:gravity="center_horizontal"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content">
+      	 <RelativeLayout 
+     	 	 android:layout_width="wrap_content"
+     	  	 android:layout_height="90dp"
+     	  	 android:orientation="horizontal"
+     	  	 android:background="@drawable/new_list_frame_line">
+     	  	 <TextView
+     	  	 	android:layout_width="10dp"
+     	  	 	android:layout_height="fill_parent"
+     	  	 	android:layout_marginTop="19dp"
+     	  	 	android:layout_marginLeft="6dp"
+     	  	 	android:textSize="10dp"
+     	  	 	android:textStyle="bold"
+     	  	 	android:textColor="@android:color/white"
+     	  	 	android:layout_gravity="top|left"
+     	  	 	android:text="最近更新"/>
+   	  	 </RelativeLayout>
+   	  	 <RelativeLayout 
+     	 	 android:layout_width="wrap_content"
+     	  	 android:layout_height="90dp"
+     	  	 android:orientation="horizontal"
+     	  	 android:background="@drawable/new_list_frame_line">
+     	  	 <TextView 
+     	  	 	android:layout_width="10dp"
+     	  	 	android:layout_height="fill_parent"
+     	  	 	android:layout_marginTop="19dp"
+     	  	 	android:layout_marginLeft="6dp"
+     	  	 	android:textSize="10dp"
+     	  	 	android:textStyle="bold"
+     	  	 	android:textColor="@android:color/white"
+     	  	 	android:layout_gravity="top|left"
+     	  	 	android:text="节日专区"/>
+   	  	 </RelativeLayout>
+   	  	 <RelativeLayout 
+     	 	 android:layout_width="wrap_content"
+     	  	 android:layout_height="90dp"
+     	  	 android:orientation="horizontal"
+     	  	 android:background="@drawable/new_list_frame_line">
+     	  	 <TextView
+     	  	 	android:layout_width="10dp"
+     	  	 	android:layout_height="fill_parent"
+     	  	 	android:layout_marginTop="19dp"
+     	  	 	android:layout_marginLeft="6dp"
+     	  	 	android:textSize="10dp"
+     	  	 	android:textStyle="bold"
+     	  	 	android:textColor="@android:color/white"
+     	  	 	android:layout_gravity="top|left"
+     	  	 	android:text="创意模板"/>
+   	  	 </RelativeLayout>
+   	  	 <RelativeLayout 
+     	 	 android:layout_width="wrap_content"
+     	  	 android:layout_height="90dp"
+     	  	 android:orientation="horizontal"
+     	  	 android:background="@drawable/new_list_frame_line">
+     	  	 <TextView
+     	  	 	android:layout_width="10dp"
+     	  	 	android:layout_height="fill_parent"
+     	  	 	android:layout_marginTop="19dp"
+     	  	 	android:layout_marginLeft="6dp"
+     	  	 	android:textSize="10dp"
+     	  	 	android:textStyle="bold"
+     	  	 	android:textColor="@android:color/white"
+     	  	 	android:layout_gravity="top|left"
+     	  	 	android:text="下载排行"/>
+   	  	 </RelativeLayout>
+	</LinearLayout>
+<!--     <ListView -->
+<!--         android:id="@+id/list_view" -->
+<!--         android:scrollbars="vertical" -->
+<!--         android:layout_width="fill_parent" -->
+<!--         android:layout_height="fill_parent" -->
+<!--         android:cacheColorHint="#FFF4F4F4" -->
+<!--         android:dividerHeight="0dp"/> -->
+<!--     <LinearLayout -->
+<!--          android:orientation="vertical" -->
+<!--          android:background="#FFF4F4F4" -->
+<!--          android:gravity="center_horizontal" -->
+<!--          android:layout_width="wrap_content" -->
+<!--          android:layout_height="wrap_content"> -->
+<!--     </LinearLayout> -->
+</LinearLayout>

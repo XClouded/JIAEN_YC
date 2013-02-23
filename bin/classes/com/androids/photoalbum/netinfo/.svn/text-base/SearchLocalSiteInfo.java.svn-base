@@ -1,0 +1,7 @@
+package com.android.photoalbum.netinfo;
+
+import android.graphics.Bitmap;
+
+public class SearchLocalSiteInfo extends LocalSiteInfo {
+	public String keywords = null;
+}

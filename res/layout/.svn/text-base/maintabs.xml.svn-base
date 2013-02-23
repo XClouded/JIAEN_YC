@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TabHost
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/tabhost"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0"
+            >
+        </FrameLayout>
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.0"
+            >
+        </TabWidget>
+            
+        <RadioGroup
+            android:gravity="center_horizontal|bottom"
+            android:layout_gravity="bottom|fill_horizontal"
+            android:background="@drawable/bottom_line_bar_bg"
+            android:id="@+id/radio_group"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:tag="radio_button0"
+                android:layout_margin="2.0dip"
+                android:text="主页"
+                android:drawableTop="@drawable/home_bg"
+                style="@style/RadioButton"/>
+
+            <RadioButton
+                android:tag="radio_button1"
+                android:layout_margin="2.0dip"
+                android:text="搜索"
+                android:drawableTop="@drawable/search_bg"
+                style="@style/RadioButton"/>
+<!--             <RadioButton -->
+<!--                 android:tag="radio_button2" -->
+<!--                 android:layout_margin="2.0dip" -->
+<!--                 android:text="管理" -->
+<!--                 android:drawableTop="@drawable/manage_not_selected_bg" -->
+<!--                 style="@style/RadioButton"/> -->
+            <RadioButton
+                android:tag="radio_button2"
+                android:layout_margin="2.0dip"
+                android:text="收藏"
+                android:drawableTop="@drawable/store_bg"
+                style="@style/RadioButton"/>
+            <RadioButton
+                android:tag="radio_button3"
+                android:layout_margin="2.0dip"
+                android:text="彩信"
+                android:drawableTop="@drawable/message_bg"
+                style="@style/RadioButton"/>
+            <RadioButton
+                android:tag="radio_button4"
+                android:layout_margin="2.0dip"
+                android:text="加工"
+                android:drawableTop="@drawable/modify_bg"
+                style="@style/RadioButton"/>
+<!--             <RadioButton -->
+<!--                 android:tag="radio_button5" -->
+<!--                 android:layout_margin="2.0dip" -->
+<!--                 android:text="后退" -->
+<!--                 android:drawableTop="@drawable/forward_not_selected_bg" -->
+<!--                 style="@style/RadioButton"/> -->
+<!--             <RadioButton -->
+<!--                 android:tag="radio_button6" -->
+<!--                 android:layout_margin="2.0dip" -->
+<!--                 android:text="前进" -->
+<!--                 android:drawableTop="@drawable/forward_not_selected_bg2" -->
+<!--                 style="@style/RadioButton"/> -->
+<!--             <RadioButton -->
+<!--                 android:tag="radio_button7" -->
+<!--                 android:layout_margin="2.0dip" -->
+<!--                 android:text="短信" -->
+<!--                 android:drawableTop="@drawable/mail_not_selected_bg" -->
+<!--                 style="@style/RadioButton"/> -->
+        </RadioGroup>
+    </LinearLayout>
+</TabHost>
+
+
+
+<!--tabwidget-->
+<!--            android:visibility="2"-->
+
+
+<!--               radioGroup-->
+<!--            android:orientation="0"-->
+<!--            android:background="@7F0201F3"-->
+<!--            android:gravity="0x00000010"-->
+<!--            android:layout_gravity="0x00000050"--><!--
+
+
+-->

@@ -1,0 +1,161 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils
+END
+Utils.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/Utils.java
+END
+GalleryAdapter.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/GalleryAdapter.java
+END
+FormFile.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/FormFile.java
+END
+GridViewWebsiteParserTask.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/cicc.android/!svn/ver/29/YC/src/com/android/photoalbum/utils/GridViewWebsiteParserTask.java
+END
+Stack.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/Stack.java
+END
+ProductDownPoster.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/ProductDownPoster.java
+END
+LoadImageTask.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/LoadImageTask.java
+END
+ListViewAdapter.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/ListViewAdapter.java
+END
+NetWorkUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/NetWorkUtils.java
+END
+DateUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/DateUtil.java
+END
+BitMapHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/BitMapHelper.java
+END
+MusicListAdapter.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/MusicListAdapter.java
+END
+HttpRequester.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/HttpRequester.java
+END
+PhotoLoader.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/PhotoLoader.java
+END
+ImageUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/ImageUtil.java
+END
+ServiceUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/ServiceUtils.java
+END
+GridViewAdapter.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/cicc.android/!svn/ver/27/YC/src/com/android/photoalbum/utils/GridViewAdapter.java
+END
+GalleryWebsiteParserTask.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/GalleryWebsiteParserTask.java
+END
+BASE64Encoder.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/BASE64Encoder.java
+END
+PhotoListAdapter.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/PhotoListAdapter.java
+END
+SpbLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/SpbLog.java
+END
+ListViewWebsiteParserTask.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/cicc.android/!svn/ver/29/YC/src/com/android/photoalbum/utils/ListViewWebsiteParserTask.java
+END
+GifDecoder.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/GifDecoder.java
+END
+TextViewLink.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/TextViewLink.java
+END
+MicroBlogUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/utils/MicroBlogUtils.java
+END
+CommonWebsiteTask.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/cicc.android/!svn/ver/29/YC/src/com/android/photoalbum/utils/CommonWebsiteTask.java
+END

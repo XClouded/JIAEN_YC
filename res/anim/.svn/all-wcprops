@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/cicc.android/!svn/ver/13/YC/res/anim
+END
+header_appear.xml
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/cicc.android/!svn/ver/13/YC/res/anim/header_appear.xml
+END
+header_disappear.xml
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/cicc.android/!svn/ver/13/YC/res/anim/header_disappear.xml
+END
+slide_in_left.xml
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/cicc.android/!svn/ver/13/YC/res/anim/slide_in_left.xml
+END
+left_appear.xml
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/cicc.android/!svn/ver/13/YC/res/anim/left_appear.xml
+END
+left_disappear.xml
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/cicc.android/!svn/ver/13/YC/res/anim/left_disappear.xml
+END
+slide_in_right.xml
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/cicc.android/!svn/ver/13/YC/res/anim/slide_in_right.xml
+END
+slide_out_right.xml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/cicc.android/!svn/ver/13/YC/res/anim/slide_out_right.xml
+END
+footer_appear.xml
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/cicc.android/!svn/ver/13/YC/res/anim/footer_appear.xml
+END
+footer_disappear.xml
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/cicc.android/!svn/ver/13/YC/res/anim/footer_disappear.xml
+END

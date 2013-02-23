@@ -1,0 +1,129 @@
+package com.android.photoalbum.tab.ui;
+
+import com.android.photoalbum.R;
+import com.android.photoalbum.parser.CollectionsWebsiteParser;
+import com.android.photoalbum.parser.WordsAddWebsiteParser;
+import com.android.photoalbum.userinfo.StaticInfo;
+import com.android.photoalbum.utils.ListViewWebsiteParserTask;
+import com.android.photoalbum.utils.NetWorkUtils;
+import com.android.photoalbum.view.LoginActivity;
+import com.android.photoalbum.view.MainTabActivity;
+import com.android.photoalbum.view.SignNameActivity;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
+
+
+public class FavoriteActivity extends BaseActivity implements OnItemClickListener {
+	public static boolean notLoaded = true;
+	
+	@Override
+	protected void onCreate(Bundle paramBundle) {
+		super.onCreate(paramBundle);
+		setView(R.layout.favorite_layout);
+		setTitleBar(com.android.photoalbum.view.BaseLayout.TYPE_GONE, null, null, null);
+//		mFavoriteText = (TextView)findViewById(R.id.my_favorite);
+		mProductList = (LinearLayout)findViewById(R.id.product_list);
+		
+	    mImageWidth = (int)mResources.getDimension(R.dimen.favorite_image_with);
+	    mImageHeigth = (int)mResources.getDimension(R.dimen.favorite_image_height);
+		mListView = (ListView)findViewById(R.id.list_view);
+		mListView.setOnItemClickListener(this);
+	    mLineCount = 3;
+	    reloadFavoriteList();
+//		GifDecoder decoder = new GifDecoder();
+//		
+//        URL myFileUrl = null;
+//        Bitmap bitmap = null;
+//        try {
+//            myFileUrl = new URL("http://www.uuunm.com/Product/MMS/0030070428.gif");
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+//        
+//        ImageView image = (ImageView)findViewById(R.id.image);
+//        
+//        try {
+//	        HttpURLConnection conn = (HttpURLConnection)myFileUrl.openConnection();
+//	        conn.setDoInput(true);
+//	        conn.connect();
+//	        InputStream is = conn.getInputStream();
+//	        decoder.read(is);
+//	        ArrayList<GifFrame> frames = decoder.getFrames();
+//	        int count = frames.size();
+//	        Log.d("zheng", "共几张:" + count);
+//	        for (int i =0; i< count;i++) {
+//	        	Log.d("zheng", "第几张:" + i);
+//	        	GifFrame gf = frames.get(i);
+//	        	image.setImageBitmap(gf.image);
+//	        	Thread.sleep(2000);
+//	        }
+//        } catch (Exception e) {
+//		}
+//	    login();
+		 
+//		new WebsiteParserTask(new CollectionsWebsiteParser(), this).execute(param);
+		
+//		String param = NetWorkUtils.COLLECTION + "?userid=" + StaticInfo.userid + "&pageindex=" + 0 + "&pagecount=" + 30;
+//		new ListViewWebsiteParserTask(this, new CollectionsWebsiteParser(), mListView, mLineCount, mImageWidth, mImageHeigth).execute(param);
+	}
+	
+	private void login() {
+		if (StaticInfo.mPassword == null || StaticInfo.mPassword.length() == 0) {
+			Intent intent = new Intent(this, LoginActivity.class);
+			MainTabActivity.getCurrentActivityGroup().setNextActivity(intent, "LoginActivity");
+//			startActivityForResult(intent, LoginActivity.REQUEST_LOGIN_CODE);
+			return;
+		} else if (notLoaded) {
+			reloadFavoriteList();
+		}
+	}
+	
+	@Override
+	public void onClick(View view) {
+		super.onClick(view);
+	}
+	
+	public void reloadFavoriteList() {
+		String param = NetWorkUtils.COLLECTION + "?userid=" + StaticInfo.userid + "&pageindex=" + 0 + "&pagecount=" + 30;
+		new ListViewWebsiteParserTask(this, new CollectionsWebsiteParser(), mListView, mLineCount, mImageWidth, mImageHeigth, true).execute(param);
+	}
+
+	@Override
+	protected void handleTitleBarEvent(int paramInt) {
+		
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (notLoaded) {
+			reloadFavoriteList();
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//		String param = NetWorkUtils.COLLECTION + "?userid=" + StaticInfo.userid + "&pageindex=" + 0 + "&pagecount=" + 30;
+//		new WebsiteParserTask(new CollectionsWebsiteParser(), this).execute(param);
+		if (resultCode == Activity.RESULT_OK) {
+			reloadFavoriteList();
+		}
+//		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		
+	}
+}

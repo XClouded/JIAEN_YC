@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<!-- res/layout/gridview_to_gallery.xml -->  
+<LinearLayout    
+    	xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:id="@+id/list_item"
+        android:layout_width="fill_parent"  
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="@drawable/new_list_frame_line"  
+        android:orientation="horizontal">  
+    <TextView 
+ 	 	android:id="@+id/title"
+ 	 	android:layout_width="20dp"
+ 	 	android:layout_height="wrap_content"
+ 	 	android:layout_marginLeft="0dp"
+ 	 	android:textSize="12dp"
+ 	 	android:paddingLeft="3dp"
+ 	 	android:layout_gravity="center_vertical|center_horizontal"
+ 	 	android:gravity="center_vertical|center_horizontal"
+ 	 	android:textStyle="bold" 
+ 	 	android:textColor="@android:color/white"/>
+</LinearLayout>
+<!-- <HorizontalScrollView -->
+<!--    	 xmlns:android="http://schemas.android.com/apk/res/android" -->
+<!--      android:orientation="vertical" -->
+<!--      android:gravity="center_horizontal" -->
+<!--      android:scrollbars="none" -->
+<!--      android:layout_width="fill_parent" -->
+<!--      android:layout_height="wrap_content"> -->
+<!--   	 <LinearLayout   -->
+<!--  	 	 android:layout_width="fill_parent" -->
+<!--  	  	 android:layout_height="104dp" -->
+<!--  	  	 android:background="@drawable/new_list_frame_line" -->
+<!--  	  	 android:orientation="horizontal" -->
+<!--  	  	 > -->
+<!--  	  	 <TextView  -->
+<!--  	  	 	android:id="@+id/title" -->
+<!--  	  	 	android:layout_width="10dp" -->
+<!--  	  	 	android:layout_height="104dp" -->
+<!--  	  	 	android:layout_marginLeft="6dp" -->
+<!--  	  	 	android:textSize="10dp" -->
+<!--  	  	 	android:layout_gravity="center_vertical" -->
+<!--  	  	 	android:gravity="center_vertical" -->
+<!--  	  	 	android:textStyle="bold"  -->
+<!--  	  	 	android:textColor="@android:color/white"/> -->
+<!--  	  	<GridView android:layout_width="fill_parent" -->
+<!-- 			android:layout_height="104dp" -->
+<!-- 			android:layout_gravity="left|center_vertical" -->
+<!-- 			android:gravity="center"   -->
+<!-- 			android:paddingTop="8dp" -->
+<!-- 			android:paddingBottom="8dp" -->
+<!-- 			android:columnWidth="85dip"  -->
+<!-- 			android:spacing="0px"  -->
+<!-- 			android:layout_alignRight="@id/title" -->
+<!-- 			android:id="@+id/gallery"/> -->
+<!--   	 </LinearLayout> -->
+<!-- </HorizontalScrollView> -->
+<!-- <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" -->
+<!-- 	android:orientation="horizontal"  -->
+<!-- 	android:id="@+id/list_item" -->
+<!-- 	android:background="@drawable/new_list_frame_line" -->
+<!-- 	android:layout_width="fill_parent" -->
+<!-- 	android:gravity="center_vertical" -->
+<!-- 	android:layout_height="wrap_content"> -->
+<!-- 	<TextView -->
+<!-- 		android:id="@+id/title" -->
+<!-- 	 	android:layout_width="10dp" -->
+<!-- 	 	android:layout_height="fill_parent" -->
+<!-- 	 	android:layout_marginTop="19dp" -->
+<!-- 	 	android:layout_marginLeft="6dp" -->
+<!-- 	 	android:textSize="10dp" -->
+<!-- 	 	android:textStyle="bold" -->
+<!-- 	 	android:textColor="@android:color/white" -->
+<!-- 	 	android:layout_gravity="top|left"/> -->
+<!-- 	android:unselectedAlpha: 设置未选中的条目的透明度(Alpha)。该值必须是float类型，比如：“1.2”。 -->
+<!-- 	<Gallery android:layout_width="fill_parent" -->
+<!-- 		android:layout_height="70dp" -->
+<!-- 		android:layout_alignRight="@id/title" -->
+<!-- 		android:padding="0dp" -->
+<!-- 		android:id="@+id/gallery"/> -->
+<!-- 		<ImageSwitcher android:id="@+id/imageSwitcher" -->
+<!-- 			android:layout_width="fill_parent" -->
+<!-- 			android:layout_height="wrap_content" -->
+<!-- 			android:layout_marginTop="30dp" /> -->
+<!-- </RelativeLayout>  -->

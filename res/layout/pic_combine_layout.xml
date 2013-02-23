@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFF4F4F4" >
+    <include android:id="@+id/title" layout="@layout/titlebar"/>
+  	<LinearLayout
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:layout_weight="8"
+        android:layout_below="@id/title"
+        android:background="@drawable/photo_frame_backg_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp">
+        <GridView android:layout_width="fill_parent"
+        	android:layout_height="fill_parent"
+        	android:id="@+id/grid_list"
+        	android:layout_margin="5dp"
+        	android:numColumns="3"
+        	android:scrollbars="none"></GridView>
+	</LinearLayout>
+	<RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:padding="5dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
+        android:layout_height="0dp">
+        <Button android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:background="@drawable/camara_image_bg"
+        	android:textColor="@android:color/white"
+        	android:id="@+id/combine"
+        	android:text="合成"/>
+        <Button android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentRight="true"
+        	android:id="@+id/camera"
+        	android:background="@drawable/user_click_btn_bg"/>
+	</RelativeLayout>
+</LinearLayout>

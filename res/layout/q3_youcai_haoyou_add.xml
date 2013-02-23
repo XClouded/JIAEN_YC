@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/q3_function_page_background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/q3_youcaifeixiang_tianjia_tittle" >
+
+        <ImageView
+            android:id="@+id/q3_youcaifeixiang_back"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/q3_fanhui" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp" >
+
+        <AutoCompleteTextView
+            android:id="@+id/q3_youcai_haoyou_add_local"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:background="@drawable/q3_youcai_add_haoyou_bendi"
+            android:hint="添加本机号码："
+            android:paddingLeft="30dp"
+            android:phoneNumber="true" />
+
+        <ImageView
+            android:id="@+id/q3_youcai_haoyou_add_local_rentou"
+            android:layout_width="48dp"
+            android:layout_height="36dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="#00000000"
+            android:padding="3dp" />
+    </RelativeLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" >
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical" >
+
+            <Button
+                android:id="@+id/q3_youcai_haoyou_add_no_0"
+                android:layout_width="90dp"
+                android:layout_height="30dp"
+                android:background="@drawable/q3_youcai_haoyou_add_no" />
+
+            <Button
+                android:id="@+id/q3_youcai_haoyou_add_yes_0"
+                android:layout_width="90dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/q3_youcai_haoyou_add_yes" />
+        </TableRow>
+    </TableLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp" >
+
+        <EditText
+            android:id="@+id/q3_youcai_haoyou_add_phone"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:background="@drawable/q3_youcai_add_haoyou_shoudong"
+            android:hint="号码添加："
+            android:paddingLeft="30dp"
+            android:phoneNumber="true" />
+
+        <ImageView
+            android:id="@+id/q3_youcai_haoyou_add_local_chazhao"
+            android:layout_width="48dp"
+            android:layout_height="36dp"
+            android:background="#ffffff"
+            android:padding="3dp"
+            android:src="@drawable/q3_youcai_haoyou_add_sousuo"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" >
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical" >
+
+            <Button
+                android:id="@+id/q3_youcai_haoyou_add_no_1"
+                android:layout_width="90dp"
+                android:layout_height="30dp"
+                android:background="@drawable/q3_youcai_haoyou_add_no" />
+
+            <Button
+                android:id="@+id/q3_youcai_haoyou_add_yes_1"
+                android:layout_width="90dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/q3_youcai_haoyou_add_yes" />
+        </TableRow>
+    </TableLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </RelativeLayout>
+
+</LinearLayout>

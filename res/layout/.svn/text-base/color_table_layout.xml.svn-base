@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="#FFF4F4F4">
+		<Button android:id="@+id/color0" android:layout_width="11dp" android:layout_height="30dp" android:background="#e92100" android:tag="e92100" android:textColor="#e92100"/>
+		<Button android:id="@+id/color1" android:layout_width="11dp" android:layout_height="30dp" android:background="#d86f00" android:tag="d86f00" android:textColor="#d86f00"/> 
+		<Button android:id="@+id/color2" android:layout_width="11dp" android:layout_height="30dp" android:background="#a23d19" android:tag="a23d19" android:textColor="#a23d19"/> 
+		<Button android:id="@+id/color3" android:layout_width="11dp" android:layout_height="30dp" android:background="#cc2163" android:tag="cc2163" android:textColor="#cc2163"/> 
+		<Button android:id="@+id/color4" android:layout_width="11dp" android:layout_height="30dp" android:background="#8a229b" android:tag="8a229b" android:textColor="#8a229b"/> 
+		<Button android:id="@+id/color5" android:layout_width="11dp" android:layout_height="30dp" android:background="#a53b8e" android:tag="a53b8e" android:textColor="#a53b8e"/> 
+		<Button android:id="@+id/color6" android:layout_width="11dp" android:layout_height="30dp" android:background="#a03754" android:tag="a03754" android:textColor="#a03754"/> 
+		<Button android:id="@+id/color7" android:layout_width="11dp" android:layout_height="30dp" android:background="#cc257b" android:tag="cc257b" android:textColor="#cc257b"/> 
+		<Button android:id="@+id/color8" android:layout_width="11dp" android:layout_height="30dp" android:background="#5ca800" android:tag="5ca800" android:textColor="#5ca800"/> 
+		<Button android:id="@+id/color9" android:layout_width="11dp" android:layout_height="30dp" android:background="#2380d8" android:tag="2380d8" android:textColor="#2380d8"/> 
+		<Button android:id="@+id/color10" android:layout_width="11dp" android:layout_height="30dp" android:background="#278fe6" android:tag="278fe6" android:textColor="#278fe6"/> 
+		<Button android:id="@+id/color11" android:layout_width="11dp" android:layout_height="30dp" android:background="#2952d5" android:tag="2952d5" android:textColor="#2952d5"/> 
+		<Button android:id="@+id/color11dp" android:layout_width="11dp" android:layout_height="30dp" android:background="#8f836e" android:tag="8f836e" android:textColor="#8f836e"/> 
+		<Button android:id="@+id/color13" android:layout_width="11dp" android:layout_height="30dp" android:background="#38a49b" android:tag="38a49b" android:textColor="#38a49b"/> 
+		<Button android:id="@+id/color14" android:layout_width="11dp" android:layout_height="30dp" android:background="#1d5d93" android:tag="1d5d93" android:textColor="#1d5d93"/> 
+		<Button android:id="@+id/color15" android:layout_width="11dp" android:layout_height="30dp" android:background="#1d524a" android:tag="1d524a" android:textColor="#1d524a"/> 
+		<Button android:id="@+id/color16" android:layout_width="11dp" android:layout_height="30dp" android:background="#51ec00" android:tag="51ec00" android:textColor="#51ec00"/> 
+		<Button android:id="@+id/color17" android:layout_width="11dp" android:layout_height="30dp" android:background="#eeed00" android:tag="eeed00" android:textColor="#eeed00"/> 
+		<Button android:id="@+id/color18" android:layout_width="11dp" android:layout_height="30dp" android:background="#646400" android:tag="646400" android:textColor="#646400"/> 
+		<Button android:id="@+id/color19" android:layout_width="11dp" android:layout_height="30dp" android:background="#d97000" android:tag="d97000" android:textColor="#d97000"/> 
+		<Button android:id="@+id/color20" android:layout_width="11dp" android:layout_height="30dp" android:background="#4c86b9" android:tag="4c86b9" android:textColor="#4c86b9"/> 
+		<Button android:id="@+id/color21" android:layout_width="11dp" android:layout_height="30dp" android:background="#da338a" android:tag="da338a" android:textColor="#da338a"/> 
+		<Button android:id="@+id/color22" android:layout_width="11dp" android:layout_height="30dp" android:background="#61608f" android:tag="61608f" android:textColor="#61608f"/> 
+		<Button android:id="@+id/color23" android:layout_width="11dp" android:layout_height="30dp" android:background="#6f7071" android:tag="6f7071" android:textColor="#6f7071"/> 
+		<Button android:id="@+id/color24" android:layout_width="11dp" android:layout_height="30dp" android:background="#000000" android:tag="000000" android:textColor="#000000"/> 
+		<Button android:id="@+id/color25" android:layout_width="11dp" android:layout_height="30dp" android:background="#ffffff" android:tag="ffffff" android:textColor="#ffffff"/>
+</LinearLayout>

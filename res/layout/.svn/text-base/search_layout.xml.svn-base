@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="#FFF4F4F4"
+    >
+    
+    <include android:id="@+id/title" layout="@layout/titlebar"/>
+<!--     <LinearLayout -->
+<!--          android:orientation="vertical" -->
+<!--          android:background="#FFF4F4F4" -->
+<!--          android:gravity="center_horizontal" -->
+<!--          android:layout_width="fill_parent" -->
+<!--          android:layout_height="wrap_content"> -->
+	    <FrameLayout
+	        android:gravity="center"
+	        android:orientation="horizontal"
+	        android:layout_marginTop="0dp"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content">
+            <AutoCompleteTextView
+                android:id="@+id/search_field"
+                android:layout_width="216dp"
+                android:layout_height="wrap_content"
+                android:maxWidth="216dp"
+                android:background="@drawable/search_button_edittext_bg"
+                android:singleLine="true"
+                android:hint="请 输入搜索内容"
+	            android:paddingLeft="15.0dip"
+	            android:paddingRight="52.0dip"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:completionThreshold="1"/>
+           <TextView
+	           android:id="@+id/search_button"
+	           android:layout_width="50dp"
+	           android:layout_height="50dp"
+	           android:layout_marginRight="66dp"
+	           android:textSize="16dp"
+	           android:layout_gravity="center_vertical|right"
+	           android:textColor="@android:color/black"
+	           android:text=""/>
+   		</FrameLayout>
+<!--             <Button -->
+<!--                 android:id="@+id/search_button" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:background="@drawable/search_button_bg" -->
+<!--                 android:layout_height="45dp"/> -->
+<!--          </LinearLayout> -->
+<!--       	 <RelativeLayout  -->
+<!--      	 	 android:layout_width="fill_parent" -->
+<!--      	  	 android:layout_height="30dp" -->
+<!--      	  	 android:orientation="horizontal" -->
+<!--      	  	 android:background="@drawable/bottom_line_bar_bg"> -->
+<!--      	  	 <TextView -->
+<!--      	  	 	android:layout_width="wrap_content" -->
+<!--      	  	 	android:layout_height="wrap_content" -->
+<!--      	  	 	android:layout_marginTop="5dp" -->
+<!--      	  	 	android:layout_marginLeft="8dp" -->
+<!--      	  	 	android:textSize="14dp" -->
+<!--      	  	 	android:textStyle="bold" -->
+<!--      	  	 	android:visibility="visible" -->
+<!--      	  	 	android:textColor="@android:color/white" -->
+<!--      	  	 	android:layout_gravity="center_vertical|left" -->
+<!--      	  	 	android:gravity="center_vertical" -->
+<!--      	  	 	android:text="搜索结果列表"/> -->
+<!--    	  	 </RelativeLayout> -->
+
+
+<!--    	  	 <LinearLayout -->
+<!-- 			android:id="@+id/product_list" -->
+<!-- 		    android:background="@drawable/list_frame_list_line" -->
+<!-- 		    android:layout_width="fill_parent" -->
+<!-- 		    android:layout_height="fill_parent" -->
+<!-- 		    android:layout_margin="4dp" -->
+<!-- 		    android:padding="4dp" -->
+<!-- 		    android:gravity="left|top" -->
+<!-- 		    android:orientation="horizontal"> -->
+<!-- 	     </LinearLayout> -->
+
+	    <ListView
+		    android:id="@+id/list_view"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:layout_margin="6dp"
+		    android:padding="6dp"
+		    android:dividerHeight="0dp"
+		    android:layout_gravity="center_horizontal"
+		    android:cacheColorHint="#FFF4F4F4"
+		    android:orientation="vertical"
+		    android:background="@drawable/list_frame_list_line">
+	    </ListView>
+	     
+	     
+<!--    	  	 <RelativeLayout  -->
+<!--      	 	 android:layout_width="wrap_content" -->
+<!--      	  	 android:layout_height="wrap_content" -->
+<!--      	  	 android:orientation="horizontal" -->
+<!--      	  	 android:visibility="gone" -->
+<!--      	  	 android:background="@drawable/category_frame_line"> -->
+<!--      	  	 <TextView -->
+<!--      	  	 	android:layout_width="wrap_content" -->
+<!--      	  	 	android:layout_height="wrap_content" -->
+<!--      	  	 	android:layout_marginTop="12dp" -->
+<!--      	  	 	android:layout_marginLeft="8dp" -->
+<!--      	  	 	android:textSize="10dp" -->
+<!--      	  	 	android:textStyle="bold" -->
+<!--      	  	 	android:textColor="@android:color/white" -->
+<!--      	  	 	android:layout_gravity="top|left" -->
+<!--      	  	 	android:text="精彩专题"/> -->
+<!--    	  	 </RelativeLayout> -->
+<!-- 	</LinearLayout> -->
+</LinearLayout>

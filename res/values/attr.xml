@@ -1,0 +1,6 @@
+<resources>  
+    <declare-styleable name="com.android.photoalbum.view.GifView">  
+        <attr name="gif" format="reference"  />  
+    </declare-styleable>  
+</resources>  
+

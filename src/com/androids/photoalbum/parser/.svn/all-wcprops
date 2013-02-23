@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/parser
+END
+SignNameWebsiteParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/parser/SignNameWebsiteParser.java
+END
+AddCollectionWebsiteParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/cicc.android/!svn/ver/28/YC/src/com/android/photoalbum/parser/AddCollectionWebsiteParser.java
+END
+SearchWebsiteParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/parser/SearchWebsiteParser.java
+END
+WordsAddWebsiteParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/parser/WordsAddWebsiteParser.java
+END
+ExistNewProductWebsiteParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/parser/ExistNewProductWebsiteParser.java
+END
+TemplateWebsiteParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/parser/TemplateWebsiteParser.java
+END
+BackPwdWebsiteParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/parser/BackPwdWebsiteParser.java
+END
+CollectionsWebsiteParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/parser/CollectionsWebsiteParser.java
+END
+WebsiteParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/parser/WebsiteParser.java
+END
+MusicWebsiteParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/parser/MusicWebsiteParser.java
+END
+DelCollectionWebsiteParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/parser/DelCollectionWebsiteParser.java
+END
+PassWordVerifyWebsiteParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/parser/PassWordVerifyWebsiteParser.java
+END
+FrameWebsiteParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/parser/FrameWebsiteParser.java
+END
+WorkingPhotoWebsiteParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/parser/WorkingPhotoWebsiteParser.java
+END
+ClassificationWebsiteParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/parser/ClassificationWebsiteParser.java
+END
+EffectWebsiteParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/cicc.android/!svn/ver/29/YC/src/com/android/photoalbum/parser/EffectWebsiteParser.java
+END

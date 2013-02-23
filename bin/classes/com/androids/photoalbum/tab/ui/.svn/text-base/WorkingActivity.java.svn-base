@@ -1,0 +1,79 @@
+package com.android.photoalbum.tab.ui;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+
+import com.android.photoalbum.R;
+import com.android.photoalbum.tab.ui.BaseActivity;
+import com.android.photoalbum.view.LoginActivity;
+import com.android.photoalbum.view.MainTabActivity;
+import com.android.photoalbum.view.PictureWorkingActivity;
+import com.android.photoalbum.view.SignNameActivity;
+
+public class WorkingActivity extends BaseActivity {
+	private Button mPicWork;
+	private Button mNameSign;
+	
+	@Override
+	protected void onCreate(Bundle paramBundle) {
+		super.onCreate(paramBundle);
+		
+		setView(R.layout.working_layout);
+		setTitleBar(com.android.photoalbum.view.BaseLayout.TYPE_GONE, null, null, null);
+		mPicWork = (Button)findViewById(R.id.pic_work);
+		mPicWork.setOnClickListener(this);
+		mPicWork.setOnTouchListener(this);
+		
+		mNameSign = (Button)findViewById(R.id.name_sign);
+		mNameSign.setOnClickListener(this);
+		mNameSign.setOnTouchListener(this);
+	}
+	
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+			case R.id.pic_work:
+				picWork();
+				break;
+			case R.id.name_sign:
+				nameSign();
+				break;
+			default:
+				super.onClick(view);
+		}
+		
+	}
+	
+	private void picWork() {
+		Intent intent = new Intent(this, PictureWorkingActivity.class);
+		startActivity(intent);
+//		MainTabActivity.getCurrentActivityGroup().setNextActivity(intent, "PictureWorkingActivity");
+		
+//		Intent intent = new Intent(this, PictureWorkingActivity.class);
+//    	WorkingActivityGroup.setNextActivity(intent, "PictureWorkingActivity");
+	}
+	
+	private void nameSign() {
+		Intent intent  = new Intent(this, SignNameActivity.class);
+//		startActivity(intent);
+		MainTabActivity.getCurrentActivityGroup().setNextActivity(intent, "SignNameActivity");
+		
+//		Intent intent = new Intent(this, SignNameActivity.class);
+//    	WorkingActivityGroup.setNextActivity(intent, "SignNameActivity");
+
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	protected void handleTitleBarEvent(int paramInt) {
+		
+	}
+	
+}

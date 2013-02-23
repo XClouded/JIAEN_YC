@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/q3_liulan_gridview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/q3_item_image_layout"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
+        android:background="#fff"
+        android:padding="4dp"
+        android:src="@drawable/q3_zuijinggengxin" />
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="23dp"
+        android:layout_alignBottom="@+id/q3_item_image_layout"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/q3_btm" />
+
+    <TextView
+        android:id="@+id/q3_item_text_layout"
+        android:layout_width="150dp"
+        android:layout_height="110dp"
+        android:layout_alignBottom="@+id/q3_item_image_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="3dp"
+        android:gravity="bottom|center_horizontal"
+        android:text="最近更新"
+        android:textColor="#000"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/q3_item_image_layout"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/q3_biezhen" />
+
+</RelativeLayout>

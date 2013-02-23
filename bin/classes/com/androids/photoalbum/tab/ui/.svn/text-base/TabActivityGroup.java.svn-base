@@ -1,0 +1,373 @@
+package com.android.photoalbum.tab.ui;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import com.android.photoalbum.R;
+import com.android.photoalbum.utils.Stack;
+import com.android.photoalbum.view.ImageLayout;
+import com.android.photoalbum.view.MainTabActivity;
+import com.android.photoalbum.view.SignNameActivity;
+
+import android.app.Activity;
+import android.app.ActivityGroup;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.LocalActivityManager;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.Spinner;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
+
+public class TabActivityGroup extends ActivityGroup  implements OnItemSelectedListener {
+//	public ActivityGroup group;
+	private  Intent mCurrentIntent = null;
+	private  Stack mStack = new Stack();
+	public ProgressDialog pd = null;
+	private ContentResolver mResolver;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+//		group = this;
+		setMainTabActivityGroup();
+		mResolver = this.getContentResolver();
+	}
+	
+    @Override
+    protected Dialog onCreateDialog(int id) {
+    	Dialog dialog = null;
+    	switch (id) {
+    		case BaseActivity.DIALOG_SAVE_IMAGE:
+    			dialog = createSaveImageDialog();
+    			break;
+			default:
+				break;
+		}
+    	
+        return dialog;
+    }
+    
+	public boolean showProgessBarDialog(final String msg) {
+		if(pd != null) {
+			return false;
+		}
+		Runnable action = new Runnable() {
+			 
+			public void run() {
+				pd = new ProgressDialog(TabActivityGroup.this);
+//			    pd.setTitle("加载图片");
+			    pd.setMessage(msg);
+			    pd.show();	
+			}
+		};
+		 
+		runOnUiThread(action);
+		
+		return true;
+	}
+	
+	public void dismissProgressBarDialog() {
+		Runnable action = new Runnable() {
+			 
+			public void run() {
+				if (pd != null) {
+					pd.dismiss();
+					pd = null;
+				}
+			}
+		};
+		 
+		runOnUiThread(action);
+	}
+    
+	public void saveImage(Bitmap bitmap, String photoaddress) {
+		if (photoaddress == null) {
+			return;
+		}
+//		Bitmap bitmap = image.getImage();
+//		HashMap<String, Bitmap> blogPicList = mPicDownloadedReceiver.getBlogPicList();
+//	    Bitmap bitmap = blogPicList.get(imgbig);
+//	    if (bitmap == null) {
+//	    	return;
+//	    }
+		
+//		if (d == null) {
+//			return;
+//		}
+//		
+//		BitmapDrawable bd = (BitmapDrawable) d;
+//		Bitmap bitmap = bd.getBitmap();
+	    
+		try {
+			File sdPhoto = new File("/sdcard/优彩/");
+			if (!sdPhoto.exists()) {
+				sdPhoto.mkdirs();
+			}
+			
+			String filename = "/sdcard/优彩/";
+			int index = photoaddress.lastIndexOf("/");
+			filename += photoaddress.substring(index+1);
+			File sdCard = new File(filename);
+			FileOutputStream outStreamz = new FileOutputStream(sdCard);
+			bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStreamz);
+			outStreamz.flush();
+			outStreamz.close();
+			notifyToUser("图片保存成功, 已加到你的相册");
+		} catch (FileNotFoundException e) {
+			notifyToUser("图片保存失败, 请确保sd卡可用");
+			e.printStackTrace();
+		} catch (IOException e) {
+			notifyToUser("图片保存失败, 请确保sd卡可用");
+			e.printStackTrace();
+		}
+		
+//		pd.dismiss();
+	}
+	
+    protected void notifyToUser(final String result) {
+		Runnable run = new Runnable() {
+			
+//				@Override
+			public void run() {
+				Toast.makeText(TabActivityGroup.this, result, Toast.LENGTH_SHORT).show();
+			}
+		};
+		
+		runOnUiThread(run);
+    }
+    
+    public Dialog createSaveImageDialog() {
+    	return new AlertDialog.Builder(this)
+    	.setIcon(android.R.drawable.ic_dialog_alert)
+    	.setTitle("下载艺术签名")
+//    	.setMessage("下载")
+    	.setPositiveButton("下载", new DialogInterface.OnClickListener() {
+    		public void onClick(DialogInterface dialog, int whichButton) {
+    			dismissDialog(BaseActivity.DIALOG_SAVE_IMAGE);
+//    			saveImage(SignNameActivity.mBitmap, SignNameActivity.mPhotoaddress);
+    			ImageLayout.intent.putExtra("from_activity", "SignNameActivity");
+				startActivity(ImageLayout.intent);
+    		}
+    	})
+    	.setNegativeButton(R.string.cancel_action, new DialogInterface.OnClickListener() {
+    		public void onClick(DialogInterface dialog, int whichButton) {
+    			dismissDialog(BaseActivity.DIALOG_SAVE_IMAGE);
+    		}
+    	})
+    	.create();
+    }
+    
+	private void setMainTabActivityGroup() {
+		switch (MainTabActivity.mCurrentPage) {
+			case 0:
+				MainTabActivity.mHomeActivityGroup = this;
+				break;
+			case 1:
+				MainTabActivity.mSearchActivityGroup = this;
+				break;
+			case 2:
+				MainTabActivity.mFavoriteActivityGroup = this;
+				break;
+			case 3:
+				MainTabActivity.mMultiMessageActivityGroup = this;
+				break;
+			case 4:
+				MainTabActivity.mWorkingActivityGroup = this;
+				break;
+			default:
+				break;
+		}
+	}
+	public  boolean isActivityGroupNull() {
+		return mStack.size() <= 0;
+	}
+	
+	public  void setJumpActivity(Context context, String id, Class<? extends com.android.photoalbum.tab.ui.BaseActivity> tabActivity) {
+		//要跳转的界面
+		mCurrentIntent = new Intent(context, tabActivity);
+//			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		//把一个Activity转换成一个View
+		Window w = getLocalActivityManager().startActivity(id, mCurrentIntent);
+	    View view = w.getDecorView();
+	    //把View添加大ActivityGroup中
+	    setContentView(view);
+	    
+	}
+	
+	@Override
+	protected void onDestroy() {
+		mCurrentIntent = null;
+		mStack.clear();
+		super.onDestroy();
+	}
+	
+	public Spinner mSpinner;
+	public  void setNextActivity(Intent intent, String id) {
+		mStack.push(mCurrentIntent);
+		mCurrentIntent = intent;
+		mCurrentIntent.putExtra("id", id);
+		convertActivity();
+	}
+	
+	public  void setCurrentActivity() {
+		if (mCurrentIntent != null) {
+			convertActivity();
+		}
+	}
+	
+	private  void convertActivity() {
+//		mCurrentIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		String id = mCurrentIntent.getStringExtra("id");
+		//把一个Activity转换成一个View
+		Window w = getLocalActivityManager().startActivity(id, mCurrentIntent);
+	    View view = w.getDecorView();
+	    //把View添加大ActivityGroup中
+	    setContentView(view);
+	}
+	
+	public  void setPreviousActivity() {
+		mCurrentIntent = mStack.pop();
+		if (mCurrentIntent != null) {
+			convertActivity();
+		}
+	}
+
+	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+		MessageActivity.mActivity.onItemSelected(parent, view, position, id);
+	}
+
+	public void onNothingSelected(AdapterView<?> arg0) {
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.d("zheng", "TabActivityGroup onActivityResult");
+		if (resultCode != RESULT_OK){ 
+			return; 
+		}
+		
+		if (requestCode == 10) {
+			if (MainTabActivity.getCurrentActivityGroup() == MainTabActivity.mMultiMessageActivityGroup) {
+				MultiMediaMessageActivity.contactActivityResult(requestCode, resultCode, data, MultiMediaMessageActivity.mReceiver, mResolver);
+			} else {
+				MultiMediaMessageActivity.contactActivityResult(requestCode, resultCode, data, MessageActivity.mReceiver, mResolver);
+			}
+			return;
+		}
+		
+		int with = getWindowManager().getDefaultDisplay().getWidth();
+		int heigth = getWindowManager().getDefaultDisplay().getHeight();
+		if (requestCode == 0) {
+			Intent cj = new Intent("com.android.camera.action.CROP");
+			cj.setData(data.getData());
+			cj.putExtra("crop", "true");
+			cj.putExtra("aspectX", 2);
+			cj.putExtra("aspectY", 2);
+			cj.putExtra("outputX", with);
+			cj.putExtra("outputY", heigth);
+			cj.putExtra("noFaceDetection", true);
+			cj.putExtra("return-data", true);
+			startActivityForResult(Intent.createChooser(cj, "裁剪"), 2);
+		} else if (requestCode == 3) {
+			Intent cj1 = new Intent("com.android.camera.action.CROP");
+			try {
+				cj1.setData(Uri.parse(android.provider.MediaStore.Images.Media.
+				insertImage(getContentResolver(), "/mnt/sdcard/camera.png", null, null)));
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			cj1.putExtra("crop", "true");
+			cj1.putExtra("aspectX", 2);
+			cj1.putExtra("aspectY", 2);
+			cj1.putExtra("outputX", with);
+			cj1.putExtra("outputY", heigth);
+			cj1.putExtra("return-data", true);
+			startActivityForResult(cj1, 2);
+
+			File camera = new File("/mnt/sdcard/camera.png");
+			if (camera.exists()) {
+				camera.delete();
+			}
+		} else if (requestCode == 2) {
+//			Intent intent = new Intent();
+			if (true) {
+//				setResult(MultiMediaMessageActivity.RESULT_CODE_OK, data);
+				data.setAction(MultiMediaMessageActivity.ACTION_PICTURE_SELECTED);
+				sendBroadcast(data);
+//				finish();
+				MainTabActivity.getCurrentActivityGroup().setPreviousActivity();
+				return;
+			}
+			Bundle extras = data.getExtras();
+			if (extras != null) {
+				Bitmap photo = extras.getParcelable("data");
+				
+//				photo = Utils.getResizedBitmap(photo, width, height);
+//				mWorkingPhoto.setBackgroundDrawable(new BitmapDrawable(photo));
+//				try {
+//					FileOutputStream outStreamz = new FileOutputStream(sdCard);
+//					photo.compress(Bitmap.CompressFormat.JPEG, 30, outStreamz);
+//					outStreamz.close();
+//				} catch (FileNotFoundException e) {
+//					e.printStackTrace();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+
+
+//				Drawable d = new BitmapDrawable(photo);
+//				mPicView.setBackgroundDrawable(d);
+//				mPicView.setVisibility(View.VISIBLE);
+				
+		        final ByteArrayOutputStream os = new ByteArrayOutputStream();
+		        
+		       
+		        // 构造SQLite的Content对象，这里也可以使用raw
+//		        ContentValues values = new ContentValues();
+//		        mNewHeadPic = os.toByteArray();
+//		        if(Utils.logging)Log.d("zheng", "StaticInfo.mPicQuality:" + StaticInfo.mPicQuality + " pic size:" + mNewHeadPic.length);
+				
+//				mHeadPicView.setImageURI(data.getData());
+//				try {
+// 
+//					FileOutputStream outStreamz = new FileOutputStream(sdCard);
+//
+//					photo.compress(Bitmap.CompressFormat.PNG, 50, outStreamz);
+//
+//					outStreamz.close();
+//
+//				} catch (FileNotFoundException e) {
+//
+//					e.printStackTrace();
+//
+//				} catch (IOException e) {
+//
+//					e.printStackTrace();
+//
+//				}
+
+//				intent.setClass(AddCardActivity.this, ChooseABActivity.class);
+//
+//				startActivity(intent);
+//
+//				finish();
+
+			}
+		}
+	}
+}

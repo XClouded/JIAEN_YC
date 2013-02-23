@@ -1,0 +1,31 @@
+package com.android.photoalbum.utils;
+
+import com.android.photoalbum.service.AlbumServiceProxy;
+import com.android.photoalbum.service.IAlbumService;
+import com.android.photoalbum.service.IAlbumServiceCallback;
+import com.android.photoalbum.tab.ui.BaseActivity.AlbumService;
+
+import android.content.Context;
+
+//import com.android.email.ExchangeUtils.NullEmailService;
+//import com.android.email.service.EmailServiceProxy;
+//import com.android.email.service.IAlbumService;
+//import com.android.email.service.IAlbumServiceCallback;
+//import com.android.exchange.SyncManager;
+
+public class ServiceUtils {
+	public static final String PREFS_NAME = "com.android.userinfo";
+	
+    public static IAlbumService getAlbumService(Context context,
+            IAlbumServiceCallback callback) {
+        IAlbumService ret = null;
+        //ALBUM-REMOVE-SECTION-START
+        ret = new AlbumServiceProxy(context, AlbumService.class, callback);
+        //ALBUM-REMOVE-SECTION-END
+//        if (ret == null) {
+//            ret = NullEmailService.INSTANCE;
+//        }
+        return ret;
+    }
+
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:background="#D1EEEE"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="5dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:text="优彩提示："
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:textColor="#000"
+            android:text="        您注册成功后，账户为手机号码，密码为123456."
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:layout_gravity="center_horizontal"
+            android:layout_width="256sp"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/sure"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="18dp"
+                android:background="@drawable/login_regist"
+                android:text="确定注册" />
+
+            <Button
+                android:id="@+id/not"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="3dp"
+                android:layout_marginRight="18dp"
+                android:background="@drawable/login_regist"
+                android:text="取消注册" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

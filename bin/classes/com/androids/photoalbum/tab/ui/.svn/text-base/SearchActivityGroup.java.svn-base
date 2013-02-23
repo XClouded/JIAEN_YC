@@ -1,0 +1,5 @@
+package com.android.photoalbum.tab.ui;
+
+public class SearchActivityGroup extends TabActivityGroup {
+	
+}

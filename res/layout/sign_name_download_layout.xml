@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFF4F4F4"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/titlebar"
+        android:visibility="gone" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/q3_word_title_bg" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <AutoCompleteTextView
+            android:id="@+id/search_field"
+            android:layout_width="216dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:background="@drawable/yi_shu_zi_combo_bg"
+            android:completionThreshold="1"
+            android:maxWidth="216dp"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="52.0dip"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="66dp"
+            android:text="上传"
+            android:textColor="@android:color/black"
+            android:textSize="16dp" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="12"
+        android:background="#FFF4F4F4" >
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="6dp"
+            android:background="@drawable/list_frame_list_line"
+            android:cacheColorHint="#FFF4F4F4"
+            android:divider="#FFF4F4F4"
+            android:gravity="left"
+            android:orientation="vertical"
+            android:padding="6dp"
+            android:scrollbars="none" >
+        </ListView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#FFF4F4F4"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/camara_image_bg"
+            android:padding="5dp"
+            android:text="发送"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/reinput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/camara_image_bg"
+            android:padding="5dp"
+            android:text="重新输入"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+</LinearLayout>

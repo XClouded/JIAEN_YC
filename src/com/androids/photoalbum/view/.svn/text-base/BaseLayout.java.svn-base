@@ -1,0 +1,183 @@
+package com.android.photoalbum.view;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import com.android.photoalbum.R;
+
+public class BaseLayout extends LinearLayout implements View.OnTouchListener {
+//    public static final int TYPE_BUTTON_GROUP = 0;
+	public static final int TYPE_GONE = 0;
+    public static final int TYPE_NORMAL = 1;
+    public TextView registButton;
+    public LinearLayout lyButtonGroup;
+    public Button mButton1;
+    public Button mButton2;
+    public Button mButton3;
+    public Button leftButton;
+    public Button rightButton;
+    public RelativeLayout progressButton;
+    public TextView loginButton;
+    public TextView tvInfo;
+
+    public BaseLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        Log.d("zheng", "BaseLayout Context context, AttributeSet attrs");
+        leftButton = (Button)findViewById(R.id.left_button);
+        rightButton = (Button)findViewById(R.id.right_button);
+//        tvInfo = (TextView)findViewById(R.id.center_textview);
+//        lyButtonGroup = (LinearLayout)findViewById(R.id.title_button_group);
+//        mButton1 = (Button)findViewById(R.id.group_left_button);
+//        mButton2 = (Button)findViewById(R.id.group_middle_button);
+//        mButton3 = (Button)findViewById(R.id.group_right_button);
+//        progressButton = (RelativeLayout)findViewById(R.id.progress_layout);
+    }
+    
+    public boolean onTouch(View v, MotionEvent event) {
+    	if (v == null) {
+    		return false;
+    	}
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            v.getBackground().setAlpha(155);// 璁剧疆鍥剧墖閫忔槑搴?~255锛?瀹屽叏閫忔槑锛?55涓嶉€忔槑
+            v.invalidate();
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            v.getBackground().setAlpha(255);// 杩樺師鍥剧墖
+            v.invalidate();
+        }
+
+        return false;
+    }
+    
+    public BaseLayout(Context paramContext, int resId) {
+        super(paramContext);
+        Log.d("zheng", "BaseLayout Context paramContext, int resId");
+//        LayoutInflater layoutInflater = (LayoutInflater)paramContext
+//                .getSystemService("layout_inflater");
+//        View titleView = layoutInflater.inflate(R.layout.titlebar, null);
+//
+////        addView(titleView, (ViewGroup.LayoutParams)localObject);
+//        View view = layoutInflater.inflate(resId, null);
+//        RelativeLayout.LayoutParams localLayoutParams = new RelativeLayout.LayoutParams(-1, -1);
+//        localLayoutParams.addRule(3, 2131624152);
+//        addView(view, localLayoutParams);
+//        addView(titleView);
+        
+        
+//        leftButton = (Button)findViewById(R.id.left_button);
+//        rightButton = (Button)findViewById(R.id.right_button);
+//        tvInfo = (TextView)findViewById(R.id.center_textview);
+//        lyButtonGroup = (LinearLayout)findViewById(R.id.title_button_group);
+//        mButton1 = (Button)findViewById(R.id.group_left_button);
+//        mButton2 = (Button)findViewById(R.id.group_middle_button);
+//        mButton3 = (Button)findViewById(R.id.group_right_button);
+//        progressButton = (RelativeLayout)findViewById(R.id.progress_layout);
+    }
+    
+    public void setButtonTypeAndInfo(int titleType, String leftText, String title, String rightText) {
+//        this.lyButtonGroup.setVisibility(GONE);
+        Resources resource = getResources();
+        switch (titleType) {
+            case TYPE_NORMAL:
+                if (TextUtils.isEmpty(leftText)) {
+                    this.leftButton.setVisibility(GONE);
+                } else if (leftText.equalsIgnoreCase("返回")) {
+                    leftButton.setBackgroundDrawable(resource.getDrawable(R.drawable.title_button));
+                    this.leftButton.setText(leftText);
+                }
+
+                if (!TextUtils.isEmpty(title)) {
+                    setTitle(title);
+                }
+
+                
+                if (TextUtils.isEmpty(rightText)) {
+                    rightButton.setVisibility(GONE);
+                } else if (rightText.equalsIgnoreCase("刷新")) {
+                	rightButton.setVisibility(VISIBLE);
+                	rightButton.setText(rightText);
+                } else if (rightText.equalsIgnoreCase("返回")) {
+                	rightButton.setVisibility(VISIBLE);
+                	rightButton.setText(rightText);
+                }
+//                else if (rightText.equalsIgnoreCase("返回首页")) {
+//                    rightButton.setBackgroundDrawable(resource.getDrawable(R.drawable.title_home));
+//                } else if (rightText.equalsIgnoreCase("注册新帐号")) {
+//                    rightButton.setBackgroundDrawable(resource.getDrawable(R.drawable.title_button));
+//                    this.rightButton.setText(rightText);
+//                } else {
+//                    rightButton.setBackgroundDrawable(resource.getDrawable(R.drawable.title_button));
+//                    rightButton.setText(rightText);
+//                }
+                break;
+            case TYPE_GONE:
+//            	findViewById(R.id.function_bar).setVisibility(View.GONE);
+            	break;
+//            case TYPE_BUTTON_GROUP:
+//                this.leftButton.setVisibility(GONE);
+//                this.rightButton.setVisibility(GONE);
+//                this.tvInfo.setVisibility(GONE);
+//                this.lyButtonGroup.setVisibility(VISIBLE);
+//                break;
+            default:
+        }
+    }
+
+//    public void setButtonTypeAndInfo(int titleType, String leftText, String title, String rightText) {
+//        this.lyButtonGroup.setVisibility(GONE);
+//        Resources resource = getResources();
+//        switch (titleType) {
+//            case TYPE_NORMAL:
+//                if (TextUtils.isEmpty(leftText)) {
+//                    this.leftButton.setVisibility(GONE);
+//                } else if (leftText.equalsIgnoreCase("发表新微博")) {
+//                    leftButton.setBackgroundDrawable(resource.getDrawable(R.drawable.title_new));
+//                } else {
+//                    leftButton.setBackgroundDrawable(resource.getDrawable(R.drawable.title_button));
+//                    this.leftButton.setText(leftText);
+//                }
+//
+//                if (!TextUtils.isEmpty(title)) {
+//                    setTitle(title);
+//                }
+//
+//                if (TextUtils.isEmpty(rightText)) {
+//                    rightButton.setVisibility(GONE);
+//                } else if (rightText.equalsIgnoreCase("刷新")) {
+//                    rightButton.setBackgroundDrawable(resource.getDrawable(R.drawable.title_reload));
+//                } else if (rightText.equalsIgnoreCase("返回首页")) {
+//                    rightButton.setBackgroundDrawable(resource.getDrawable(R.drawable.title_home));
+//                } else if (rightText.equalsIgnoreCase("注册新帐号")) {
+//                    rightButton.setBackgroundDrawable(resource.getDrawable(R.drawable.title_button));
+//                    this.rightButton.setText(rightText);
+//                } else {
+//                    rightButton.setBackgroundDrawable(resource.getDrawable(R.drawable.title_button));
+//                    rightButton.setText(rightText);
+//                }
+//                break;
+//            case TYPE_BUTTON_GROUP:
+//                this.leftButton.setVisibility(GONE);
+//                this.rightButton.setVisibility(GONE);
+//                this.tvInfo.setVisibility(GONE);
+//                this.lyButtonGroup.setVisibility(VISIBLE);
+//                break;
+//            default:
+//        }
+//    }
+
+    public void setTitle(String paramString) {
+        this.tvInfo.setText(paramString);
+    }
+}
+

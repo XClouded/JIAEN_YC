@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/q3_function_page_background"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/titlebar"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/q3_process_title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/q3_progress_title_bg" />
+
+    <LinearLayout
+        android:id="@+id/bottom_function_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="0dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/quit"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/q3_progress_wancheng" />
+
+        <Gallery
+            android:id="@+id/record_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:background="@drawable/jg_assets_pan"
+            android:gravity="left|center_vertical"
+            android:orientation="horizontal"
+            android:padding="2dp"
+            android:spacing="0dp"
+            android:visibility="gone" >
+        </Gallery>
+
+        <HorizontalScrollView
+            android:id="@+id/mScrollView"
+            android:layout_width="205dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_weight="0.33"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <GridView
+                    android:id="@+id/mGridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="horizontal" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/q3_progress_chexiao" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/bottom_function_bar"
+        android:layout_below="@+id/q3_process_title"
+        android:gravity="center_vertical|center_horizontal"
+        android:measureAllChildren="false"
+        android:orientation="horizontal" >
+
+        <com.androids.photoalbum.view.FrameContainer
+            android:id="@+id/webview_frame"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:fitsSystemWindows="true"
+            android:gravity="center_horizontal|center_vertical"
+            android:scrollbars="none" />
+
+        <LinearLayout
+            android:id="@+id/left_organize"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="left"
+            android:background="@drawable/left_opetion_panel_bg"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="45dp"
+            android:visibility="gone" >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="10dip"
+                android:layout_weight="1"
+                android:background="@drawable/tv_null"
+                android:drawablePadding="0dp"
+                android:drawableTop="@drawable/select_picture_bg"
+                android:tag="radio_button0"
+                android:text="选择照片"
+                android:textColor="@android:color/black"
+                android:textSize="10dp" />
+
+            <Button
+                style="@style/radio_button_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="10dip"
+                android:layout_weight="1"
+                android:background="@drawable/tv_null"
+                android:drawablePadding="0dp"
+                android:drawableTop="@drawable/local_photo_bg"
+                android:tag="radio_button1"
+                android:text="本地拍照"
+                android:textColor="@android:color/black"
+                android:textSize="10dp" />
+
+            <Button
+                style="@style/radio_button_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="10dip"
+                android:layout_weight="1"
+                android:background="@drawable/tv_null"
+                android:drawablePadding="0dp"
+                android:drawableTop="@drawable/template_bg"
+                android:tag="radio_button2"
+                android:text="模板选择"
+                android:textColor="@android:color/black"
+                android:textSize="10dp" />
+
+            <Button
+                style="@style/radio_button_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="10dip"
+                android:layout_weight="1"
+                android:background="@drawable/tv_null"
+                android:drawablePadding="0dp"
+                android:drawableTop="@drawable/photo_frame_bg"
+                android:tag="radio_button3"
+                android:text="相框选择"
+                android:textColor="@android:color/black"
+                android:textSize="10dp" />
+
+            <Button
+                style="@style/radio_button_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="10dip"
+                android:layout_weight="1"
+                android:background="@drawable/tv_null"
+                android:drawablePadding="0dp"
+                android:drawableTop="@drawable/te_xiao_bg"
+                android:tag="radio_button4"
+                android:text="特效选择"
+                android:textColor="@android:color/black"
+                android:textSize="10dp" />
+
+            <Button
+                style="@style/radio_button_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="10dip"
+                android:layout_weight="1"
+                android:background="@drawable/tv_null"
+                android:drawablePadding="0dp"
+                android:drawableTop="@drawable/charactor_bg"
+                android:tag="radio_button5"
+                android:text="添加文字"
+                android:textColor="@android:color/black"
+                android:textSize="10dp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/left_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="top|left"
+            android:background="@drawable/left_arrow_back" />
+
+        <ImageButton
+            android:id="@+id/right_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="top|right"
+            android:background="@drawable/select_to_submmit"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/bottom_gallery"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="@android:color/darker_gray"
+            android:orientation="vertical"
+            android:paddingTop="0dp"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/keyboard_bar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/keyboard_bar" />
+
+            <HorizontalScrollView
+                android:id="@+id/bottom_crollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="4dp"
+                android:scrollbars="none" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <GridView
+                        android:id="@+id/gallery"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="none" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:id="@+id/bottom_words"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:orientation="vertical"
+                    android:visibility="gone" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top"
+                            android:text="文字内容:"
+                            android:textColor="@android:color/black" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/words_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/selected_photo_title_text"
+                            android:imeOptions="actionDone"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:singleLine="true"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:layout_marginBottom="3dp"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="文字大小:"
+                            android:textColor="@android:color/black" />
+
+                        <SeekBar
+                            android:id="@+id/word_size"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:max="40"
+                            android:progress="20" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:id="@+id/selected_color"
+                            android:layout_width="20dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="5dp"
+                            android:src="#000000" />
+
+                        <include
+                            android:id="@+id/color_table"
+                            layout="@layout/color_table_layout" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </FrameLayout>
+
+</RelativeLayout>

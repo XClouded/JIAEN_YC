@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#FFF4F4F4"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    <include android:id="@+id/title" layout="@layout/titlebar"/>
+<!--     <LinearLayout -->
+<!-- 		android:id="@+id/product_list" -->
+<!-- 	    android:background="@drawable/list_frame_list_line" -->
+<!-- 	    android:layout_width="fill_parent" -->
+<!-- 	    android:layout_height="fill_parent" -->
+<!-- 	    android:layout_margin="5dp" -->
+<!-- 	    android:paddingTop="5dp" -->
+<!-- 	    android:layout_weight="3.2" -->
+<!-- 	    android:gravity="center_horizontal" -->
+<!-- 	    android:orientation="vertical"> -->
+<!--     </LinearLayout> -->
+	<LinearLayout
+	    android:background="#FFF4F4F4"
+	    android:layout_marginTop="4dp"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent">
+	    <ListView
+		    android:id="@+id/list_view"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:layout_margin="6dp"
+		    android:padding="6dp"
+		    android:dividerHeight="0dp"
+		    android:layout_gravity="center_horizontal"
+		    android:cacheColorHint="#FFF4F4F4"
+		    android:orientation="vertical"
+		    android:background="@drawable/list_frame_list_line">
+	    </ListView>
+	</LinearLayout>
+</LinearLayout>

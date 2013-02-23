@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#FFF4F4F4"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    <include android:id="@+id/title" layout="@layout/titlebar"/>
+    <LinearLayout
+		android:id="@+id/product_list"
+	    android:background="@drawable/category_frame_line"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_margin="10dp"
+	    android:gravity="center_horizontal|top"
+	    android:orientation="vertical">
+	    <TextView android:layout_width="85dp"
+	    	android:layout_height="15dp"
+	    	android:layout_marginTop="3dp"
+	    	android:gravity="center"
+	    	android:layout_gravity="left"
+	    	android:textStyle="bold" 
+ 	 		android:textColor="@android:color/white"
+ 	 		android:textSize="12dp"
+ 	 		android:text="优彩重设密码"/>
+ 	 	<LinearLayout android:layout_width="fill_parent"
+	    	android:layout_height="wrap_content"
+	    	android:paddingTop="25dp"
+	    	android:paddingLeft="10dp"
+	    	android:paddingRight="10dp"
+	    	android:layout_marginTop="45dp"
+	    	android:orientation="horizontal">
+	    	<TextView android:textColor="@android:color/black"
+ 	 			android:textSize="18dp"
+ 	 			android:text="用户名 :"
+ 	 			android:textStyle="bold"
+ 	 			android:layout_width="0dp"
+ 	 			android:layout_weight="1"
+ 	 			android:gravity="center_vertical|center_horizontal"
+	    		android:layout_height="wrap_content"/>
+	    	<EditText android:textColor="@android:color/black"
+ 	 			android:textSize="20dp"
+ 	 			android:id="@+id/content"
+ 	 			android:singleLine="true"
+ 	 			android:paddingLeft="8dp"
+ 	 			android:paddingRight="8dp"
+ 	 			android:layout_weight="2"
+ 	 			android:layout_width="0dp"
+	    		android:layout_height="wrap_content"
+	    		android:background="@drawable/title_input_background"/>
+ 	 	</LinearLayout>	
+ 	 	<Button android:layout_width="85dp"
+ 	 		android:id="@+id/change_pwd"
+	    	android:layout_height="30dp"
+	    	android:textColor="@android:color/white"
+ 	 		android:textSize="16dp"
+ 	 		android:layout_marginTop="25dp"
+	    	android:background="@drawable/favorite_delete_button_bg"
+	    	android:text="修改密码"/>
+ 	 	<TextView android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:paddingTop="25dp"
+	    	android:paddingLeft="10dp"
+	    	android:paddingRight="10dp"
+	    	android:gravity="center_horizontal"
+	    	android:textColor="@android:color/black"
+ 	 		android:textSize="15dp"
+ 	 		android:text="密码将以短信的方式发送到您的手机上\n请注意查收"/>
+    </LinearLayout>
+</LinearLayout>
+    

@@ -1,0 +1,188 @@
+package com.android.photoalbum.view;
+
+import java.io.ByteArrayOutputStream;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+
+import com.android.photoalbum.R;
+import com.android.photoalbum.netinfo.ClassificationWebSiteInfo.ProductInfo;
+import com.android.photoalbum.parser.DelCollectionWebsiteParser;
+import com.android.photoalbum.tab.ui.BaseActivity;
+import com.android.photoalbum.tab.ui.FavoriteActivity;
+import com.android.photoalbum.tab.ui.HomeActivityGroup;
+import com.android.photoalbum.tab.ui.MessageActivity;
+import com.android.photoalbum.tab.ui.SearchActivityGroup;
+import com.android.photoalbum.tab.ui.SignNameMessageActivity;
+import com.android.photoalbum.utils.CommonWebsiteTask;
+import com.android.photoalbum.utils.NetWorkUtils;
+
+import android.view.ContextMenu.ContextMenuInfo;
+
+public class ImageLayout extends LinearLayout implements View.OnClickListener, View.OnLongClickListener {
+	private ImageView mImageView;
+	public  ProgressBar mProgressBar;
+	private ProductInfo mProductInfo;
+	private Context mContext;
+	private boolean mShowButton;
+	private Button mDelButton;
+	private Button mSendButton;
+	private int mPhotoType = PHOTO_TYPE_DEFAULT;
+	public final static int PHOTO_TYPE_HOME = 0;
+	public final static int PHOTO_TYPE_SIGN_NAME = 1;
+	public final static int PHOTO_TYPE_SEARCH = 2;
+	public final static int PHOTO_TYPE_DEFAULT = PHOTO_TYPE_HOME;
+	
+	public void setPhotoType(int photoType) {
+		mPhotoType = photoType;
+	}
+	
+	public String getPhotoAddress() {
+		return mProductInfo.photoaddress;
+	}
+	
+	public Bitmap getImage() {
+		Drawable d = mImageView.getDrawable();
+		BitmapDrawable bd = (BitmapDrawable)d;
+		return bd.getBitmap();
+	}
+	
+	public ImageLayout(Context context, AttributeSet attrs, ProductInfo productInfo, boolean showbutton) {
+		super(context, attrs);
+		mProductInfo = productInfo;
+		LinearLayout imgFrm = (LinearLayout)inflate(context, R.layout.image_layout, null);
+		this.addView(imgFrm);
+
+		mContext = context;
+		mImageView = (ImageView)findViewById(R.id.image);
+//		if (!(((Activity)context) instanceof SignNameActivity) {
+			mImageView.setOnClickListener(this);
+//		}
+		((Activity)mContext).registerForContextMenu(mImageView);
+		mImageView.setOnLongClickListener(this);
+		mProgressBar = (ProgressBar)findViewById(R.id.progressbar);
+		mShowButton = showbutton;
+		if (mShowButton) {
+			mDelButton = (Button)findViewById(R.id.delete);
+			mSendButton = (Button)findViewById(R.id.send);
+			mDelButton.setVisibility(View.VISIBLE);
+			mSendButton.setVisibility(View.VISIBLE);
+			mDelButton.setOnClickListener(this);
+			mSendButton.setOnClickListener(this);
+			mImageView.setPadding(4, 4, 4, 4);
+		}
+	}
+
+//	public void setProductInfo(ProductInfo productInfo) {
+//		mProductInfo = productInfo;
+//	}
+	
+	@Override
+	protected void onCreateContextMenu(ContextMenu menu) {
+		super.onCreateContextMenu(menu);
+		if (mProductInfo.photobitmap == null) {
+			return;
+		}
+		
+		menu.setHeaderTitle("收藏此图片？");
+		((Activity)mContext).getMenuInflater().inflate(R.menu.favorite_img, menu);
+		menu.findItem(R.id.favorite_image).setTitle(mProductInfo.proname);
+		menu.findItem(R.id.favorite_image).setIcon(new BitmapDrawable(mProductInfo.photobitmap));
+	}
+
+	public static Intent intent = null;
+	public void onClick(View v) {
+		if (mProductInfo == null || mProductInfo.photobitmap == null) {
+			return;
+		}
+		
+		if (MainTabActivity.mCurrentPage == 4) {
+			intent = new Intent(mContext, SignNameMessageActivity.class);
+		} else {
+			intent = new Intent(mContext, MessageActivity.class);
+		}
+		intent.setAction(BaseActivity.ACTION_MESSAGE_COMPOSE);
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
+        mProductInfo.photobitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
+        byte[] imgByte = os.toByteArray();
+		intent.putExtra("photo_bitmap", imgByte);
+		intent.putExtra("productid", mProductInfo.productid);
+		intent.putExtra("id", mProductInfo.id);
+		intent.putExtra("photoaddress", mProductInfo.photoaddress);
+		
+		switch (v.getId()) {
+			case R.id.image:
+				if (mProductInfo.photobitmap != null) {
+					switch (MainTabActivity.mCurrentPage) {
+						case 0: //home 
+						case 1: //search
+						case 2: // favorite
+							mContext.startActivity(intent);
+							break;
+						case 4:
+							MainTabActivity.getCurrentActivityGroup().showDialog(BaseActivity.DIALOG_SAVE_IMAGE);
+							break;
+						default:
+							break;
+					}
+				} else {
+					mProgressBar.setVisibility(View.VISIBLE);
+				}
+				break;
+			case R.id.delete:
+				new CommonWebsiteTask(new DelCollectionWebsiteParser(), mContext).execute(NetWorkUtils.DELLCOLLECTION + "?id=" + mProductInfo.id);
+//				((FavoriteActivity)mContext).reloadFavoriteList();
+				break;
+			case R.id.send:
+				MainTabActivity.getCurrentActivityGroup().setNextActivity(intent, "MessageActivity");
+				break;
+			default:
+				break;
+		}
+
+	}
+//	
+//    public static Dialog createFavoriteImageDialog() {
+//    	Log.d("zheng", "");
+//        return new AlertDialog.Builder(mContext)
+//            .setIcon(new BitmapDrawable(mProductInfo.photoBitmap))
+//            .setTitle("收藏此图片?")
+//            .setMessage(mProductInfo.proname)
+//            .setPositiveButton(R.string.okay_action, new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int whichButton) {
+//                	
+//                	((Activity) mContext).dismissDialog(BaseActivity.DIALOG_FAVORITE_IMAGE);
+//                }
+//            })
+//            .setNegativeButton(R.string.cancel_action, new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int whichButton) {
+//                    ((Activity) mContext).dismissDialog(BaseActivity.DIALOG_FAVORITE_IMAGE);
+//                }
+//            })
+//            .create();
+//    }
+
+	public boolean onLongClick(View v) {
+		return false;
+	}
+}

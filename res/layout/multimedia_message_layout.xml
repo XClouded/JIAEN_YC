@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="#FFF4F4F4">
+        
+    <include android:id="@+id/title" layout="@layout/titlebar"/>
+    <ScrollView android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+    	android:layout_marginTop="50dp">
+	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+	    android:orientation="vertical">
+   <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="15dp"
+         android:textSize="22dp"
+         android:textStyle="bold"
+         android:textColor="#1874CD"
+         android:text="彩信发送"/>
+  	 <FrameLayout
+         android:orientation="horizontal"
+         android:layout_width="wrap_content"
+         android:visibility="invisible"
+         android:layout_gravity="center_horizontal"
+         android:layout_height="wrap_content">
+	  	 <AutoCompleteTextView 
+	  	 	 android:id="@+id/receiver"
+	  	 	 android:layout_width="fill_parent"
+	  	 	 android:layout_height="35dp"
+	  	 	 android:singleLine="false"
+	  	 	 android:layout_margin="10dp"
+	  	 	 android:hint="收件人:"
+	  	 	 android:inputType="phone"
+	  	 	 android:paddingLeft="5dp"
+	  	 	 android:paddingRight="5dp"
+	  	 	 android:background="@drawable/message_receiver_bg"/>
+	  	<TextView android:layout_width="40dp"
+	  		android:layout_height="35dp"
+	  		android:layout_marginTop="1dp"
+	  		android:layout_marginRight="10dp"
+	  		android:padding="1dp"
+	  		android:visibility="visible"
+	  		android:layout_gravity="right|center_vertical"
+	  		android:id="@+id/add_contact"/>
+	 </FrameLayout>
+	<ImageView android:layout_width="fill_parent"
+  	 	 android:layout_height="1dp"
+  	 	 android:layout_margin="4dp"
+         android:visibility="gone"
+  	 	 android:src="@android:color/darker_gray"/>
+   <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+		<HorizontalScrollView android:id="@+id/mScrollView"
+			android:background="@drawable/selected_photo_frame_bg"
+			android:scrollbars="none"
+			android:layout_weight="4"
+	        android:layout_margin="5dp"
+	        android:padding="5dp"
+			android:layout_gravity="center_horizontal|center_vertical" 
+			android:layout_width="0dp" android:layout_height="wrap_content">
+			<LinearLayout android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:orientation="horizontal">
+				<GridView android:id="@+id/mGridView" android:layout_width="match_parent"
+					android:scrollbars="none"
+					android:layout_height="match_parent" />
+			</LinearLayout>
+		</HorizontalScrollView>
+ 	  	<Button android:id="@+id/camera"
+ 	  		 android:layout_width="0dp"
+ 	  	 	 android:layout_height="wrap_content"
+ 	  	 	 android:layout_weight="1"
+ 	  	 	 android:layout_marginBottom="6dp"
+ 	  	 	 android:layout_marginRight="6dp"
+ 	  	 	 android:layout_gravity="right|bottom"
+ 	  	 	 android:background="@drawable/user_click_btn_bg"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+	        android:orientation="vertical"
+	        android:gravity="center_horizontal"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="4"
+	        android:layout_margin="5dp"
+ 	  	    android:padding="10dp"
+	        android:background="@drawable/selected_photo_title_text">
+	        <EditText 
+	 	  	 	 android:id="@+id/subject"
+	 	  	 	 android:layout_width="fill_parent"
+	 	  	 	 android:layout_height="40dp"
+	 	  	 	 android:textSize="18dp"
+	 	  	 	 android:textColor="@android:color/black"
+	 	  	 	 android:gravity="left|center_vertical"
+	 	  	 	 android:hint="添加主题"
+	 	  	 	 android:background="@null"
+	 	  	 	 android:layout_marginBottom="2dp"
+	 	  	 	 android:singleLine="true"/>
+	 	  	<ImageView android:layout_width="fill_parent"
+	 	  	 	 android:layout_height="2dp"
+	 	  	 	 android:id="@+id/divider"
+	 	  	 	 android:layout_below="@id/subject"
+	 	  	 	 android:background="@android:color/darker_gray"/>
+	        <EditText 
+	 	  	 	 android:id="@+id/content"
+	 	  	 	 android:layout_below="@id/divider"
+	 	  	 	 android:layout_width="fill_parent"
+	 	  	 	 android:layout_height="wrap_content"
+	 	  	 	 android:background="@null"
+	 	  	 	 android:layout_marginTop="2dp"
+	 	  	 	 android:textSize="16dp"
+	 	  	 	 android:lines="3"
+	 	  	 	 android:minLines="3"
+	 	  	 	 android:maxLines="3"
+	 	  	 	 android:hint="添加文本"/>
+	 	</LinearLayout> 	
+ 	  	<Button android:id="@+id/send"
+ 	  		 android:layout_width="0dp"
+ 	  	 	 android:layout_height="wrap_content"
+ 	  	 	 android:layout_gravity="right|bottom"
+ 	  	 	 android:text="发送"
+ 	  	 	 android:layout_weight="1"
+ 	  	 	 android:textSize="14dp"
+ 	  	 	 android:layout_marginBottom="6dp"
+ 	  	 	 android:layout_marginRight="6dp"
+ 	  	 	 android:textColor="@android:color/white"
+ 	  	 	 android:background="@drawable/camara_image_bg"/>
+    </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

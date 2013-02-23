@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#FFF4F4F4">
+        
+    <include android:id="@+id/title" layout="@layout/titlebar"/>
+<!--     <ScrollView android:layout_width="fill_parent" -->
+<!--     	android:layout_height="fill_parent"> -->
+	    <LinearLayout
+	         android:orientation="vertical"
+	         android:gravity="center_horizontal"
+	         android:layout_width="fill_parent"
+	         android:layout_height="fill_parent">
+	         <TextView
+	    		 android:layout_width="wrap_content"
+	    		 android:layout_height="wrap_content"
+	    		 android:layout_marginTop="8dp"
+	    		 android:textSize="22dp"
+	  	  	 	 android:textStyle="bold"
+	  	  	 	 android:textColor="#1874CD"
+	  	  	 	 android:text="彩信下载"/>
+	  	  	 <LinearLayout
+		         android:orientation="horizontal"
+		         android:layout_width="wrap_content"
+		         android:layout_marginTop="5dp"
+		         android:layout_gravity="center_horizontal"
+		         android:layout_height="wrap_content">
+		         <TextView android:layout_width="wrap_content"
+		    		 android:layout_height="wrap_content"
+		    		 android:textSize="12dp"
+		  	  	 	 android:textStyle="bold"
+		  	  	 	 android:textColor="#EE0000"
+		  	  	 	 android:text="温馨提示: "/>
+		         <TextView android:layout_width="wrap_content"
+		    		 android:layout_height="wrap_content"
+		    		 android:textSize="12dp"
+		  	  	 	 android:textStyle="bold"
+		  	  	 	 android:textColor="#000000"
+		  	  	 	 android:text="目前收件人只能为内蒙古联通用户"/>
+		     </LinearLayout>
+	         <TextView
+	    		 android:layout_width="wrap_content"
+	    		 android:layout_height="wrap_content"
+	    		 android:textSize="10dp"
+	  	  	 	 android:textStyle="bold"
+	  	  	 	 android:visibility="gone"
+	  	  	 	 android:textColor="#1874CD"
+	  	  	 	 android:text="本条彩信价格1元"/>
+	  	  	 <FrameLayout
+		         android:orientation="horizontal"
+		         android:layout_width="wrap_content"
+		         android:layout_gravity="center_horizontal"
+		         android:layout_height="wrap_content">
+		  	  	 <AutoCompleteTextView 
+		  	  	 	 android:id="@+id/receiver"
+		  	  	 	 android:layout_width="fill_parent"
+		  	  	 	 android:layout_height="35dp"
+		  	  	 	 android:singleLine="false"
+		  	  	 	 android:layout_margin="10dp"
+		  	  	 	 android:hint="收件人:"
+		  	  	 	 android:inputType="phone"
+		  	  	 	 android:paddingLeft="5dp"
+		  	  	 	 android:paddingRight="5dp"
+		  	  	 	 android:background="@drawable/message_receiver_bg"/>
+		  	  	<TextView android:layout_width="40dp"
+		  	  		android:layout_height="35dp"
+		  	  		android:layout_marginTop="1dp"
+		  	  		android:layout_marginRight="10dp"
+		  	  		android:padding="1dp"
+		  	  		android:visibility="visible"
+		  	  		android:layout_gravity="right|center_vertical"
+		  	  		android:id="@+id/add_contact"/>
+		  	 </FrameLayout>
+	  	  	 <LinearLayout
+		         android:orientation="horizontal"
+		         android:gravity="center_vertical|fill_horizontal"
+		         android:padding="10dp"
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content">
+		  	  	 <com.ant.liao.GifView
+		  	  	 	 android:id="@+id/image"
+		    		 android:layout_width="140dp"
+		    		 android:layout_height="180dp"
+		    		 android:paddingLeft="5dp"
+		    		 android:paddingTop="5dp"
+		    		 android:gravity="center_vertical|center_horizontal"
+		    		 android:background="@drawable/list_frame_list_line"
+		    		 android:layout_gravity="left"/>
+		    	 <ImageView
+		  	  	 	 android:id="@+id/imageview"
+		    		 android:layout_width="140dp"
+		    		 android:layout_height="180dp"
+		    		 android:padding="5dp"
+		    		 android:visibility="gone"
+		    		 android:gravity="center_vertical|center_horizontal"
+		    		 android:background="@drawable/list_frame_list_line"
+		    		 android:layout_gravity="left"/>
+		    	 <LinearLayout
+			         android:orientation="vertical"
+			         android:layout_marginLeft="4dp"
+			         android:paddingTop="3dp"
+			         android:gravity="center_vertical|fill_horizontal"
+			         android:layout_width="180dp"
+			         android:layout_height="wrap_content">
+			         <LinearLayout
+			          	 android:layout_width="wrap_content"
+				         android:layout_height="wrap_content"
+				         android:layout_marginBottom="4dp"
+				         android:orientation="horizontal"
+				         android:gravity="center_vertical|fill_horizontal" >
+				         <TextView android:layout_width="wrap_content"
+				         	android:layout_height="wrap_content"
+				         	android:text="标 题: "
+				         	android:textColor="@android:color/black"/>
+		    	 		 <EditText 
+		    	 		 	android:id="@+id/subject"
+		    	 		 	android:layout_width="116dp"
+				         	android:layout_height="35dp"
+				         	android:maxWidth="113dp"
+				         	android:singleLine="true"
+				         	android:background="@drawable/title_input_background"
+				         	android:padding="5dp"
+				         	android:textAppearance="?android:attr/textAppearanceSmall"/>
+				     </LinearLayout>
+				     <LinearLayout
+				         android:orientation="horizontal"
+				         android:layout_marginBottom="4dp"
+				         android:gravity="center_vertical|fill_horizontal"
+				         android:layout_width="wrap_content"
+				         android:layout_height="wrap_content" >
+				         <TextView android:layout_width="wrap_content"
+				         	android:layout_height="wrap_content"
+				         	android:text="音 乐: "
+				         	android:textColor="@android:color/black"/>
+		    	 		 <Spinner android:id="@+id/music"
+		    	 		 	android:layout_width="116dp"
+				         	android:layout_height="50dp"
+				         	android:paddingLeft="4dp"
+				         	android:paddingTop="4dp"
+				         	android:paddingBottom="4dp"
+				         	android:paddingRight="25dp"
+				         	android:background="@drawable/combobox"/>
+				     </LinearLayout>
+				     <LinearLayout
+				         android:orientation="horizontal"
+				         android:gravity="center_vertical|fill_horizontal"
+				         android:layout_width="wrap_content"
+				         android:layout_height="wrap_content">
+				         <TextView android:layout_width="wrap_content"
+				         	android:layout_height="wrap_content"
+				         	android:text="内 容: "
+				         	android:textColor="@android:color/black"/>
+		    	 		 <EditText
+		    	 		 	android:id="@+id/content"
+		    	 		    android:layout_width="116dp"
+				         	android:layout_height="90dp"
+				         	android:background="@drawable/content_input_background"
+				         	android:padding="10dp"
+				         	android:maxWidth="113dp"
+				         	android:maxHeight="90dp"
+				         	android:textAppearance="?android:attr/textAppearanceSmall"/>
+				     </LinearLayout>
+				     
+<!-- 				     <LinearLayout  -->
+<!-- 			    	 	android:layout_width="wrap_content" -->
+<!-- 			    	 	android:layout_height="wrap_content" -->
+<!-- 			    	 	android:layout_gravity="center_horizontal|center_vertical" -->
+<!-- 			    	 	android:gravity="center_horizontal|center_vertical" -->
+<!-- 			    	 	android:orientation="vertical"> -->
+<!-- 			    	 	<LinearLayout  -->
+<!-- 				    	 	android:layout_width="wrap_content" -->
+<!-- 				    	 	android:layout_height="wrap_content" -->
+<!-- 				    	 	android:orientation="horizontal"> -->
+<!-- 			    	 		<Button android:id="@+id/favorite" -->
+<!-- 			    	 			android:layout_width="wrap_content" -->
+<!-- 				    	 		android:layout_height="wrap_content" -->
+<!-- 				    	 		android:background="@drawable/color_msg_left_arrow" -->
+<!-- 				    	 		android:text="收藏" -->
+<!-- 				    	 		android:layout_margin="8dp" -->
+<!-- 				    	 		android:textColor="@android:color/white"/> -->
+<!-- 				    	 	<Button android:id="@+id/share" -->
+<!-- 				    	 		android:layout_width="wrap_content" -->
+<!-- 				    	 		android:layout_height="wrap_content" -->
+<!-- 				    	 		android:background="@drawable/color_msg_right_arrow" -->
+<!-- 				    	 		android:text="分享" -->
+<!-- 				    	 		android:layout_margin="8dp" -->
+<!-- 				    	 		android:textColor="@android:color/white"/> -->
+<!-- 			    	 	</LinearLayout> -->
+
+<!-- 			    	 </LinearLayout> -->
+		    	 </LinearLayout>
+		     </LinearLayout>
+    	 	<LinearLayout 
+	    	 	android:layout_width="wrap_content"
+	    	 	android:layout_height="wrap_content"
+	    	 	android:layout_marginTop="20dp"
+	    	 	android:orientation="vertical">
+		    	<LinearLayout 
+		    	 	android:layout_width="wrap_content"
+		    	 	android:layout_height="wrap_content"
+		    	 	android:orientation="horizontal">
+		    	 	<Button android:id="@+id/favorite"
+	    	 			android:layout_width="70dp"
+		    	 		android:layout_height="30dp"
+		    	 		android:layout_marginRight="10dp"
+		    	 		android:gravity="center_horizontal|center_vertical"
+		    	 		android:background="@drawable/color_msg_left_arrow"
+		    	 		android:text="收藏"
+		    	 		android:textColor="@android:color/white"/>
+		    	 	<Button android:id="@+id/share"
+	    	 			android:layout_width="70dp"
+		    	 		android:layout_height="30dp"
+		    	 		android:textColor="@android:color/white"
+		    	 		android:gravity="center_horizontal|center_vertical"
+		    	 		android:background="@drawable/color_msg_right_arrow"
+		    	 		android:text="分享"/>
+				</LinearLayout>
+				<LinearLayout 
+		    	 	android:layout_width="wrap_content"
+		    	 	android:layout_height="wrap_content"
+		    	 	android:layout_marginTop="10dp"
+		    	 	android:orientation="horizontal">
+	    	 		<Button android:id="@+id/back"
+	    	 			android:layout_width="70dp"
+		    	 		android:layout_height="30dp"
+		    	 		android:layout_marginRight="10dp"
+		    	 		android:gravity="center_horizontal|center_vertical"
+		    	 		android:background="@drawable/color_msg_left_arrow"
+		    	 		android:text="返回"
+		    	 		android:textColor="@android:color/white"/>
+		    	 	<Button android:id="@+id/finish"
+	    	 			android:layout_width="70dp"
+		    	 		android:layout_height="30dp"
+		    	 		android:gravity="center_horizontal|center_vertical"
+		    	 		android:background="@drawable/color_msg_right_arrow"
+		    	 		android:text="完成"
+		    	 		android:textColor="@android:color/white"/>
+		    	 </LinearLayout>
+    	 	 </LinearLayout>
+	    	 <RelativeLayout 
+	     	 	 android:layout_width="wrap_content"
+	     	  	 android:layout_height="90dp"
+	     	  	 android:visibility="gone"
+	     	  	 android:orientation="horizontal"
+	     	  	 android:gravity="center_vertical"
+	     	  	 android:background="@drawable/new_list_frame_line">
+	     	  	 <TextView
+	     	  	 	android:layout_width="10dp"
+	     	  	 	android:layout_height="wrap_content"
+	     	  	 	android:layout_marginLeft="6dp"
+	     	  	 	android:textSize="10dp"
+	     	  	 	android:textStyle="bold"
+	     	  	 	android:textColor="@android:color/white"
+	     	  	 	android:layout_gravity="top|left"
+	     	  	 	android:text="本类下载排行"/>
+	   	  	 </RelativeLayout>
+	  </LinearLayout>
+</LinearLayout>

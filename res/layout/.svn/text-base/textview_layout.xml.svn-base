@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <TextView android:id="@+id/my_favorite"
+    	xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:layout_width="80dp"
+    	android:layout_height="15dp"
+    	android:layout_marginTop="2dp"
+    	android:gravity="center"
+    	android:layout_gravity="left"
+    	android:textStyle="bold" 
+ 		android:textColor="@android:color/white"
+ 		android:textSize="12dp"
+ 		android:text="我的收藏"/>

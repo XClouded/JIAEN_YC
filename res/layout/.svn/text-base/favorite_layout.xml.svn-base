@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#FFF4F4F4"
+    >
+    
+    <include android:id="@+id/title" layout="@layout/titlebar"/>
+    <LinearLayout
+	    android:background="@drawable/category_frame_line"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_margin="4dp"
+	    android:padding="2dp"
+	    android:gravity="center_horizontal|top"
+	    android:orientation="vertical">
+	    <TextView android:id="@+id/my_favorite"
+	    	android:layout_width="86dp"
+	    	android:layout_height="25dp"
+	    	android:layout_gravity="center_vertical|left"
+	    	android:gravity="center_vertical|center_horizontal"
+	    	android:textStyle="bold" 
+ 	 		android:textColor="@android:color/white"
+ 	 		android:textSize="12dp"
+ 	 		android:text="我的收藏"/>
+<!--  	 	<ScrollView  -->
+<!--  	 		android:layout_width="fill_parent" -->
+<!--  	 		android:layout_height="fill_parent"> -->
+<!-- 		    <LinearLayout -->
+<!-- 				android:id="@+id/product_list" -->
+<!-- 			    android:layout_width="fill_parent" -->
+<!-- 			    android:layout_height="fill_parent" -->
+<!-- 			    android:gravity="center_horizontal|top" -->
+<!-- 			    android:orientation="vertical"> -->
+<!-- 	    	</LinearLayout> -->
+<!--     	</ScrollView> -->
+    	
+     <ListView
+	    android:id="@+id/list_view"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_marginTop="2dp"
+	    android:cacheColorHint="#FFF4F4F4"
+	    android:gravity="left"
+	    android:orientation="vertical">
+    </ListView>
+    </LinearLayout>
+</LinearLayout>

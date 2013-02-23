@@ -1,0 +1,106 @@
+package com.android.photoalbum.tab.ui;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.android.photoalbum.parser.WebsiteParser;
+import com.android.photoalbum.view.BaseLayout;
+import com.android.photoalbum.view.MainTabActivity;
+import com.android.photoalbum.R;
+
+public class HomeActivity extends BaseActivity {
+	public final static int LEVEL_1 = 1;
+	public final static int LEVEL_2 = 2;
+	private TextView mFestival;
+	
+	@Override
+	protected void onCreate(Bundle paramBundle) {
+		super.onCreate(paramBundle);
+		setView(R.layout.home_main_layout);
+		titleBar = (RelativeLayout)findViewById(R.layout.titlebar);
+//		LinearLayout functionbar = (LinearLayout)findViewById(R.id.function_bar); 
+//		if (titleBar != null) {
+//			titleBar.setVisibility(View.GONE);
+//		}
+		mFestival = (TextView)findViewById(R.id.festival);
+		mFestival.setOnClickListener(this);
+		mListView = (ListView)findViewById(R.id.list_view);
+//		mHomeView = (LinearLayout)findViewById(R.id.home_view);
+//	    mWebsiteParser = new ClassificationWebsiteParser();
+	    
+	    Intent intent = getIntent();
+	    if (intent != null) {
+	    	String classid = intent.getStringExtra("classid");
+	    	String optype = intent.getStringExtra("optype");
+	    	boolean showTitleBar = intent.getBooleanExtra("show_titlebar", false);
+	    	if (showTitleBar) {
+	    		setTitleBar(com.android.photoalbum.view.BaseLayout.TYPE_NORMAL, "", "", "返回");
+	    	} else {
+	    		setTitleBar(com.android.photoalbum.view.BaseLayout.TYPE_NORMAL, "", "", "刷新");
+	    	}
+	    	
+	    	String id = intent.getStringExtra("id");
+	    	if (classid != null && optype != null) {
+	    		new ClassficationParserTask().execute(optype, classid, null);
+	    		return;
+	    	}
+	    }
+	    
+	    new ClassficationParserTask().execute(WebsiteParser.ALL, null, null);
+	}
+	
+//	@Override
+//	protected void onNewIntent(Intent intent) {
+//	    if (intent != null) {
+//	    	String classid = intent.getStringExtra("classid");
+//	    	String optype = intent.getStringExtra("optype");
+//	    	if (classid != null && optype != null) {
+//	    		new ClassficationParserTask().execute(optype, classid, null);
+//	    	}
+//	    }
+//	    
+////		super.onNewIntent(intent);
+//	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Log.d("zheng", "HomeActivity onResume");
+	}
+	
+	@Override
+	protected void handleTitleBarEvent(int paramInt) {
+		switch (paramInt) {
+			case BaseActivity.RIGHT_BUTTON:
+				String info = (String) ly.rightButton.getText();
+				if ("返回".equals(info)) {
+					MainTabActivity.mHomeActivityGroup.setPreviousActivity();
+				} else if ("刷新".equals(info)) {
+					new ClassficationParserTask().execute(WebsiteParser.ALL, null, null);
+				}
+				break;
+	
+			default:
+				break;
+		}
+	}
+	
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+		case R.id.festival:
+			
+			break;
+
+		default:
+			break;
+		}
+		super.onClick(view);
+	}
+}

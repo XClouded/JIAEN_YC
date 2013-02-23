@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:background="#D1EEEE"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="5dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:text="优彩提示："
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:textColor="#000"
+            android:text="        本服务包月费用6元/月，同时可以免费使用应用网盘以及应用网盘其他业务，如游戏盒子、微博小助手、联通小卫星、米仔社区、沃信等。\n\n手动注册：\n发送ktwp到10655867603\n自动注册：\n系统自动完成注册"
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:layout_gravity="center_horizontal"
+            android:layout_width="256sp"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/login_dialog_2"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="18dp"
+                android:background="@drawable/login_regist"
+                android:text="手动注册" />
+
+            <Button
+                android:id="@+id/exit_dialog_2"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="3dp"
+                android:layout_marginRight="18dp"
+                android:background="@drawable/login_regist"
+                android:text="取消" />
+
+            <Button
+                android:id="@+id/login_dialog_2_1"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/exit_dialog_2"
+                android:layout_toRightOf="@+id/login_dialog_2"
+                android:background="@drawable/login_regist"
+                android:text="自动注册" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

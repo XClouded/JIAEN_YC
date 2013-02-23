@@ -1,0 +1,147 @@
+/*********************************************************************
+ *  ____                      _____      _                           *
+ * / ___|  ___  _ __  _   _  | ____|_ __(_) ___ ___ ___  ___  _ __   *
+ * \___ \ / _ \| '_ \| | | | |  _| | '__| |/ __/ __/ __|/ _ \| '_ \  *
+ *  ___) | (_) | | | | |_| | | |___| |  | | (__\__ \__ \ (_) | | | | *
+ * |____/ \___/|_| |_|\__, | |_____|_|  |_|\___|___/___/\___/|_| |_| *
+ *                    |___/                                          *
+ *                                                                   *
+ *********************************************************************
+ * Copyright 2009 Sony Ericsson Mobile Communications Japan, Inc.    *
+ * All rights, including trade secret rights, reserved.              *
+ *********************************************************************/
+package com.androids.photoalbum.utils;
+
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.RectF;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
+
+public class ImageUtil {
+	public static final String ACTION_IMAGE_DOWNLOADED = "action_image_downloaded";
+	public static final String ACTION_HEADPIC_DOWNLOADED = "action_headpic_downloaded";
+    static final String TAG = "ImageUtil";
+    static float mDensity = 0;
+    public final static int HEAD_PHOTO_TYPE = 0;
+    public final static int BLOG_PHOTO_TYPE = 1;
+    /** xfermode of create bitmap. */
+    private static PorterDuffXfermode mXfermode = null;
+    
+//    public static Bitmap restoreBitmap(byte[] imgByte) {
+//    	
+//    }
+
+    public static Drawable getScaledDrwable(final Context aContext,
+            final Drawable aDrawable,
+            final int aWidthInDp, final int aHightInDp) {
+        Drawable scaledDrawable = null;
+        if (aDrawable != null
+                && aDrawable instanceof BitmapDrawable) {
+            BitmapDrawable bmpDraw = (BitmapDrawable) aDrawable;
+            Bitmap bmp = bmpDraw.getBitmap();
+            Bitmap scaledBitmap = getScaledBitmap(
+                    aContext, bmp, aWidthInDp, aHightInDp);
+// 2010/06/16 eDream mod start (coverity DC.EXPLICIT_DEPRECATION)
+            scaledDrawable = new BitmapDrawable(
+                    aContext.getResources(), scaledBitmap);
+// 2010/06/16 eDream mod end (coverity DC.EXPLICIT_DEPRECATION)
+        }
+        return scaledDrawable;
+    }
+    
+    public static Bitmap getScaledBitmapDrwable(final Context aContext,
+            final int aResourceId,
+            final int aWidthInDp, final int aHightInDp) {
+        SpbLog.method(TAG);
+        Bitmap scaledBmp = null;
+        Bitmap bmp = BitmapFactory.decodeResource(
+                aContext.getResources(),
+                aResourceId);
+        if (bmp != null) {
+            scaledBmp = getScaledBitmap(
+                    aContext, bmp, aWidthInDp, aHightInDp);
+            bmp.recycle();
+        }
+        return scaledBmp;
+    }
+    
+    public static Bitmap getScaledBitmap(final Context aContext,
+            final Bitmap aBitmap,
+            final int aWidthInDp, final int aHightInDp) {
+        SpbLog.method(TAG);
+        Bitmap scaledBmp = null;
+        getDensity(aContext);
+        if (aBitmap != null) {
+            int width = (int) (aWidthInDp * mDensity);
+            int height = (int) (aHightInDp * mDensity);
+            scaledBmp = Bitmap.createScaledBitmap(aBitmap,
+                    width, height, true);
+        }
+        return scaledBmp;
+    }
+    public static float getDensity(final Context aContext) {
+        SpbLog.method(TAG);
+        if (mDensity == 0) {
+            WindowManager wm = (WindowManager) aContext.getSystemService(
+                    Context.WINDOW_SERVICE);
+            DisplayMetrics metrics = new DisplayMetrics();
+            wm.getDefaultDisplay().getMetrics(metrics);
+            SpbLog.d(TAG, "Metrics density:" + metrics.density
+                    + " xdi:" + metrics.xdpi + " ypi:" + metrics.ydpi);
+            mDensity = metrics.density;
+        }
+        return mDensity;
+    }
+    /**
+     * create round-rect bitmap.
+     * @param aSrc the source bitmap.
+     * @return created bitmap.
+     */
+    public static Bitmap createRoundBitmap(final Bitmap aSrc,
+            final Canvas aCanvas,
+            final Paint aPaint,
+            final RectF aBmpRect,
+            final float aRound) {
+        return createRoundBitmap(aSrc,
+                aCanvas,
+                aPaint,
+                aBmpRect,
+                aRound,
+                Bitmap.Config.ARGB_4444);
+    }
+    
+    /**
+     * create round-rect bitmap.
+     * @param aSrc the source bitmap.
+     * @return created bitmap.
+     */
+    public static Bitmap createRoundBitmap(final Bitmap aSrc,
+            final Canvas aCanvas,
+            final Paint aPaint,
+            final RectF aBmpRect,
+            final float aRound,
+            final Bitmap.Config aConfig) {
+        if (mXfermode == null) {
+            mXfermode = new PorterDuffXfermode(Mode.SRC_IN);
+        }
+        float x = aSrc.getWidth();
+        float y = aSrc.getHeight();
+        Bitmap dst = Bitmap.createBitmap(
+                (int) x, (int) y, aConfig);
+        aCanvas.setBitmap(dst);
+        aPaint.setXfermode(null);
+        aCanvas.drawRoundRect(aBmpRect, aRound, aRound, aPaint);
+        aPaint.setXfermode(mXfermode);
+        aCanvas.drawBitmap(aSrc, 0, 0, aPaint);
+        return dst;
+    }
+}

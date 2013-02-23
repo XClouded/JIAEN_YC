@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 28
+/cicc.android/!svn/ver/12/YC
+END
+default.properties
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/cicc.android/!svn/ver/13/YC/default.properties
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/cicc.android/!svn/ver/13/YC/.classpath
+END
+proguard.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/cicc.android/!svn/ver/13/YC/proguard.cfg
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/cicc.android/!svn/ver/13/YC/.project
+END
+AndroidManifest.xml
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/cicc.android/!svn/ver/29/YC/AndroidManifest.xml
+END

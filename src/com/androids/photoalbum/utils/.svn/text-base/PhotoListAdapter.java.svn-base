@@ -1,0 +1,185 @@
+package com.android.photoalbum.utils;
+
+import java.io.ByteArrayOutputStream;
+
+import com.android.photoalbum.R;
+import com.android.photoalbum.netinfo.ClassificationWebSiteInfo;
+import com.android.photoalbum.netinfo.ClassificationWebSiteInfo.ConclassInfo;
+import com.android.photoalbum.netinfo.ClassificationWebSiteInfo.ParentClassInfo;
+import com.android.photoalbum.netinfo.ClassificationWebSiteInfo.ProductInfo;
+import com.android.photoalbum.netinfo.SearchWebsiteInfo;
+import com.android.photoalbum.netinfo.WebsiteInfo;
+import com.android.photoalbum.parser.WebsiteParser;
+import com.android.photoalbum.provider.AlbumContent.Album;
+import com.android.photoalbum.provider.AlbumContent.AlbumColumns;
+import com.android.photoalbum.tab.ui.BaseActivity;
+import com.android.photoalbum.tab.ui.HomeActivity;
+import com.android.photoalbum.tab.ui.HomeActivityGroup;
+import com.android.photoalbum.tab.ui.HomeConclassActivity; 
+import com.android.photoalbum.view.HomeDownloadTopActivity;
+import com.android.photoalbum.view.ImageLayout;
+import com.android.photoalbum.view.MainTabActivity;
+
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+    public class PhotoListAdapter extends BaseAdapter implements View.OnClickListener {  
+    	private Context mContext;  
+    	private WebsiteInfo mWebsiteInfo = null;
+    	private LayoutInflater mInflater;
+    	private LoadImageTask mLoadImageTask = null;
+    	private ContentResolver mResolver;
+    	private int mImageWidth; 
+    	private int mImageHeigth; 
+    	private Resources mResources;
+          
+        public PhotoListAdapter(Context a, WebsiteInfo websiteinfo) {  
+        	mContext = a;  
+        	mWebsiteInfo = websiteinfo;
+        	mInflater = (LayoutInflater)mContext.getSystemService("layout_inflater");
+        	mResolver = mContext.getContentResolver();
+        	
+        	mResources = mContext.getResources();
+    	    mImageWidth = (int)mResources.getDimension(R.dimen.image_with);
+    	    mImageHeigth = (int)mResources.getDimension(R.dimen.image_height);
+        }  
+          
+        public int getCount() {
+    		return mWebsiteInfo.getClassCount();
+        }  
+  
+        public Object getItem(int position) {  
+    		return mWebsiteInfo.getClassInfo(position);
+        }  
+  
+        public long getItemId(int position) {  
+            return position;  
+        }  
+  
+        public View getView(int position, View convertView, ViewGroup parent) {
+    		convertView = mInflater.inflate(R.layout.list_item, null);
+        	WebsiteInfo websiteInfo = (WebsiteInfo)getItem(position);
+        	
+			TextView tv = (TextView)convertView.findViewById(R.id.title);
+			tv.setOnClickListener(this);
+			tv.setText(websiteInfo.mBaseInfo.classname);
+			Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.default_image);
+			bmp = Utils.getResizedBitmap(bmp, mImageWidth, mImageHeigth);
+    		int productCount = websiteInfo.getProductsCount();
+    		boolean needDownload = false;
+    		ProductInfo productInfo = null;
+    		ImageLayout imageLayout = null;
+    		ImageView imageView = null; 
+    		ProgressBar probar = null;
+    		for (int i = 0; i < productCount; i++) {
+    			productInfo = (ProductInfo)websiteInfo.getProductInfo(i);
+        		imageLayout = new ImageLayout(mContext, null, productInfo, false);
+//        		imageLayout.setProductInfo(productInfo);
+        		imageView = (ImageView)imageLayout.findViewById(R.id.image);
+        		probar = (ProgressBar)imageLayout.findViewById(R.id.progressbar);
+    			if (productInfo.photobitmap != null) {
+    				probar.setVisibility(View.GONE);
+    				imageView.setImageBitmap(productInfo.photobitmap);
+    			} else {
+    				imageView.setImageBitmap(bmp);
+    				probar.setVisibility(View.VISIBLE);
+    				needDownload = true;
+    			}
+    			
+    			((LinearLayout)convertView).addView(imageLayout, i + 1);
+    		}
+    		
+    		if (needDownload && mLoadImageTask == null) {
+    			mLoadImageTask = new LoadImageTask(mContext, mWebsiteInfo);
+    			mLoadImageTask.execute();
+    		}
+
+            return convertView;  
+        }  
+        
+		public void onClick(View v) {
+			Log.d("zheng", "onClick");
+			if (v instanceof TextView) {
+				Log.d("zheng", "get class:" + ((TextView) v).getText().toString());
+				WebsiteInfo websiteInfo = mWebsiteInfo.getClassInfo(((TextView) v).getText().toString());
+		    	if (websiteInfo instanceof ParentClassInfo) {
+		    		if ("下载排行".equals(((TextView) v).getText().toString())) {
+		    			Intent intent = new Intent(mContext, HomeDownloadTopActivity.class);
+		    			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		    			intent.putExtra("optype", WebsiteParser.ALL);
+		    			intent.putExtra("is_latest_update", false);
+//		    			mContext.startActivity(intent);
+		    			MainTabActivity.mHomeActivityGroup.setNextActivity(intent, "HomeDownloadTopActivity");
+		    			return;
+		    		} else if ("最近更新".equals(((TextView) v).getText().toString())) {
+		    			Intent intent = new Intent(mContext, HomeDownloadTopActivity.class);
+		    			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		    			intent.putExtra("optype", WebsiteParser.ALL);
+		    			intent.putExtra("is_latest_update", true);
+		    			MainTabActivity.mHomeActivityGroup.setNextActivity(intent, "HomeDownloadTopActivity");
+		    			return;
+		    		}
+		    		
+		    		Intent intent = new Intent(mContext, HomeActivity.class);
+		    		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		    		intent.putExtra("classid", websiteInfo.mBaseInfo.classid);
+		    		intent.putExtra("optype", WebsiteParser.PARENTCLASS);
+		    		intent.putExtra("show_titlebar", true);
+//		    		mContext.startActivity(intent);
+		    		MainTabActivity.mHomeActivityGroup.setNextActivity(intent, "HomeActivity_Parent");
+		    	} else if (websiteInfo instanceof ConclassInfo) {
+		    		if ("下载排行".equals(((TextView) v).getText().toString())) {
+		    			Intent intent = new Intent(mContext, HomeDownloadTopActivity.class);
+		    			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		    			intent.putExtra("classid", mWebsiteInfo.mBaseInfo.classid);
+		    			intent.putExtra("optype", WebsiteParser.PARENTCLASS);
+//		    			mContext.startActivity(intent);
+		    			MainTabActivity.mHomeActivityGroup.setNextActivity(intent, "HomeDownloadTopActivity");
+		    			return;
+		    		}
+		    		
+		    		Intent intent = new Intent(mContext, HomeConclassActivity.class);
+		    		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		    		intent.putExtra("classid", websiteInfo.mBaseInfo.classid);
+		    		intent.putExtra("optype", WebsiteParser.SINGLE);
+		    		intent.putExtra("parentid", mWebsiteInfo.mBaseInfo.classid);
+//		    		mContext.startActivity(intent);
+		    		MainTabActivity.mHomeActivityGroup.setNextActivity(intent, "HomeConclassActivity");
+		    	}
+			} else if (v instanceof ImageView) {
+				
+			}
+		}
+		
+		private void startDownloadTopActivity() {
+    		Intent intent = new Intent(mContext, HomeDownloadTopActivity.class);
+    		if (mWebsiteInfo instanceof ClassificationWebSiteInfo) {
+//    			intent.putExtra("classid", websiteInfo.mBaseInfo.classid);
+    			intent.putExtra("optype", WebsiteParser.ALL);
+    		} else if (mWebsiteInfo instanceof ClassificationWebSiteInfo.ParentClassInfo) {
+    			intent.putExtra("classid", mWebsiteInfo.mBaseInfo.classid);
+    			intent.putExtra("optype", WebsiteParser.PARENTCLASS);
+    		} else if (mWebsiteInfo instanceof ClassificationWebSiteInfo.ConclassInfo) {
+    			
+    		}
+    		
+    		mContext.startActivity(intent);
+		}
+    }  
+//}

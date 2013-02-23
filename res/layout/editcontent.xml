@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/rlTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_title" >
+
+        <Button
+            android:id="@+id/btnClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_btn"
+            android:paddingBottom="2dp"
+            android:text="关闭"
+            android:textColor="#fff"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="腾讯微博"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/sendweibo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_btn"
+            android:paddingBottom="2dp"
+            android:text="发送"
+            android:textColor="#fff"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="@drawable/bg_content" >
+
+        <LinearLayout
+            android:id="@+id/llImage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#00ffffff"
+            android:gravity="right"
+            android:orientation="vertical" >
+
+            <!--
+                     <RelativeLayout
+                    android:id="@+id/rlTotal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp" >
+            -->
+
+            <LinearLayout
+                android:id="@+id/ll_text_limit_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_delwords"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/tv_text_limit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5px"
+                    android:text="140"
+                    android:textColor="#333" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_delwords" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/flPic"
+                android:layout_width="250dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:background="#00ffffff"
+                android:visibility="visible" >
+
+                <ImageView
+                    android:id="@+id/ivImage"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/image_background"
+                    android:src="@drawable/dota" />
+
+                <ImageView
+                    android:id="@+id/ivDelPic"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="right"
+                    android:src="@drawable/del_pic" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/llImage"
+            android:layout_alignParentTop="true"
+            android:layout_margin="3dp"
+            android:background="#00ffffff"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/qqcontent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="3px"
+                android:background="@null"
+                android:capitalize="sentences"
+                android:gravity="top|left"
+                android:imeOptions="actionDone"
+                android:isScrollContainer="true"
+                android:singleLine="false" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

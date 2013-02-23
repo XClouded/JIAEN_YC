@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFF4F4F4" >
+    <ImageView 
+    	android:background="@drawable/logo"
+    	android:layout_width="fill_parent"
+    	android:layout_gravity="top"
+		android:layout_height="70dp"/>
+  	<LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <LinearLayout
+	        android:orientation="vertical"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:gravity="center_horizontal|center_vertical">
+	        <ImageView 
+	        	android:id="@+id/working_photo"
+	        	android:layout_width="fill_parent"
+	        	android:layout_height="fill_parent"
+	        	android:layout_margin="5dp"
+	        	android:padding="5dp"
+	        	android:layout_gravity="center_horizontal|center_vertical"
+	        	android:gravity="center_horizontal|center_vertical"
+	        	android:background="@drawable/list_frame_list_line"/>
+	        <Gallery 
+	        	android:id="@+id/gallery"
+	        	android:layout_width="fill_parent"
+	        	android:layout_height="wrap_content"
+	        	android:spacing="1dip"   
+	        	android:layout_gravity="center_horizontal|bottom"
+	        	/>
+	    </LinearLayout>
+		<TabHost
+		    android:id="@android:id/tabhost"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content" >
+		    <LinearLayout
+		        android:orientation="vertical"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent" >
+		        <FrameLayout
+		            android:id="@android:id/tabcontent"
+		            android:layout_width="fill_parent"
+		            android:layout_height="0.0dip"
+		            android:layout_weight="1.0"
+		            >
+		        </FrameLayout>
+		        <TabWidget
+		            android:id="@android:id/tabs"
+		            android:visibility="gone"
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="0.0"/>
+		            
+		        <RadioGroup
+		            android:gravity="center_horizontal|bottom"
+		            android:layout_gravity="bottom|fill_horizontal"
+		            android:background="@drawable/bottom_line_bar_bg"
+		            android:id="@+id/radio_group"
+		            android:orientation="horizontal"
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content">
+		
+		            <RadioButton
+		                android:tag="radio_button0"
+		                android:layout_margin="2.0dip"
+		                android:text="选择照片"
+		                android:drawableTop="@drawable/select_picture_bg"
+		                style="@style/RadioButton"/>
+		
+		            <RadioButton
+		                android:tag="radio_button1"
+		                android:layout_margin="2.0dip"
+		                android:text="本地拍照"
+		                android:drawableTop="@drawable/local_photo_bg"
+		                style="@style/RadioButton"/>
+		            <RadioButton
+		                android:tag="radio_button2"
+		                android:layout_margin="2.0dip"
+		                android:text="模板选择"
+		                android:drawableTop="@drawable/template_bg"
+		                style="@style/RadioButton"/>
+		            <RadioButton
+		                android:tag="radio_button3"
+		                android:layout_margin="2.0dip"
+		                android:text="相框选择"
+		                android:drawableTop="@drawable/photo_frame_bg"
+		                style="@style/RadioButton"/>
+		            <RadioButton
+		                android:tag="radio_button4"
+		                android:layout_margin="2.0dip"
+		                android:text="特效选择"
+		                android:drawableTop="@drawable/te_xiao_bg"
+		                style="@style/RadioButton"/>
+		            <RadioButton
+		                android:tag="radio_button5"
+		                android:layout_margin="2.0dip"
+		                android:text="添加文字"
+		                android:drawableTop="@drawable/charactor_bg"
+		                style="@style/RadioButton"/>
+		<!--             <RadioButton -->
+		<!--                 android:tag="radio_button5" -->
+		<!--                 android:layout_margin="2.0dip" -->
+		<!--                 android:text="后退" -->
+		<!--                 android:drawableTop="@drawable/forward_not_selected_bg" -->
+		<!--                 style="@style/RadioButton"/> -->
+		<!--             <RadioButton -->
+		<!--                 android:tag="radio_button6" -->
+		<!--                 android:layout_margin="2.0dip" -->
+		<!--                 android:text="前进" -->
+		<!--                 android:drawableTop="@drawable/forward_not_selected_bg2" -->
+		<!--                 style="@style/RadioButton"/> -->
+		<!--             <RadioButton -->
+		<!--                 android:tag="radio_button7" -->
+		<!--                 android:layout_margin="2.0dip" -->
+		<!--                 android:text="短信" -->
+		<!--                 android:drawableTop="@drawable/mail_not_selected_bg" -->
+		<!--                 style="@style/RadioButton"/> -->
+		        </RadioGroup>
+		    </LinearLayout>
+		</TabHost>
+	</LinearLayout>
+</LinearLayout>

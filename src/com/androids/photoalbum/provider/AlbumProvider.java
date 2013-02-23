@@ -1,0 +1,301 @@
+package com.androids.photoalbum.provider;
+
+import android.content.BroadcastReceiver;
+import android.content.ContentProvider;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.UriMatcher;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
+import android.util.Log;
+
+import java.io.File;
+
+import com.androids.photoalbum.provider.AlbumContent.AlbumColumns;
+import com.androids.photoalbum.utils.Utils;
+
+public class AlbumProvider extends ContentProvider {
+    public static final int DATABASE_VERSION = 1;
+    public final static String TAG="zheng";
+    public static final String ALBUM_TABLE_NAME = "album";
+    protected static final String ALBUM_DATABASE_NAME = "AlbumProvider.db";
+    private SQLiteDatabase mDatabase;
+    public static final String ALBUM_AUTHORITY = "com.android.album.provider";
+
+    private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+    private static final int ALBUM = 0;
+    private static final int PRODUCT_ID = 1;
+    static {
+        UriMatcher matcher = sURIMatcher;
+
+        matcher.addURI(ALBUM_AUTHORITY, "album", ALBUM);
+        matcher.addURI(ALBUM_AUTHORITY, "album/#", PRODUCT_ID);
+    }
+    
+    @Override
+    public boolean onCreate() {
+        checkDatabases();
+        
+//        IntentFilter filter = new IntentFilter("com.android.action.CLEAR_CACHE");
+//        mClearCacheReceiver = new ClearDatabaseReceiver();
+//        getContext().registerReceiver(mClearCacheReceiver, filter);
+        return true;
+    }
+    
+    public class ClearDatabaseReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (action != null && action.equals("com.android.action.CLEAR_CACHE")) {
+				checkDatabases();
+				if(Utils.logging)Log.d("zheng", "clear database successfull");
+			}
+		}
+    	
+    }
+    
+    private ClearDatabaseReceiver mClearCacheReceiver;
+    
+    public void checkDatabases() {
+        // Uncache the databases
+        if (mDatabase != null) {
+            mDatabase = null;
+        }
+        // Look for orphans, and delete as necessary; these must always be in sync
+        File albumFile = getContext().getDatabasePath(ALBUM_DATABASE_NAME);
+
+        // TODO Make sure attachments are deleted
+//        if (albumFile.exists()) {
+//            Log.w(TAG, "Deleting orphaned BlogProvider database...");
+//            albumFile.delete();
+//        }
+    }
+
+    public synchronized SQLiteDatabase getDatabase(Context context) {
+        // Always return the cached database, if we've got one
+        if (mDatabase != null) {
+            return mDatabase;
+        }
+
+        // Whenever we create or re-cache the databases, make sure that we haven't lost one
+        // to corruption
+        checkDatabases();
+
+        DatabaseHelper helper = new DatabaseHelper(context, ALBUM_DATABASE_NAME);
+        mDatabase = helper.getWritableDatabase();
+
+        // Check for any orphaned Messages in the updated/deleted tables
+//        deleteOrphans(mBlogDatabase, Blog.UPDATED_TABLE_NAME);
+//        deleteOrphans(mBlogDatabase, Bif(Utils.logging)Log.dELETED_TABLE_NAME);
+
+        return mDatabase;
+    }
+    
+    private String whereWithId(String id, String selection) {
+        StringBuilder sb = new StringBuilder(256);
+        sb.append("_id=");
+        sb.append(id);
+        if (selection != null) {
+            sb.append(" AND (");
+            sb.append(selection);
+            sb.append(')');
+        }
+        return sb.toString();
+    }
+    
+    @Override
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
+            String sortOrder) {
+        Cursor c = null;
+        Context context = getContext();
+        Uri notificationUri = AlbumContent.CONTENT_URI;
+        SQLiteDatabase db = getDatabase(context);
+        int match = sURIMatcher.match(uri);
+        String tableName;
+        String id;
+
+        switch (match) {
+            case ALBUM:
+                tableName = ALBUM_TABLE_NAME;
+                break;
+            case PRODUCT_ID:
+                tableName = ALBUM_TABLE_NAME;
+                id = uri.getPathSegments().get(1);
+                selection = whereWithId(id, selection);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI " + uri);
+        }
+
+        try {
+            c = db.query(tableName, projection,
+                    selection, selectionArgs, null, null, sortOrder);
+        } catch (SQLiteException e) {
+            checkDatabases();
+//            throw e;
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+        
+        if ((c != null) && !isTemporary()) {
+            c.setNotificationUri(getContext().getContentResolver(), notificationUri);
+        }
+
+        return c;
+    }
+
+    @Override
+    public String getType(Uri uri) {
+        int match = sURIMatcher.match(uri);
+        switch (match) {
+            case ALBUM:
+                return "vnd.android.cursor.dir/album";
+            case PRODUCT_ID:
+                return "vnd.android.cursor.item/album";
+            default:
+                throw new IllegalArgumentException("Unknown URI " + uri);
+        }
+    }
+
+    @Override
+    public Uri insert(Uri uri, ContentValues values) {
+        int match = sURIMatcher.match(uri);
+        Context context = getContext();
+        SQLiteDatabase db = getDatabase(context);
+        long id;
+        Uri resultUri = null;
+        Log.v(TAG, "EmailProvider.insert: uri=" + uri + ", match is " + match);
+        try {
+            switch (match) {
+                case ALBUM:
+                    id = db.insert(ALBUM_TABLE_NAME, "foo", values);
+                    resultUri = ContentUris.withAppendedId(uri, id);
+                    break;
+                default:
+                    break;
+            }
+        } catch (SQLiteException e) {
+            checkDatabases();
+            throw e;
+        }
+
+        // Notify with the base uri, not the new uri (nobody is watching a new record)
+        getContext().getContentResolver().notifyChange(uri, null);
+//        totalUnreadUpdate(match);
+        return resultUri;
+    }
+
+    @Override
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        final int match = sURIMatcher.match(uri);
+        Context context = getContext();
+        // Pick the correct database for this operation
+        // If we're in a transaction already (which would happen during applyBatch), then the
+        // body database is already attached to the email database and any attempt to use the
+        // body database directly will result in a SQLiteException (the database is locked)
+        SQLiteDatabase db = getDatabase(context);
+        String id = "0";
+        String tableName;
+
+        Log.v(TAG, "EmailProvider.delete: uri=" + uri + ", match is " + match);
+
+        int result = -1;
+
+        try {
+            switch (match) {
+                case PRODUCT_ID:
+                    tableName = ALBUM_TABLE_NAME;
+                    id = uri.getPathSegments().get(1);
+                    selection = whereWithId(id, selection);
+                    break;
+                case ALBUM:
+                    tableName = ALBUM_TABLE_NAME;
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown URI " + uri);
+            }
+            result = db.delete(tableName, selection, selectionArgs);
+        } catch (SQLiteException e) {
+            checkDatabases();
+            throw e;
+        } finally {
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return result;
+    }
+    
+    @Override
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        int match = sURIMatcher.match(uri);
+        Context context = getContext();
+        // See the comment at delete(), above
+        SQLiteDatabase db = getDatabase(context);
+        int result;
+
+        Log.v(TAG, "EmailProvider.update: uri=" + uri + ", match is " + match);
+
+        String id;
+        String tableName;
+        try {
+            switch (match) {
+                case PRODUCT_ID:
+                    tableName = ALBUM_TABLE_NAME;
+                    id = uri.getPathSegments().get(1);
+                    selection = whereWithId(id, selection);
+                    break;
+                case ALBUM:
+                    tableName = ALBUM_TABLE_NAME;
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown URI " + uri);
+            }
+            result = db.update(tableName, values, selection, selectionArgs);
+        } catch (SQLiteException e) {
+            checkDatabases();
+            throw e;
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+        return result;
+    }
+
+    static void createAlbumTable(SQLiteDatabase db) {
+        String createBlogString = " (" + AlbumContent.RECORD_ID + " integer primary key autoincrement, "
+                + AlbumColumns.PHOTO_ADDRESS + " text, " 
+                + AlbumColumns.PHOTO_BITMAP + " blob, " 
+                + AlbumColumns.PRODUCT_ID + " text, "
+                + AlbumColumns.PHOTO_BYTE + " blob"
+                + ");";
+        
+        // The two tables have the same schema
+        db.execSQL("create table " + ALBUM_TABLE_NAME + createBlogString);
+    }
+
+    private class DatabaseHelper extends SQLiteOpenHelper {
+        Context mContext;
+
+        DatabaseHelper(Context context, String name) {
+            super(context, name, null, DATABASE_VERSION);
+            mContext = context;
+        }
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            if(Utils.logging)Log.d(TAG, "Creating EmailProvider database");
+
+            // Create all tables here; each class has its own method
+            createAlbumTable(db);            
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            
+        }
+    }
+}

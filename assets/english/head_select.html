@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<style>
+/* 方法一:浮动法 */
+.btn{font-size:13px; background-color:#ccc;border-top:1px solid #bbb;border-bottom:1px solid #bbb;display:inline-block;display:-moz-inline-stack;*display:inline;*zoom:1;}
+.btn-warp{position:relative;margin:0 -1px;height:100%;border-left:1px solid #bbb;border-right:1px solid #bbb;background:#e3e3e3;_float:left;_overflow:hidden;}/* float:left,ie6下触发hayout */
+.btn-top{position:absolute;top:0;left:0;right:0;border-bottom:#eeeeee 0.2em solid;background-color:#f9f9f9;line-height:0.8em;overflow:hidden;_width:100%;}/* height会使得ie下的元素获得layout,故用line-height */
+.btn-main{position:relative;line-height:1.6em;padding:0 0.5em;cursor:pointer; background-color:#e1a; color:#FFFFFF;}
+
+.btn2 {padding: 2 4 0 4;font-size:13px;height:23;background-color:#ece9d8;border-width:1;} 
+</style>
+
+<script>
+function gup( name )
+{
+  	name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  	var regexS = "[\\?&]"+name+"=([^&#]*)";
+  	var regex = new RegExp( regexS );
+  	var results = regex.exec( window.location.href );
+  	if( results == null )
+    	return "";
+  	else
+    	return results[1];
+}
+var pic_select;
+function setupPicSelected() {
+     var p1 = gup('cat1');
+     var p2 = gup('cat2');
+     var p3 = gup('filename');
+     pic_select = 'file:///android_asset/cat/' + p1 + '/' + p2 + '/' + p3;
+     var pic = document.getElementById("pic_selected");
+	 pic.setAttribute("src", pic_select) 
+}
+
+function onButtonClicked(button){
+    if(button == 0){
+        window.location.href="head_editor.html?filename="+pic_select;
+    }
+}
+</script>
+<title>第二步: 选择大头照</title>
+</head>
+<body onload=setupPicSelected()>
+
+已选场景：
+<p>
+<img id="pic_selected"></img>
+
+<p>
+<table width="100%" border="0">
+ <tr>
+        <td width="20%"><div class="btn">
+    <div class="btn-warp">
+        <div class="btn-top">&nbsp;</div>
+        <div class="btn-main" onClick="javascript:onButtonClicked(0);">制作大头照</div></a>
+    </div>
+</div></td>
+    <td width="20%"><div class="btn">
+    <div class="btn-warp">
+        <div class="btn-top">&nbsp;</div>
+        <div class="btn-main" onClick="javascript:onSetCalendarDate(7);">返回上一步</div>
+    </div>
+</div></td>
+</tr>
+
+</table>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/q3_function_page_background"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/q3_info_title" />
+
+    <ImageView
+        android:id="@+id/q3_fanhui"
+        android:layout_width="45dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="11dp"
+        android:onClick="onClick"
+        android:src="@drawable/q3_fanhui" />
+
+    <GridView
+        android:id="@+id/q3_gridview_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/q3_fanhui"
+        android:layout_margin="5dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:horizontalSpacing="20dp"
+        android:numColumns="2"
+        android:paddingTop="15dp"
+        android:verticalSpacing="20dp" />
+
+</RelativeLayout>

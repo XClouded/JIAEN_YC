@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/q3_function_page_background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/q3_youcai_feixiangtohaoyou_tittle" >
+
+        <ImageView
+            android:id="@+id/q3_youcaifeixiang_back"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/q3_fanhui" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical" >
+
+        <AutoCompleteTextView
+            android:id="@+id/q3_youcai_haoyou_add_local"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_weight="1"
+            android:background="@drawable/q3_youcai_haoyou_add_bg"
+            android:hint="查找好友："
+            android:paddingLeft="15dp"
+            android:phoneNumber="true" />
+
+        <ImageView
+            android:id="@+id/q3_youcai_haoyou_add_local_rentou"
+            android:layout_width="48dp"
+            android:layout_height="36dp"
+            android:layout_weight="0"
+            android:background="#ffffff"
+            android:padding="3dp"
+            android:src="@drawable/q3_youcai_haoyou_add_sousuo" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/q3_youcai_feixiangtohaoyou_add_feixiang_list"
+        android:layout_width="match_parent"
+        android:layout_height="334dp"
+        android:layout_margin="2dp"
+        android:cacheColorHint="#00000000"
+        android:divider="@drawable/q3_fengexian" >
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/q3_youcai_feixiangtohaoyou_add_feixiang_selete"
+            android:layout_width="80dp"
+            android:layout_height="23dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/q3_youcai_feixiangtohaoyou_feixiang_select" />
+
+        <Button
+            android:id="@+id/q3_youcai_feixiangtohaoyou_add_feixiang_back"
+            android:layout_width="80dp"
+            android:layout_height="23dp"
+            android:background="@drawable/q3_youcai_feixiangtohaoyou_feixiang_back" />
+    </LinearLayout>
+
+</LinearLayout>

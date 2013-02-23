@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#FFF4F4F4"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    <include android:id="@+id/title" layout="@layout/titlebar"/>
+    <LinearLayout
+		android:id="@+id/product_list"
+	    android:layout_width="265dp"
+	    android:layout_height="fill_parent"
+        android:gravity="center_vertical|center_horizontal"
+    	android:layout_gravity="center_vertical|center_horizontal"
+	    android:orientation="vertical">
+	    <Button android:id="@+id/pic_work"
+	    	android:layout_width="fill_parent"
+	    	android:layout_height="wrap_content"
+	    	android:background="@drawable/option_select_button_bg"
+	    	android:textStyle="bold" 
+ 	 		android:textColor="@android:color/white"
+ 	 		android:textSize="16dp"
+ 	 		android:text="图片加工"/>
+ 	 	<TextView android:layout_width="fill_parent"
+	    	android:layout_height="50dp"/>
+ 	 	<Button android:id="@+id/pic_conbime"
+ 	 		android:layout_width="fill_parent"
+	    	android:layout_height="wrap_content"
+	    	android:background="@drawable/option_select_button_bg"
+	    	android:textStyle="bold" 
+	    	android:textColor="@android:color/white"
+ 	 		android:textSize="16dp"
+ 	 		android:text="图片合成"/>
+ 	 	<TextView android:layout_width="fill_parent"
+	    	android:layout_height="50dp"/>
+ 	 	<Button android:id="@+id/name_sign"
+ 	 		android:layout_width="fill_parent"
+	    	android:layout_height="wrap_content"
+	    	android:background="@drawable/option_select_button_bg"
+	    	android:textStyle="bold" 
+	    	android:textColor="@android:color/white"
+ 	 		android:textSize="16dp"
+ 	 		android:text="漫彩彩信"/>
+    </LinearLayout>
+</LinearLayout>
+    

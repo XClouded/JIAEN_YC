@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.photoalbum"
+    android:sharedUserLabel="@string/app_name"
+    android:versionCode="5"
+    android:versionName="4.0.0" >
+
+    <uses-sdk android:minSdkVersion="3" />
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
+    <uses-feature android:name="android.hardware.screen.landscape" />
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <!-- Donut-specific flags which allow us to run on any dpi screens. -->
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-feature android:name="android.software.live_wallpaper" />
+    <uses-feature android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:icon="@drawable/icon"
+        android:label="优彩飞享彩信" >
+        <service
+            android:name="com.androids.photoalbum.userinfo.view.AlbumWallpaper"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_WALLPAPER" >
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/album_wallpaper" />
+        </service>
+
+        <provider
+            android:name="com.androids.photoalbum.provider.AlbumProvider"
+            android:authorities="com.android.album.provider"
+            android:exported="false"
+            android:multiprocess="false" />
+
+        <service
+            android:name="com.androids.photoalbum.tab.ui.BaseActivity$AlbumService"
+            android:enabled="true" />
+
+        <activity
+            android:name="com.androids.photoalbum.view.YC"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.androids.photoalbum.tab.ui.MultiMediaMessageActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.androids.photoalbum.view.SelectPictureActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.androids.photoalbum.view.ForgetPwdActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.androids.photoalbum.view.PictureWorkingActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.androids.photoalbum.view.HomeDownloadTopActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.androids.photoalbum.view.SignNameActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.androids.photoalbum.view.SignNameDownloadActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.androids.photoalbum.view.PictureWorkingMainTabActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.androids.photoalbum.view.RegisterActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.androids.photoalbum.tab.ui.HomeActivityGroup"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.androids.photoalbum.tab.ui.TabActivityGroup"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.androids.photoalbum.tab.ui.SearchActivityGroup"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.androids.photoalbum.tab.ui.HomeConclassActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name="com.androids.photoalbum.tab.ui.HomeActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.androids.photoalbum.view.LoginActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.androids.photoalbum.tab.ui.SearchActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.androids.photoalbum.tab.ui.ManageActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.androids.photoalbum.tab.ui.FavoriteActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.androids.photoalbum.tab.ui.WorkingActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.androids.photoalbum.tab.ui.MessageActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.androids.photoalbum.tab.ui.LoginActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.androids.photoalbum.tab.ui.SignNameMessageActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.androids.photoalbum.view.MainTabActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboard|orientation"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name="com.androids.photoalbum.view.PictureCombineActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.androids.photoalbum.view.PictureReviewActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.cs.mms.MMSTest1Activity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="weibo4android.androidexamples.AndroidExample"
+            android:label="@string/app_name" >
+        </activity>
+        <!-- <activity android:name=".view.SinaLoginActivity" -->
+        <!-- android:theme="@android:style/Theme.NoTitleBar"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN"/> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <activity
+            android:name="com.androids.photoalbum.tab.ui.SinaLoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.androids.photoalbum.tab.ui.NewWeiboActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="weibo4android.androidexamples.OAuthActivity"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateAlwaysVisible" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="OAuthActivity"
+                    android:scheme="weibo4android" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="com.androids.photoalbum.provider.AlbumProvider"
+            android:authorities="com.android.album.provider"
+            android:exported="true"
+            android:multiprocess="true" />
+
+        <activity
+            android:name="com.weibo.android.example.AuthorizeActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:icon="@drawable/xinlang"
+            android:label="新浪"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="adjustResize" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <!--
+                     <data
+                    android:host="OAuthActivity"
+                    android:scheme="weibo4andriod" />
+                -->
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.weibo.android.example.ShareToWeiboActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@style/ActivityTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="TimeLineActivity"
+                    android:scheme="weiboandroidsdk" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.weibo.net.ShareActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:theme="@style/ContentOverlay"
+            android:windowSoftInputMode="adjustPan|stateAlwaysVisible" >
+        </activity>
+
+        <receiver
+            android:name="com.androids.photoalbum.view.BootCompleteReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.androids.photoalbum.ACTION_BROADCAST" />
+            </intent-filter>
+        </receiver>
+
+        <!-- <action android:name="android.intent.action.BOOT_COMPLETED" /> -->
+        <receiver android:name="com.androids.photoalbum.utils.AlarmExpirationManager$ExpiredAlarmReceiver" >
+            <intent-filter>
+                <action android:name="cn.android.common.ACTION_PASSWORD_EXPIRING" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.androids.photoalbum.view.NotificationBroadcastProcessService" />
+
+        <activity
+            android:name="qq.gdky005.WebViewActivity"
+            android:icon="@drawable/tengxun"
+            android:label="腾讯"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.weibo.webview.OAuthV2AuthorizeWebView"
+            android:configChanges="orientation|keyboard"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.renren.android.example.WebViewActivity"
+            android:icon="@drawable/renren"
+            android:label="人人"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.renren.api.connect.android.AuthorizationHelper$BlockActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+
+        <!-- 发布状态的Activity，如需使用一键发布状态的功能，则必须在AndroidManifest.xml中声明 -->
+        <activity
+            android:name="com.renren.api.connect.android.status.StatusPubActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+
+        <!-- 发布照片的Activity，如需使用一键上传图片的功能，则必须在AndroidManifest.xml中声明 -->
+        <activity
+            android:name="com.renren.api.connect.android.photos.UploadPhotoActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+
+        <!-- 创建相册的Activity，如需使用一键创建相册的功能，则必须在AndroidManifest.xml中声明 -->
+        <activity
+            android:name="com.renren.api.connect.android.photos.CreateAlbumActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+
+        <!-- Activities in the demo -->
+        <activity android:name=".activity.ApiListActivity" >
+        </activity>
+        <activity android:name=".activity.ApiUploadPhotoActivity" >
+        </activity>
+        <activity android:name=".activity.ApiCreateAlbumActivity" >
+        </activity>
+        <activity android:name=".activity.ApiGetAlbumsActivity" >
+        </activity>
+        <activity android:name=".activity.StatusPublishActivity" >
+        </activity>
+        <activity android:name=".activity.LogActivity" >
+        </activity>
+        <activity android:name=".activity.ApiUsersInfoActivity" >
+        </activity>
+        <activity android:name=".activity.FriendsGetActivity" >
+        </activity>
+        <activity android:name=".activity.PayActivity" >
+        </activity>
+        <activity android:name=".activity.FriendsGetFriendsActivity" >
+        </activity>
+        <activity android:name=".activity.ApiFeedPublishActivity" >
+        </activity>
+        <activity android:name="com.renren.api.connect.android.pay.view.PayRepairActivity" >
+        </activity>
+
+        <!-- Q3_Activities -->
+        <activity
+            android:name="com.xhm.myVideoView.MyVideoView"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.xhm.firstPage.ViewPagerActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.xhm.q3.view.q3_function_activity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.xhm.q3.view.q3_login_activity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.xhm.q3.view.q3_msm_activity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.xhm.q3.view.q3_info_model_activity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.xhm.q3.view.q3_info_model_nologo_activity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.xhm.q3.view.q3_info_model_leftlogo_activity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.xhm.q3.view.q3_info_model_rightlogo_activity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.xhm.q3.view.q3_info_model_morepage_activity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.xhm.q3.view.q3_erweima_activity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="com.google.zxing.client.android.CaptureActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:stateNotNeeded="true"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+            <intent-filter>
+                <action android:name="com.google.zxing.client.android.SCAN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!-- Allow web apps to launch Barcode Scanner by linking to http://zxing.appspot.com/scan. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="zxing.appspot.com"
+                    android:path="/scan"
+                    android:scheme="http" />
+            </intent-filter>
+            <!-- We also support a Google Product Search URL. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.google.com"
+                    android:path="/m/products/scan"
+                    android:scheme="http" />
+            </intent-filter>
+            <!-- And the UK version. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.google.co.uk"
+                    android:path="/m/products/scan"
+                    android:scheme="http" />
+            </intent-filter>
+            <!-- Support zxing://scan/?... like iPhone app -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="scan"
+                    android:path="/"
+                    android:scheme="zxing" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.xhm.q3.view.q3_youcai_activity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.xhm.q3.view.q3_youcai_remen"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.xhm.q3.view.q3_youcai_tuijian"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.xhm.q3.view.q3_youcai_haoyou"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.xhm.q3.view.q3_youcai_paihang"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.xhm.q3.view.q3_youcai_fenlei"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.xhm.q3.view.q3_youcai_fenxiang"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.xhm.q3.view.q3_youcai_haoyou_add"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.xhm.q3.view.q3_youcai_fenlei_item"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.xhm.q3.view.q3_youcai_item_feixiangtohaoyou"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+     <activity
+            android:name="com.xhm.q3.view.q3_youcai_feixiangtohaoyou_add_feixiang"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+    </application>
+
+</manifest>

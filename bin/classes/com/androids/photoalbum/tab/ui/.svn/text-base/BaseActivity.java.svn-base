@@ -1,0 +1,1030 @@
+package com.android.photoalbum.tab.ui;
+
+import android.app.Activity;
+import android.app.ActivityGroup;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.RemoteCallbackList;
+import android.os.RemoteException;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.photoalbum.service.IAlbumServiceCallback;
+import com.android.photoalbum.R;
+import com.android.photoalbum.netinfo.ClassificationLocalSiteInfo;
+import com.android.photoalbum.netinfo.ClassificationWebSiteInfo;
+import com.android.photoalbum.netinfo.ClassificationWebSiteInfo.ProductInfo;
+import com.android.photoalbum.netinfo.CollectionsWebsiteInfo;
+import com.android.photoalbum.netinfo.MusicLocalSiteInfo;
+import com.android.photoalbum.netinfo.PassWordVerifyLocalSiteInfo;
+import com.android.photoalbum.netinfo.PassWordVerifyWebsiteInfo;
+import com.android.photoalbum.netinfo.SearchLocalSiteInfo;
+import com.android.photoalbum.netinfo.SearchWebsiteInfo;
+import com.android.photoalbum.netinfo.ServerInfo;
+import com.android.photoalbum.netinfo.WebsiteInfo;
+import com.android.photoalbum.parser.ClassificationWebsiteParser;
+import com.android.photoalbum.parser.CollectionsWebsiteParser;
+import com.android.photoalbum.parser.MusicWebsiteParser;
+import com.android.photoalbum.parser.PassWordVerifyWebsiteParser;
+import com.android.photoalbum.parser.SearchWebsiteParser;
+import com.android.photoalbum.parser.WebsiteParser;
+import com.android.photoalbum.service.IAlbumService;
+import com.android.photoalbum.userinfo.*;
+import com.android.photoalbum.utils.*;
+import com.android.photoalbum.view.BaseLayout;
+import com.android.photoalbum.view.HomeDownloadTopActivity;
+import com.android.photoalbum.view.ImageLayout;
+import com.android.photoalbum.view.MainTabActivity;
+import com.android.photoalbum.view.SignNameActivity;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public abstract class BaseActivity extends Activity implements
+        View.OnClickListener, View.OnTouchListener {
+	public final static String ADAPTER_ID = "adapter_id";
+	private TextView mFavoriteText;
+	protected boolean isActivity = false;
+	public int mImageWidth; 
+	public int mImageHeigth; 
+	public int mScreenWith;
+	public int mScreenHeihgt;
+	public int mLineCount = 5;
+	public Spinner mSpinner;
+	protected boolean mIsAutoLogin = false;
+	protected LinearLayout mProductList;
+	protected float mScale = 0;
+//	protected LinearLayout mHomeView;
+	public ListView mListView;
+//    protected ArrayList mBlogList;
+    protected Resources mResources;
+    protected long mNowTimeStamp = -1;
+    protected String mRootNode = "";
+    protected String mCommand = "";
+    protected Handler mHandler = new Handler();
+    protected Runnable mBlogPicRun = null;
+    protected Runnable mHeadPicRun = null;
+	protected static LayoutInflater mInflater;
+	protected Map<String, Bitmap> mHeadPicMap = new HashMap<String, Bitmap>();
+	protected Map<ImageView, String> mHeadViewMap = new HashMap<ImageView, String>();
+    public static final int BG_BUTTON1 = 2;
+
+    public static final int BG_BUTTON2 = 3;
+
+    public static final int BG_BUTTON3 = 4;
+
+    public static final int LEFT_BUTTON = 1;
+    public final static long ONE_DAY = 60 * 60 * 24;
+    public final static long ONE_HNOUR = 60 * 60;
+    public final static long ONE_MINUTE = 60;
+    // private static final int MSG_SWITCH_TO_LOGIN;
+    public static final int RIGHT_BUTTON = 0;
+    public LoadImageTask mLoadImageTask;
+
+    protected BaseLayout ly;
+    protected boolean mNeedReloaded = false;
+    protected boolean mIsPicReceiverRegisted = false;
+    protected Bitmap mHeadPicBitmap = null;
+
+    Handler mBaseHandler;
+    protected IntentFilter mPicDownloadFilter = new IntentFilter();
+			
+	public final static int TYPE_QUERY_IMAGE_SAVE_PIC_FROM_DATABASE = 2;
+	public ImageView mHeadPicView;
+	protected String mRetweetBlogid = null;
+	protected String mBlogId = null;
+	protected ImageView mBlogContentPic = null;
+	protected ImageView mRetweetBlogPic = null;
+	protected String mBlogContentPicPath = null;
+	protected String mBlogRetweetPicPath = null;
+	protected Drawable mDefaultHeadpicDrawable = null;
+
+    protected RelativeLayout titleBar;
+    public static final int DIALOG_SAVE_IMAGE = 0;
+    public static final int DIALOG_LOGOUT_ACCOUNT = 1;
+    protected static final int DIALOG_CLEAR_WORDS = 2;
+    protected static final int DIALOG_CONFIRM_ADD_PHOTO = 3;
+    protected static final int DIALOG_COMBINE_SUCESS = 4;
+    public static final int DIALOG_CONFIRM_QUIT_YC = 5;
+    public static final int DIALOG_QUIT = 6;
+    public static final int DIALOG_BACK = 7;
+    protected ContentResolver mResolver;
+    public static final String ACTION_MESSAGE_COMPOSE = "com.android.photoalbum.MESSAGE_COMPOSE";
+    public static final String ACTION_RELOAD_AFTER_SWITCH_USER = "com.android.photoalbum.RELOAD_AFTER_SWITCH_USER";
+    public static final String ACTION_RELOAD_AFTER_DATA_CHANGE = "com.android.microblog.RELOAD_AFTER_DATA_CHANGE";
+    
+    public static WebsiteInfo mWebsiteInfo = null;
+    public IAlbumService mService = null;
+    public PhotoListAdapter mPhotoAdapter = null;
+    public ListViewAdapter mAlbumAdapter = null;
+    public MusicListAdapter mMusicAdapter = null;
+    public View mFooterView;
+    public static final String ACTION_NOTIFY_DATA_SET_CHANGED = "action_notify_data_set_changed";
+    public static final String ACTION_NOTIFY_DATA_SET_INVALIDATED = "action_notify_data_set_invalidated";
+    public static final String ACTION_NOTIFY_DATA_SET_INITIALIZED = "action_notify_data_set_initialized";
+    
+    public static final String ACTION_NOTIFY_LISTVIEW_DATA_SET_CHANGED = "action_notify_listview_data_set_changed";
+//    private final ServiceConnection mAlbumServiceConnection = new AlbumServiceConnection ();
+    
+    public BaseActivity() {
+        mBaseHandler = new MessageHandler();
+    }
+    
+    synchronized protected void reloadList(final boolean isMoreLoaded) {}
+
+    private void switchToLoginActivity() {
+        // Utils.cleanUserFile(getCacheDir().getPath());
+//        StaticInfo.mUser = null;
+        StaticInfo.mPassword = null;
+        StaticInfo.mUsername = null;
+        StaticInfo.mTotals = null;
+        StaticInfo.mNickName = null;
+        SharedPreferences.Editor userInfoPre = getSharedPreferences("weibo", 0).edit();
+        userInfoPre.clear();
+        userInfoPre.commit();
+        // AccountHelper.cleanAccounts(this);
+        Intent noUserIntent = new Intent("sina.weibo.action.NOUSER");
+        sendBroadcast(noUserIntent);
+        MainTabActivity.mMode = 0;
+        Intent mainTabIntent = new Intent(this, MainTabActivity.class);
+        mainTabIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        mainTabIntent.putExtra("MODE_KEY", 0);
+        mainTabIntent.setAction("com.sina.weibo.action.switchuser_activity_on_stack_top");
+        startActivity(mainTabIntent);
+    }
+
+    protected void handleErrorEvent(String event) {
+        if ((event != null) && (event.equalsIgnoreCase("-100"))) {
+            Message msg = this.mBaseHandler.obtainMessage();
+            msg.what = 0;
+            boolean bool = this.mBaseHandler.sendMessage(msg);
+        }
+    }
+    
+    protected ResultDisplayer mPendingResult;
+    class ResultDisplayer implements OnClickListener {
+        String mMsg;
+        String mMimeType;
+        
+        ResultDisplayer(String msg, String mimeType) {
+            mMsg = msg;
+            mMimeType = mimeType;
+        }
+        
+        public void onClick(View v) {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType(mMimeType);
+            mPendingResult = this;
+            if (isActivity) {
+            	startActivityForResult(intent, 10);
+            } else {
+            	MainTabActivity.getCurrentActivityGroup().startActivityForResult(intent, 10);
+            }
+        }
+    }
+
+    protected abstract void handleTitleBarEvent(int paramInt);
+
+    public void onClick(View view) {
+//        if (view == ly.registButton) {
+//            handleTitleBarEvent(LEFT_BUTTON);
+//        } else if (view == ly.loginButton) {
+//            handleTitleBarEvent(RIGHT_BUTTON);
+//        } else 
+        if (view == ly.leftButton) {
+            handleTitleBarEvent(LEFT_BUTTON);
+        } else if (view == ly.rightButton) {
+            handleTitleBarEvent(RIGHT_BUTTON);
+        } else if (view == ly.mButton1) {
+            handleTitleBarEvent(BG_BUTTON1);
+        } else if (view == ly.mButton2) {
+            handleTitleBarEvent(BG_BUTTON2);
+        } else if (view == ly.mButton3) {
+            handleTitleBarEvent(BG_BUTTON3);
+        } else if (view == mFavoriteText) {
+			String param = NetWorkUtils.COLLECTION + "?userid=" + StaticInfo.userid + "&pageindex=" + 0 + "&pagecount=" + 30;
+			new WebsiteParserTask(new CollectionsWebsiteParser(), this).execute(param);
+		}
+    }
+
+    protected void onCreate(Bundle paramBundle) {
+        super.onCreate(paramBundle);
+//        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mResolver = this.getContentResolver();
+        mInflater = (LayoutInflater)this.getSystemService("layout_inflater");
+        mResources = getResources();
+        
+//        if (this instanceof HomeActivity) {
+        	mWebsiteInfo = new ClassificationWebSiteInfo();
+//        }
+        
+        IntentFilter filter = new IntentFilter(ACTION_NOTIFY_DATA_SET_CHANGED);
+        filter.addAction(ACTION_NOTIFY_DATA_SET_INITIALIZED);
+        filter.addAction(ACTION_NOTIFY_DATA_SET_INVALIDATED);
+        
+        registerReceiver(mReceiver, filter);
+        
+	    mImageWidth = (int)mResources.getDimension(R.dimen.image_with);
+	    mImageHeigth = (int)mResources.getDimension(R.dimen.image_height);
+	    
+        mScreenWith = getWindowManager().getDefaultDisplay().getWidth();
+        mScreenHeihgt = getWindowManager().getDefaultDisplay().getHeight();
+        
+        mFooterView = getLayoutInflater().inflate(R.layout.list_footer, null);
+        mFooterView.setTag(0);
+        mFooterView.setOnClickListener(this);
+    }
+
+    protected void setAppTitle(String paramString1, String paramString2) {
+    }
+
+  protected void setTitleBar(int paramInt, String paramString1, String paramString2, String paramString3)
+  {
+    if (this.ly != null)
+      this.ly.setButtonTypeAndInfo(paramInt, paramString1, paramString2, paramString3);
+  }
+
+  protected void setView(int resId)
+  {
+//    ly = new BaseLayout(this, paramInt);
+    setContentView(resId);
+    ly = (BaseLayout)this.findViewById(R.id.title);
+    if (ly == null) { 
+    	Log.d("zheng", "the ly is null");
+    }
+    
+    ly.leftButton = (Button)ly.findViewById(R.id.left_button);
+    ly.rightButton = (Button)ly.findViewById(R.id.right_button);
+    ly.tvInfo = (TextView)ly.findViewById(R.id.center_textview);
+    
+    this.ly.leftButton.setOnClickListener(this);
+    ly.leftButton.setOnTouchListener(this);
+    this.ly.rightButton.setOnClickListener(this);
+    ly.rightButton.setOnTouchListener(this);
+//    ly.registButton = (TextView)ly.findViewById(R.id.regist_button);
+//    ly.loginButton = (TextView)ly.findViewById(R.id.login_button);
+//    this.ly.registButton.setOnClickListener(this);
+//    this.ly.loginButton.setOnClickListener(this);
+  }
+
+    protected void showToast(int resId) {
+        Toast toast = Toast.makeText(this, resId, Toast.LENGTH_LONG);
+        toast.setGravity(17, 0, 0);
+        toast.show();
+    }
+
+    class MessageHandler extends Handler {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                default:
+                case 0:
+            }
+        }
+    }
+    
+    protected Dialog createClearWordsDialog() {
+        return null;
+    }
+    
+    private Dialog createExitLoginDialog() {
+        return new AlertDialog.Builder(this)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setMessage("确认退出登录?")
+            .setPositiveButton(R.string.okay_action, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    dismissDialog(DIALOG_LOGOUT_ACCOUNT);
+                    switchToLoginActivity();
+//                    StaticInfo.mNickName = null;
+//                    StaticInfo.mUsername = null;
+//                    StaticInfo.mPassword = null;
+////                    Process.killProcess(Process.myPid());
+//                    Intent intent = new Intent(getApplication(), MainTabActivity.class);
+//                    startActivity(intent);
+                }
+            })
+            .setNegativeButton(R.string.cancel_action, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    dismissDialog(DIALOG_LOGOUT_ACCOUNT);
+                }
+            })
+            .create();
+    }
+    
+    protected Dialog createSaveImageDialog() {
+    	return null;
+    }
+    
+    @Override
+    protected Dialog onCreateDialog(int id) {
+    	Dialog dialog = null;
+    	switch (id) {
+    		case DIALOG_SAVE_IMAGE:
+    			dialog = createSaveImageDialog();
+    			break;
+    		case DIALOG_LOGOUT_ACCOUNT:
+				dialog = createExitLoginDialog();
+				break;
+			case DIALOG_CLEAR_WORDS:
+				dialog = createClearWordsDialog();
+				break;
+			case DIALOG_CONFIRM_ADD_PHOTO:
+				dialog = createNeedAddPhotoDialog();
+				break;
+			case DIALOG_COMBINE_SUCESS:
+				dialog = createCombineSucessDialog();
+				break;
+			case DIALOG_CONFIRM_QUIT_YC:
+				dialog = createConfirmQuitDialog();
+				break;
+			case DIALOG_BACK:
+				dialog = createBackWorkingDialog();
+				break;
+			case DIALOG_QUIT:
+				dialog = createQuitWorkingDialog();
+				break;
+			default:
+				break;
+		}
+    	
+        return dialog;
+    }
+    
+    protected void backWorkingPicturePage() {
+    	
+    }
+    
+    private Dialog createQuitWorkingDialog() {
+        return new AlertDialog.Builder(this)
+        .setIcon(android.R.drawable.ic_dialog_alert)
+//        .setTitle("取消发布")
+        .setMessage("确定要放弃正在编辑的彩信吗?")
+        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dismissDialog(DIALOG_QUIT);
+                finish();
+            }
+        })
+        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dismissDialog(DIALOG_QUIT);
+            }
+        })
+        .create();
+    }
+    
+    private Dialog createBackWorkingDialog() {
+        return new AlertDialog.Builder(this)
+        .setIcon(android.R.drawable.ic_dialog_alert)
+//        .setTitle("取消发布")
+        .setMessage("确定要放弃正在编辑的彩信吗?")
+        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dismissDialog(DIALOG_BACK);
+                backWorkingPicturePage();
+            }
+        })
+        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dismissDialog(DIALOG_BACK);
+            }
+        })
+        .create();
+    }
+    
+    @Override
+    protected void onStart() {
+    	super.onStart();
+    	if (!NetWorkUtils.checkNet(this)) {
+    		alertNetError(MainTabActivity.getCurrentActivityGroup());
+    	}
+    }
+    
+	public void alertNetError(final Context context) {
+		AlertDialog.Builder ab=new AlertDialog.Builder(context);
+		ab.setTitle("网络出错");
+		ab.setMessage("连接网络失败，请检查网络");
+	    ab.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			
+//			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if (NetWorkUtils.checkNet(context)) {
+					dialog.cancel();
+				} else {
+					context.startActivity(new 
+				             Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS)); 
+		    	    dialog.cancel();
+				}
+			}
+		});
+	    ab.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+			
+//			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				//ֹͣ����
+//			    Intent it=new Intent(context,MainService.class);
+//			    context.stopService(it);
+				if (!NetWorkUtils.checkNet(context)) {
+					android.os.Process.killProcess(android.os.Process.myPid());
+				}
+			}
+		});
+	    ab.create().show();
+	}
+    
+    protected Dialog createCombineSucessDialog() {
+    	return null;
+    }
+    
+    protected Dialog createNeedAddPhotoDialog() {
+        return new AlertDialog.Builder(this)
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .setMessage("请添加一张图片或选择一个模板")
+        .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dismissDialog(DIALOG_CONFIRM_ADD_PHOTO);
+            }
+        })
+        .create();
+    }
+    
+    protected Dialog createConfirmQuitDialog() {
+        return new AlertDialog.Builder(this)
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .setMessage("确认退出微博?")
+        .setPositiveButton(R.string.okay_action, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dismissDialog(DIALOG_CONFIRM_QUIT_YC);
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
+        })
+        .setNegativeButton(R.string.cancel_action, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dismissDialog(DIALOG_CONFIRM_QUIT_YC);
+            }
+        })
+        .create();
+    }
+    
+    protected void setHeadPic(String ulogname, ImageView head_pic) {
+    	Bitmap headpic = mHeadPicMap.get(ulogname);
+        if (headpic != null) {
+            Drawable drawable = null;
+            drawable = new BitmapDrawable(headpic);
+            head_pic.setBackgroundDrawable(drawable);
+        }
+    }
+    
+    public final static int REQUST_CODE_NEED_RELOAD = 1;
+    
+    protected void notifyToUser(final String result) {
+		Runnable run = new Runnable() {
+			
+//				@Override
+			public void run() {
+				Toast.makeText(BaseActivity.this, result, Toast.LENGTH_SHORT).show();
+			}
+		};
+		
+		runOnUiThread(run);
+    }
+    
+    
+    protected void returnToMainPage() {
+    	Intent intent = new Intent(this, MainTabActivity.class);
+    	intent.setAction("com.android.microblog.action.go_back_to_homepage");
+    	intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    	startActivity(intent);
+    	finish();
+    }
+    
+	protected void setSentTime(final long sentTime, final String sentDate,
+			final TextView textview) {
+		long nowTime = mNowTimeStamp;
+		int timelength = (int) (nowTime - sentTime);
+		String timeStr = null;
+//		textview.setTextColor(Color.YELLOW);
+		if (timelength < ONE_MINUTE) {
+			timeStr = timelength + "秒钟前";
+		} else if (timelength < ONE_HNOUR) {
+			timeStr = timelength / ONE_MINUTE + "分钟前";
+		} else if (timelength < ONE_DAY) {
+			timeStr = timelength / ONE_HNOUR + "小时前";
+		} else {
+//			textview.setTextColor(Color.GRAY);
+			timeStr = sentDate;
+		}
+
+		final String time = timeStr;
+		textview.setText(time);
+	}
+	
+	protected Bitmap scaleImage(Bitmap bitmap, int sWidth, int sHeight) {
+        int bmpWidth  =bitmap.getWidth();  
+
+        int bmpHeight  =bitmap.getHeight();  
+
+        //缩放图片的尺寸  
+
+        float scaleWidth  = (float) sWidth/ bmpWidth;     //按固定大小缩放  sWidth 写多大就多大
+
+        float scaleHeight = (float) sHeight / bmpHeight;  //
+
+        Matrix matrix = new Matrix();  
+
+        matrix.postScale(scaleWidth, scaleHeight);//产生缩放后的Bitmap对象  
+
+        Bitmap resizeBitmap = Bitmap.createBitmap(bitmap, 0, 0, bmpWidth,bmpHeight, matrix, false);  
+
+        return resizeBitmap;
+    }
+	
+	public class ClassficationParserTask extends AsyncTask<String, Void, Void> {
+
+		@Override
+		protected Void doInBackground(String... params) {
+			Log.d("zheng", "calling parseClassificationWebsiteInfo");
+			ClassificationLocalSiteInfo localInfo = new ClassificationLocalSiteInfo();
+			localInfo.optype = params[0];
+			localInfo.classid = params[1];
+			localInfo.classname = params[2];
+			showProgessBarDialog("Loading...");
+			mWebsiteInfo = new ClassificationWebsiteParser().parseWebsiteInfo(NetWorkUtils.GET_CLASS, localInfo);
+			
+			String urlParam = null;
+			String hitsUrlParam = null;
+			if (WebsiteParser.ALL.equals(localInfo.optype)) {
+				urlParam = "?productid=&parentclass=&sonclass=&addtime=&pageindex=0&pagecount=5&ordertype=DownHits";
+			} else if (WebsiteParser.PARENTCLASS.equals(localInfo.optype)) {
+				urlParam = "?productid=&parentclass=" + localInfo.classid + "&sonclass=&addtime=&pageindex=0&pagecount=5&ordertype=DownHits";
+			} else if (WebsiteParser.SINGLE.equals(localInfo.optype)) {
+				urlParam = "?productid=&parentclass=&sonclass=" + localInfo.classid + "&addtime=&pageindex=0&pagecount=5&ordertype=DownHits";
+			}
+			
+			WebsiteInfo webinfo = new SearchWebsiteParser().parseWebsiteInfo(NetWorkUtils.GET_PRODUCTS + urlParam);
+//			notifyToUser(webinfo.resultdesc);
+			if (ServerInfo.FAIL.equals(webinfo.result)) {
+				webinfo = null;
+//				return null;
+			}
+			
+			if(WebsiteParser.ALL.equals(localInfo.optype)) {
+				hitsUrlParam = "?productid=&parentclass=&sonclass=&addtime=&pageindex=0&pagecount=5&ordertype=Hits";
+				WebsiteInfo hitsWebinfo = new SearchWebsiteParser().parseWebsiteInfo(NetWorkUtils.GET_PRODUCTS + hitsUrlParam);
+				notifyToUser(hitsWebinfo.resultdesc);
+				if (!ServerInfo.FAIL.equals(hitsWebinfo.result)) {
+					SearchWebsiteInfo productWebsiteInfo = (SearchWebsiteInfo)hitsWebinfo;
+					ClassificationWebSiteInfo classificationWebsiteInfo = (ClassificationWebSiteInfo)mWebsiteInfo;
+					ClassificationWebSiteInfo.ParentClassInfo parentinfo = new ClassificationWebSiteInfo.ParentClassInfo();
+					parentinfo.mBaseInfo.classname = "最近更新";
+					classificationWebsiteInfo.mParentInfoList.add(0, parentinfo);
+					
+					ClassificationWebSiteInfo.ConclassInfo conclassinfo = new ClassificationWebSiteInfo.ConclassInfo();
+					parentinfo.newEntry(conclassinfo);
+					
+					int productCount = productWebsiteInfo.getProductsCount();
+					for (int i = 0; i < productCount; i++) {
+						SearchWebsiteInfo.ProductInfo productinfo = (SearchWebsiteInfo.ProductInfo)productWebsiteInfo.getProductInfo(i);
+						conclassinfo.newEntry(productinfo);
+					}
+				}
+			} else if (WebsiteParser.PARENTCLASS.equals(localInfo.optype)) {
+//				hitsUrlParam = "?productid=&parentclass=&sonclass=&addtime=&pageindex=0&pagecount=30&ordertype=Hits";
+//				WebsiteInfo hitsWebinfo = new SearchWebsiteParser().parseWebsiteInfo(NetWorkUtils.GET_PRODUCTS + hitsUrlParam);
+//				notifyToUser(hitsWebinfo.resultdesc);
+//				if (!ServerInfo.FAIL.equals(hitsWebinfo.result)) {
+//					
+//				}
+			}
+			
+			
+			
+			SearchWebsiteInfo productWebsiteInfo = (SearchWebsiteInfo)webinfo;
+			if (productWebsiteInfo == null) {
+				return null;
+			}
+			ClassificationWebSiteInfo.ConclassInfo conclassinfo = null;
+			if (WebsiteParser.ALL.equals(localInfo.optype)) {
+				ClassificationWebSiteInfo classificationWebsiteInfo = (ClassificationWebSiteInfo)mWebsiteInfo;
+				ClassificationWebSiteInfo.ParentClassInfo parentinfo = new ClassificationWebSiteInfo.ParentClassInfo();
+				parentinfo.mBaseInfo.classname = "下载排行";
+				classificationWebsiteInfo.newEntry(parentinfo);
+				
+				conclassinfo = new ClassificationWebSiteInfo.ConclassInfo();
+				parentinfo.newEntry(conclassinfo);
+			} else if (WebsiteParser.PARENTCLASS.equals(localInfo.optype)) {
+				ClassificationWebSiteInfo.ParentClassInfo parentinfo = (ClassificationWebSiteInfo.ParentClassInfo)mWebsiteInfo;
+				conclassinfo = new ClassificationWebSiteInfo.ConclassInfo();
+				conclassinfo.mBaseInfo.classname = "下载排行";
+				parentinfo.newEntry(conclassinfo);
+			} else if (WebsiteParser.SINGLE.equals(localInfo.optype)) {
+				conclassinfo = (ClassificationWebSiteInfo.ConclassInfo)mWebsiteInfo;
+				conclassinfo.mBaseInfo.classname = "栏目下载排行";
+			}
+			
+			int productCount = productWebsiteInfo.getProductsCount();
+			for (int i = 0; i < productCount; i++) {
+				SearchWebsiteInfo.ProductInfo productinfo = (SearchWebsiteInfo.ProductInfo)productWebsiteInfo.getProductInfo(i);
+				conclassinfo.newEntry(productinfo);
+			}
+			//			Intent intent = new Intent(ACTION_NOTIFY_DATA_SET_INITIALIZED);
+//			getApplicationContext().sendBroadcast(intent);
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			pd.dismiss();
+			mPhotoAdapter = new PhotoListAdapter(BaseActivity.this, mWebsiteInfo);
+			mListView.setAdapter(mPhotoAdapter);
+//			super.onPostExecuted(result);
+		}
+	}
+	
+	private void saveUserInfo() {
+		
+	}
+	
+	public class MusicParserTask extends AsyncTask<String, Void, Void> {
+
+		@Override
+		protected Void doInBackground(String... params) {
+			Log.d("zheng", "calling MusicParserTask");
+			MusicLocalSiteInfo localInfo = new MusicLocalSiteInfo();
+			localInfo.optype = params[0];
+			localInfo.id = params[1];
+//			showProgessBarDialog("Loading...");
+			mWebsiteInfo = new MusicWebsiteParser().parseWebsiteInfo(NetWorkUtils.GET_MUSIC, localInfo);
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+//			pd.dismiss();
+			mMusicAdapter = new MusicListAdapter(MainTabActivity.mHomeActivityGroup.getParent(), android.R.layout.simple_spinner_item, mWebsiteInfo);
+			mMusicAdapter.setDropDownViewResource(
+	                android.R.layout.simple_spinner_dropdown_item);
+			mSpinner.setAdapter(mMusicAdapter);
+			mSpinner.setSelected(false);
+		}
+	}
+	
+	public class CollectionsParserTask extends AsyncTask<String, Void, Void> {
+
+		@Override
+		protected Void doInBackground(String... params) {
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+		}
+	}
+	
+	public class WebsiteParserTask extends AsyncTask<String, Void, Void> {
+		private WebsiteParser mWebsiteParser;
+		private Context mContext;
+		
+		public WebsiteParserTask(WebsiteParser websiteParser, Context context) {
+			mWebsiteParser = websiteParser;
+			mContext = context;
+		}
+
+		@Override
+		protected Void doInBackground(String... params) {
+			Log.d("zheng", "calling SearchParserTask");
+			showProgessBarDialog("Loading...");
+			mWebsiteInfo = mWebsiteParser.parseWebsiteInfo(params[0]);
+			
+			int productCount = mWebsiteInfo.getProductsCount();
+			for(int j = 0; j < productCount; j++) {
+				ClassificationWebSiteInfo.ProductInfo productinfo = (ClassificationWebSiteInfo.ProductInfo)mWebsiteInfo.getProductInfo(j);
+    			if (productinfo == null) {
+    				continue;
+    			}
+				if (productinfo.photobitmap == null) {
+    				
+    				// query the photo from database firstly
+    				productinfo.photobitmap = Utils.getPhotoFromDatabase(mContext, productinfo);
+    				if (productinfo.photobitmap != null) {
+    					Log.d("zheng", "getPhotoFromDatabase:" + productinfo.photoaddress);
+    				}
+    				
+    				// if database doesn't store this photo, get it from network
+    				if (productinfo.photobitmap == null) {
+    					try {
+    						productinfo.photobitmap = Utils.getBitMapFromNetwork(productinfo.photoaddress, mContext);
+            				if (productinfo.photobitmap != null) {
+            					Log.d("zheng", "getBitMapFromNetwork:" + productinfo.photoaddress);
+            				}
+    					} catch (Exception e) {
+    						e.printStackTrace();
+    					}
+    					
+						if (productinfo.photobitmap != null) {
+							//restore this photo into database
+//							Utils.savePhotoIntoDatabase(mResolver, productinfo);
+							
+							productinfo.photobitmap = Utils.getResizedBitmap(productinfo.photobitmap, mImageWidth, mImageHeigth);
+							Log.d("zheng", "the bitmap with:" + productinfo.photobitmap.getWidth());
+							Log.d("zheng", "the bitmap height:" + productinfo.photobitmap.getHeight());
+						}
+    				}
+    			}
+			}
+			
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			pd.dismiss();
+			ImageView iv = null;
+			if (mWebsiteInfo == null) {
+				return;
+			}
+			
+			notifyToUser(mWebsiteInfo.resultdesc);
+			if (ServerInfo.FAIL.equals(mWebsiteInfo.result)) {
+				return;
+			}
+			int productCount = mWebsiteInfo.getProductsCount();
+			LinearLayout lineLayout = null;
+			ImageLayout imageLayout = null;
+			ImageView imageView = null;
+    		ProgressBar probar = null;
+    		boolean needDownload = false;
+    		boolean showButton = false;
+    		mProductList.removeAllViewsInLayout();
+    		if (mWebsiteInfo instanceof CollectionsWebsiteInfo) {
+    			showButton = true;
+    			
+    			mFavoriteText = (TextView)mInflater.inflate(R.layout.textview_layout, null);
+    			mFavoriteText.setOnClickListener(BaseActivity.this);
+    			mProductList.addView(mFavoriteText);
+    		}
+    		Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.default_image);
+			bmp = Utils.getResizedBitmap(bmp, mImageWidth, mImageHeigth);
+			for(int productIndex = 0; productIndex < productCount; productIndex++) {
+				if (productIndex % mLineCount == 0) {
+					lineLayout = new LinearLayout(mContext);
+					mProductList.addView(lineLayout);
+				}
+				
+				ProductInfo productinfo = (ProductInfo)mWebsiteInfo.getProductInfo(productIndex);
+				imageLayout = new ImageLayout(mContext, null, productinfo, showButton);
+				
+        		imageView = (ImageView)imageLayout.findViewById(R.id.image);
+        		probar = (ProgressBar)imageLayout.findViewById(R.id.progressbar);
+    			if (productinfo.photobitmap != null) {
+    				probar.setVisibility(View.GONE);
+    				imageView.setImageBitmap(productinfo.photobitmap);
+    			} else {
+    				imageView.setImageBitmap(bmp);
+    				probar.setVisibility(View.VISIBLE);
+    				needDownload = true;
+    			}
+    			
+    			((LinearLayout)lineLayout).addView(imageLayout, productIndex % mLineCount);
+    			
+    			
+//    			if (productinfo.photobitmap != null) {
+//    				iv = (ImageView)mInflater.inflate(R.layout.image, null);
+//    				iv.setImageBitmap(productinfo.photobitmap);
+//    				mProductList.addView(iv, productIndex);
+//    			}
+			}
+			
+			mProductList.invalidate();
+    		if (needDownload && mLoadImageTask == null) {
+    			mLoadImageTask = new LoadImageTask(mContext, mWebsiteInfo);
+    			mLoadImageTask.execute();
+    		}
+		}
+	}
+	
+	public class AlbumService extends Service {
+		public AlbumService(String name) {
+//			super(name);
+		}
+		private IAlbumServiceCallback mCallback;
+	    private RemoteCallbackList<IAlbumServiceCallback> mCallbackList =
+	            new RemoteCallbackList<IAlbumServiceCallback>();
+	     
+		public final IAlbumService.Stub mBinder = new IAlbumService.Stub() {
+			public void parseClassificationWebsiteInfo(String optype, String classid,
+					String classname) throws RemoteException {
+				Log.d("zheng", "calling parseClassificationWebsiteInfo");
+				ClassificationLocalSiteInfo localInfo = new ClassificationLocalSiteInfo();
+				localInfo.optype = optype;
+				localInfo.classid = classid;
+				localInfo.classname = classname;
+				mWebsiteInfo = new ClassificationWebsiteParser().parseWebsiteInfo(NetWorkUtils.GET_CLASS, localInfo);
+				
+				Intent intent = new Intent(ACTION_NOTIFY_DATA_SET_INITIALIZED);
+				getApplicationContext().sendBroadcast(intent);
+			}
+			
+			public void parseLoginWebsiteInfo() throws RemoteException {
+				Log.d("zheng", "calling parseClassificationWebsiteInfo");
+				PassWordVerifyLocalSiteInfo localInfo = new PassWordVerifyLocalSiteInfo();
+				localInfo.username = StaticInfo.mUsername;
+				localInfo.pwd = StaticInfo.mPassword;
+				mWebsiteInfo = new PassWordVerifyWebsiteParser().parseWebsiteInfo(NetWorkUtils.IS_EXIST_USER, localInfo);
+				Log.d("zheng", "the website result:" + mWebsiteInfo.result);
+			}
+			
+	        public void setCallback(IAlbumServiceCallback cb) throws RemoteException {
+	            if (mCallback != null) {
+	                mCallbackList.unregister(mCallback);
+	            }
+	            mCallback = cb;
+	            mCallbackList.register(cb);
+	        }
+		};
+		
+//		static protected final IAlbumServiceCallback.Stub sCallbackProxy =
+//		        new IAlbumServiceCallback.Stub() {
+//
+//		        public void loadAttachmentStatus(long messageId, long attachmentId, int statusCode,
+//		                int progress) throws RemoteException {
+////			            IEmailServiceCallback cb = INSTANCE == null ? null: INSTANCE.mCallback;
+////			            if (cb != null) {
+////			                cb.loadAttachmentStatus(messageId, attachmentId, statusCode, progress);
+////			            }
+//		        }
+//
+//		        public void sendMessageStatus(long messageId, String subject, int statusCode, int progress)
+//		                throws RemoteException {
+////			            IEmailServiceCallback cb = INSTANCE == null ? null: INSTANCE.mCallback;
+////			            if (cb != null) {
+////			                cb.sendMessageStatus(messageId, subject, statusCode, progress);
+////			            }
+//		        }
+//
+//		        public void syncMailboxListStatus(long accountId, int statusCode, int progress)
+//		                throws RemoteException {
+////			            IEmailServiceCallback cb = INSTANCE == null ? null: INSTANCE.mCallback;
+////			            if (cb != null) {
+////			                cb.syncMailboxListStatus(accountId, statusCode, progress);
+////			            }
+//		        }
+//
+//		        public void syncMailboxStatus(long mailboxId, int statusCode, int progress)
+//		                throws RemoteException {
+////			            IEmailServiceCallback cb = INSTANCE == null ? null: INSTANCE.mCallback;
+////			            if (cb != null) {
+////			                cb.syncMailboxStatus(mailboxId, statusCode, progress);
+////			            }
+//		        }
+//		    };
+		
+		@Override
+		public void onCreate() {
+		}
+
+		@Override
+		public IBinder onBind(Intent intent) {
+			mService = mBinder;
+			return mBinder;
+		}
+		
+//		static public IAlbumServiceCallback callback() {
+//			return sCallbackProxy;
+//		}
+	}
+	
+    @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    	if (mReceiver != null) {
+    		unregisterReceiver(mReceiver);
+    		mReceiver = null;
+    	}
+    	
+    	if (pd != null) {
+    		pd.dismiss();
+    	}
+    }
+    
+    public BroadcastReceiver mReceiver = new BroadcastReceiver() {
+		
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if(ACTION_NOTIFY_DATA_SET_CHANGED.equals(intent.getAction())) {
+				if (mPhotoAdapter != null) {
+					mPhotoAdapter.notifyDataSetChanged();
+				}
+				
+//				if (mAlbumAdapter != null) {
+//					mAlbumAdapter.notifyDataSetChanged();
+//				}
+				
+				if (mListView != null) {
+					BaseAdapter adapter = (BaseAdapter)mListView.getAdapter();
+					if (adapter != null) {
+						adapter.notifyDataSetChanged();
+					}
+				}
+			} else if (ACTION_NOTIFY_DATA_SET_INVALIDATED.equals(intent.getAction())) {
+				mPhotoAdapter.notifyDataSetInvalidated();
+			} else if (ACTION_NOTIFY_DATA_SET_INITIALIZED.equals(intent.getAction())) {
+				if (mPhotoAdapter == null) {
+					mPhotoAdapter = new PhotoListAdapter(BaseActivity.this, mWebsiteInfo);
+					mListView.setAdapter(mPhotoAdapter);
+				}
+			}
+			
+			Log.d("zheng", "BroadcastReceiver notifyDataSetChanged");
+		}
+	};
+	
+	public ProgressDialog pd;
+	protected void showProgessBarDialog(final String msg) {
+		Runnable action = new Runnable() {
+			
+			public void run() {
+			    if(pd==null) {
+			    	pd=new ProgressDialog(MainTabActivity.getCurrentActivityGroup());
+//			    	pd.setTitle("加载图片");
+			    }
+			    pd.setMessage(" 加载中... ");
+			    pd.show();	
+			}
+		};
+
+	    
+	    runOnUiThread(action);
+	}
+	
+    public boolean onTouch(View v, MotionEvent event) {
+    	if (v == null) {
+    		return false;
+    	}
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            v.getBackground().setAlpha(155);// 璁剧疆鍥剧墖閫忔槑搴?~255锛?瀹屽叏閫忔槑锛?55涓嶉€忔槑
+            v.invalidate();
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            v.getBackground().setAlpha(255);// 杩樺師鍥剧墖
+            v.invalidate();
+        }
+
+        return false;
+    }
+	
+//	public class WebsiteParserTask extends AsyncTask<String, Void, WebsiteInfo> {
+//	    public WebsiteParser mWebsiteParser = null;
+//	    
+//	    public WebsiteParserTask(WebsiteParser parser) {
+//	    	mWebsiteParser = parser;
+//	    }
+//	    
+//		@Override
+//		protected WebsiteInfo doInBackground(String... params) {
+//			WebsiteInfo websiteInfo = mWebsiteParser.parseWebsiteInfo(params[0]);
+//			return websiteInfo;
+//		}
+//		
+//		@Override
+//		protected void onPostExecute(WebsiteInfo result) {
+//			postExecute(result);
+//		}
+//	}
+	
+//	public void postExecute(WebsiteInfo result) {
+//		
+//	}
+}

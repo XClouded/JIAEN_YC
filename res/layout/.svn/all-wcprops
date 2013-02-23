@@ -1,0 +1,239 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/cicc.android/!svn/ver/13/YC/res/layout
+END
+message_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/cicc.android/!svn/ver/29/YC/res/layout/message_layout.xml
+END
+photo_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/cicc.android/!svn/ver/13/YC/res/layout/photo_layout.xml
+END
+list_item.xml
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/cicc.android/!svn/ver/13/YC/res/layout/list_item.xml
+END
+text_horizontal.xml
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/cicc.android/!svn/ver/13/YC/res/layout/text_horizontal.xml
+END
+forget_pwd_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/cicc.android/!svn/ver/13/YC/res/layout/forget_pwd_layout.xml
+END
+gridview_item.xml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/cicc.android/!svn/ver/29/YC/res/layout/gridview_item.xml
+END
+touchgifview_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/cicc.android/!svn/ver/23/YC/res/layout/touchgifview_layout.xml
+END
+signname_message_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/cicc.android/!svn/ver/27/YC/res/layout/signname_message_layout.xml
+END
+home_subject_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/cicc.android/!svn/ver/13/YC/res/layout/home_subject_layout.xml
+END
+login_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/cicc.android/!svn/ver/13/YC/res/layout/login_layout.xml
+END
+select_picture_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/cicc.android/!svn/ver/13/YC/res/layout/select_picture_layout.xml
+END
+home_detail_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/cicc.android/!svn/ver/13/YC/res/layout/home_detail_layout.xml
+END
+linear_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/cicc.android/!svn/ver/13/YC/res/layout/linear_layout.xml
+END
+delete_frame_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/cicc.android/!svn/ver/13/YC/res/layout/delete_frame_layout.xml
+END
+product_list.xml
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/cicc.android/!svn/ver/13/YC/res/layout/product_list.xml
+END
+color_table_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/cicc.android/!svn/ver/13/YC/res/layout/color_table_layout.xml
+END
+image.xml
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/cicc.android/!svn/ver/13/YC/res/layout/image.xml
+END
+list_footer.xml
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/cicc.android/!svn/ver/13/YC/res/layout/list_footer.xml
+END
+home_main_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/cicc.android/!svn/ver/13/YC/res/layout/home_main_layout.xml
+END
+regist_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/cicc.android/!svn/ver/13/YC/res/layout/regist_layout.xml
+END
+splash.xml
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/cicc.android/!svn/ver/13/YC/res/layout/splash.xml
+END
+multimedia_message_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/cicc.android/!svn/ver/29/YC/res/layout/multimedia_message_layout.xml
+END
+gallerypicker.xml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/cicc.android/!svn/ver/13/YC/res/layout/gallerypicker.xml
+END
+sign_name_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/cicc.android/!svn/ver/13/YC/res/layout/sign_name_layout.xml
+END
+words.xml
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/cicc.android/!svn/ver/28/YC/res/layout/words.xml
+END
+home_download_top_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/cicc.android/!svn/ver/13/YC/res/layout/home_download_top_layout.xml
+END
+maintabs.xml
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/cicc.android/!svn/ver/13/YC/res/layout/maintabs.xml
+END
+message_three_bottom.xml
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/cicc.android/!svn/ver/13/YC/res/layout/message_three_bottom.xml
+END
+gif_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/cicc.android/!svn/ver/27/YC/res/layout/gif_layout.xml
+END
+search_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/cicc.android/!svn/ver/13/YC/res/layout/search_layout.xml
+END
+webview_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/cicc.android/!svn/ver/13/YC/res/layout/webview_layout.xml
+END
+titlebar.xml
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/cicc.android/!svn/ver/29/YC/res/layout/titlebar.xml
+END
+picture_working_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/cicc.android/!svn/ver/29/YC/res/layout/picture_working_layout.xml
+END
+pic_work_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/cicc.android/!svn/ver/13/YC/res/layout/pic_work_layout.xml
+END
+favorite_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/cicc.android/!svn/ver/23/YC/res/layout/favorite_layout.xml
+END
+textview_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/cicc.android/!svn/ver/13/YC/res/layout/textview_layout.xml
+END
+text_vertical.xml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/cicc.android/!svn/ver/13/YC/res/layout/text_vertical.xml
+END
+working_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/cicc.android/!svn/ver/13/YC/res/layout/working_layout.xml
+END
+image_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/cicc.android/!svn/ver/13/YC/res/layout/image_layout.xml
+END

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+	
+<com.ant.liao.TouchGifView
+   	xmlns:android="http://schemas.android.com/apk/res/android"
+   	android:layout_width="@dimen/working_image_with"
+   	android:layout_height="@dimen/working_image_height"
+   	android:layout_gravity="center_horizontal|center_vertical"
+   	android:gravity="center_horizontal|center_vertical"/>

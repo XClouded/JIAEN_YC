@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_login" >
+
+    <EditText
+        android:id="@+id/q3_edit_pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:password="true" >
+    </EditText>
+
+    <CheckBox
+        android:id="@+id/q3_check_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/q3_edit_pwd"
+        android:layout_below="@+id/q3_edit_pwd"
+        android:layout_toLeftOf="@+id/q3_button_login_1"
+        android:text="下次自动登录"
+        android:textColor="#000"
+        android:textSize="13sp" />
+
+    <ImageView
+        android:id="@+id/q3_button_login_1"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/q3_edit_pwd"
+        android:layout_alignTop="@+id/q3_check_login"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/button_login" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/q3_edit_pwd"
+        android:layout_alignLeft="@+id/q3_edit_name"
+        android:layout_marginBottom="18dp"
+        android:text="密码："
+        android:textColor="#000"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/q3_edit_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView1"
+        android:layout_alignLeft="@+id/q3_edit_pwd"
+        android:layout_alignRight="@+id/q3_edit_pwd"
+        android:layout_marginBottom="20dp"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/q3_edit_name"
+        android:layout_alignLeft="@+id/q3_edit_name"
+        android:layout_marginBottom="18dp"
+        android:text="用户名："
+        android:textColor="#000"
+        android:textSize="15sp" />
+
+</RelativeLayout>

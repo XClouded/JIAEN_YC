@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#FFF4F4F4"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    <include android:id="@+id/title" layout="@layout/titlebar"/>
+    <LinearLayout
+		android:id="@+id/product_list"
+	    android:background="@drawable/category_frame_line"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_margin="20dp"
+	    android:gravity="center_horizontal|top"
+	    android:orientation="vertical">
+	    <TextView android:layout_width="80dp"
+	    	android:layout_height="15dp"
+	    	android:layout_marginTop="3dp"
+	    	android:gravity="center"
+	    	android:layout_gravity="left"
+	    	android:textStyle="bold" 
+ 	 		android:textColor="@android:color/white"
+ 	 		android:textSize="12dp"
+ 	 		android:text="优彩用户注册"/>
+ 	 	<TextView android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:paddingTop="25dp"
+	    	android:paddingLeft="10dp"
+	    	android:paddingRight="10dp"
+	    	android:textColor="@android:color/black"
+ 	 		android:textSize="16dp"
+ 	 		android:text="提示注册\: 发送zc到10655888, 收到提示回复Y即可注册成功\; 亦可登录网站http\:\/\/www.uuunm.com进行注册. 注册资费3元/月，注册以后您可以根据注册帐号收藏、管理收藏的种子彩信，方便二次发送、浏览；不注册也可以正常编辑、制作、发送彩信。"/>
+    </LinearLayout>
+</LinearLayout>
+    

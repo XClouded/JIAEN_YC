@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFF4F4F4" >
+    <include android:id="@+id/title" layout="@layout/titlebar"/>
+  <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:visibility="gone" android:layout_height="fill_parent">
+   	  <Button android:layout_height="wrap_content" android:text="GoGo" android:layout_width="wrap_content" android:id="@+id/Button01"></Button>
+      <ScrollView xmlns:android="http://schemas.android.com/apk/res/android" 
+        android:layout_width="fill_parent" android:layout_height="fill_parent" 
+        android:scrollbars="vertical" android:fadingEdge="vertical"> 
+        <TextView android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" android:id="@+id/TextView01" 
+            android:paddingTop="5dip" /> 
+	  </ScrollView>
+  
+  </LinearLayout>
+ 
+ 	<TextView 
+ 		android:id="@+id/notify"
+      	android:layout_width="fill_parent"
+      	android:layout_height="wrap_content"
+      	android:textColor="@android:color/black"
+      	android:layout_centerInParent="true"
+      	android:layout_gravity="center_horizontal|center_vertical"
+      	android:gravity="center_horizontal|center_vertical"
+      	android:text="微博上传中，请稍候..."/>
+</RelativeLayout>

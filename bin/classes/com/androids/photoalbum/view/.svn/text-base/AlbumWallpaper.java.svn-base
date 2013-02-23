@@ -1,0 +1,477 @@
+/*
+ * Copyright (C) 2009 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.android.photoalbum.view;
+
+import java.util.Vector;
+import java.util.regex.Pattern;
+
+import com.android.photoalbum.R;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Paint.FontMetrics;
+
+import android.graphics.Typeface;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Handler;
+import android.service.wallpaper.WallpaperService;
+
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+
+/*
+ * This animated wallpaper draws a rotating wireframe shape. It is similar to
+ * example #1, but has a choice of 2 shapes, which are user selectable and
+ * defined in resources instead of in code.
+ */
+
+public class AlbumWallpaper extends WallpaperService {
+
+    public static final String SHARED_PREFS_NAME="Albumsettings";
+    public static final String TAG="Albumsettings";
+    Vector<String> listFiles = null;
+    ImageFileManager ifm = new ImageFileManager();
+    
+ 
+    @Override
+    public void onCreate() {
+    	this.ifm.setContext(this);
+    	this.listFiles = this.ifm.getFileList();
+        super.onCreate();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public Engine onCreateEngine() {
+    	return new CubeEngine();
+    }
+
+    public String getErrorString(){
+		
+		String error = (String) getResources().getText(R.string.error_message);
+		error = error + "\n";
+		error = error + (String) getResources().getText(R.string.tips_support);
+		error = error + "\n";
+		//error = error + ifm.getPathes();
+		//error = error + (String) getResources().getText(R.string.tips_copy);
+		return error;
+}
+
+
+    class CubeEngine extends Engine 
+        implements SharedPreferences.OnSharedPreferenceChangeListener, SensorEventListener {
+
+        private final Handler mHandler = new Handler();
+        private float yDegree = 0;
+        private int numb = 0;
+        Paint mPaint = null;
+        int mCenterX = 200;
+        
+        Bitmap bmLandscape = null;
+        Bitmap bm = null;
+        
+        private final Runnable mDrawCube = new Runnable() {
+            public void run() {
+                drawFrame();
+            }
+        };
+        
+        private boolean mVisible;
+        private SharedPreferences mPrefs;
+        private SensorManager m_sensorManager = null;
+        CubeEngine() {
+            mPrefs = AlbumWallpaper.this.getSharedPreferences(SHARED_PREFS_NAME, 0);
+            mPrefs.registerOnSharedPreferenceChangeListener(this);
+            onSharedPreferenceChanged(mPrefs, null);
+            
+            mPaint = new Paint();
+            mPaint.setAntiAlias(true);
+            mPaint.setTextSize(30);
+            mPaint.setTypeface(Typeface.SERIF);
+            mPaint.setColor(0xBB00FF00);        
+        }
+
+        public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+
+            String shape = prefs.getString("cube2_shape", "cube");
+
+            // read the 3D model from the resource
+            readModel(shape);
+        }
+
+        private void readModel(String prefix) {
+            // Read the model definition in from a resource.
+
+            // get the resource identifiers for the arrays for the selected shape
+            //int pid = getResources().getIdentifier(prefix + "points", "array", getPackageName());
+            //int lid = getResources().getIdentifier(prefix + "lines", "array", getPackageName());
+
+        }
+
+        @Override
+        public void onCreate(SurfaceHolder surfaceHolder) {
+            super.onCreate(surfaceHolder);
+            setTouchEventsEnabled(true);
+            
+            m_sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+            m_sensorManager.registerListener(this, m_sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_GAME);
+      
+        }
+
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            mHandler.removeCallbacks(mDrawCube);
+            
+            m_sensorManager.unregisterListener(this);
+        }
+
+        @Override
+        public void onVisibilityChanged(boolean visible) {
+            mVisible = visible;
+            if (visible) {
+                drawFrame();
+            } else {
+                mHandler.removeCallbacks(mDrawCube);
+            }
+        }
+
+        @Override
+        public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            super.onSurfaceChanged(holder, format, width, height);
+            // store the center of the surface, so we can draw the cube in the right spot
+            mCenterX = width/2;
+            //mCenterY = height/2.0f;
+            drawFrame();
+        }
+
+        
+
+        @Override
+        public void onSurfaceDestroyed(SurfaceHolder holder) {
+            super.onSurfaceDestroyed(holder);
+            mVisible = false;
+            mHandler.removeCallbacks(mDrawCube);
+        }
+
+        @Override
+        public void onOffsetsChanged(float xOffset, float yOffset,
+                float xStep, float yStep, int xPixels, int yPixels) {
+            //mOffset = xOffset;
+            drawFrame();
+        }
+
+        /*
+         * Store the position of the touch event so we can use it for drawing later
+         */
+        @Override
+        public void onTouchEvent(MotionEvent event) {
+            /*if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                mTouchX = event.getX();
+                mTouchY = event.getY();
+            } else {
+                mTouchX = -1;
+                mTouchY = -1;
+            }*/
+            super.onTouchEvent(event);
+        }
+        
+        
+        
+        /*
+         * Draw one frame of the animation. This method gets called repeatedly
+         * by posting a delayed Runnable. You can do any drawing you want in
+         * here. This example draws a wireframe cube.
+         */
+        void drawFrame() {
+            final SurfaceHolder holder = getSurfaceHolder();
+            Canvas c = null;
+            try {
+                c = holder.lockCanvas();
+                if (c != null) {               	
+                	if(!AlbumWallpaper.this.ifm.isPathesExist()){
+            			c.drawColor(Color.BLACK);
+                		drawErrorMessage(c, getErrorString());                		
+                	}else{
+                		drawCurBitMap(c);
+                	}                	
+                }
+            } finally {
+                if (c != null) holder.unlockCanvasAndPost(c);
+            }
+
+            mHandler.removeCallbacks(mDrawCube);
+            if (mVisible) {
+                mHandler.postDelayed(mDrawCube, 1000 * 5);
+            }
+        }
+        
+        void drawString(Canvas c, String string){
+        	Vector<String> strings = GetTextLines(string, c.getWidth() - 20);
+        	for(int i=0; i < strings.size(); i++){
+    			FontMetrics fm = mPaint.getFontMetrics();
+    			int mFontHeight = (int) (Math.ceil(fm.descent - fm.top) + 2);
+        		c.translate(0, mFontHeight);
+        		c.drawText(strings.get(i), 10, 0, mPaint);
+        	}
+        	
+        }
+        
+        /**
+         * Draw the error message on canvas
+         * @param c
+         * @param errString
+         */
+        void drawErrorMessage(Canvas c, String errString){
+        	int count = c.save();
+        	c.translate(0, 30);
+        	mPaint.setTextAlign(Paint.Align.LEFT);
+        	
+        	mPaint.setColor(Color.RED);
+        	mPaint.setTextSize(30);
+        	drawString(c, getString(R.string.error_message));
+        	
+        	mPaint.setColor(Color.GREEN);
+        	mPaint.setTextSize(20);
+        	drawString(c, getString(R.string.tips_support));
+        	c.restoreToCount(count);
+        }
+        
+        /**
+         * Get bitmap of next screen, draw the picture on a bitmap
+         * @param c
+         * @param bitmap
+         * @param rotate90
+         * @return
+         */
+        void drawBitmap(Canvas c, Bitmap bitmap, boolean rotate90){
+        	Matrix matrix = new Matrix();
+        	float scale;
+        	float dx;
+        	float dy;
+        	
+        	int dwidth;
+        	int dheight;
+        	
+        	int vwidth;
+        	int vheight;
+        	
+        	dwidth = bitmap.getWidth();
+    		dheight = bitmap.getHeight();
+    		
+        	if(rotate90){
+        		vwidth = c.getHeight();
+        		vheight = c.getWidth();
+        	}else{
+        		vwidth = c.getWidth();
+        		vheight = c.getHeight();        		
+        	}
+			//prepare the matrix
+        	if(dwidth < vwidth && dheight < vheight){
+    			scale = 1.0f;
+    		} else {
+    			scale = Math.min((float)vwidth/(float)dwidth,
+    					(float)vheight/(float)dheight);
+    		}
+    		
+    		dx = (vwidth - dwidth * scale) * 0.5f;
+    		dy = (vheight - dheight * scale) * 0.5f;
+    		
+    		matrix.setScale(scale, scale);
+        	Bitmap currentImage = Bitmap.createBitmap(bitmap, 0, 0, dwidth, dheight, matrix, true);
+			
+			if (rotate90) {
+				// create bitmap rotated by 90 degree
+				Matrix vMatrix = new Matrix();
+				vMatrix.setRotate(90);
+
+				Bitmap vB2 = Bitmap.createBitmap(currentImage, 0, 0, currentImage.getWidth(),
+						currentImage.getHeight(), vMatrix, true);
+				c.drawColor(Color.BLACK);
+				c.drawBitmap(vB2, dy, dx, null);
+			} else {
+				c.drawColor(Color.BLACK);
+				c.drawBitmap(currentImage, dx, dy, null);
+			}
+
+        }
+        
+		/**
+		 * Draw the picture on the surface
+		 * 
+		 * @param c
+		 */
+		void drawCurBitMap(Canvas c) {
+			synchronized (this) {
+				//
+				listFiles = ifm.getFileList();
+				if (listFiles.size() == 0) {
+					return;
+				}
+				if (numb < listFiles.size()) {
+				} else {
+					numb = 0;
+				}
+				String fileName = listFiles.get(numb);
+				if (fileName == null || !ifm.isExist(fileName)) {
+					numb++;
+					return;
+				}
+
+				Bitmap bmp = BitmapFactory.decodeFile(fileName, null);
+				if (bmp == null) {
+					numb++;
+					return;
+				}
+				// draw the picture
+				boolean rotate90 = false;
+				
+				if (yDegree < 25.0 && yDegree > -25.0) {
+					rotate90 = true;
+				}
+				
+				drawBitmap(c, bmp, rotate90);
+				
+				numb++;
+
+			}
+		}
+        
+		public String[] split(String str, String sep) {
+            // Create a pattern to match breaks
+            Pattern p = Pattern.compile(sep);
+            // Split input with the pattern
+            String[] result = 
+                     p.split(str);
+            return result;
+        }
+        
+		public Vector<String> GetTextLinesNoWhitespace(String strText, int width) {
+			char ch;
+			int w = 0;
+			int istart = 0;
+
+			Vector<String> strings = new Vector<String>(3);
+
+			
+			int count = strText.length();
+			for (int i = 0; i < count; i++) {
+				ch = strText.charAt(i);
+				float[] widths = new float[1];
+				String str = String.valueOf(ch);
+				mPaint.getTextWidths(str, widths);
+				if (ch == '\n') {
+					strings.add(strText.substring(istart, i));
+					istart = i + 1;
+					w = 0;					
+				} else {
+					w += (int) Math.ceil(widths[0]);
+					if (w > width) {
+						// 78. mRealLine++;// 真实的行数加一
+						strings.add(strText.substring(istart, i));
+						istart = i;
+						i--;
+						w = 0;
+					} else {
+						if (i == count - 1) {
+							strings.add(strText.substring(istart, count));
+						}
+					}
+				}
+			}
+			return strings;
+		}
+
+		
+		public Vector<String> GetTextLines(String strText, int width) {
+			int w = 0;
+			float wf = 0;
+			
+			Vector<String> strings = new Vector<String>(3);
+			
+			String[] strLines = split(strText, "\n");
+			for (int n = 0; n < strLines.length; n++) {
+				String[] strWords = split(strLines[n], " ");
+				int count = strWords.length;
+				if(count == 1){
+					Vector<String> oneLineStrings = GetTextLinesNoWhitespace(strWords[0], width);
+					for(int i = 0; i < oneLineStrings.size(); i++){
+						strings.add(oneLineStrings.get(i));
+					}
+					continue;
+				}
+				StringBuffer sb = new StringBuffer();
+				for (int i = 0; i < count; i++) {
+					strWords[i] = strWords[i] + " ";
+					float[] widths = new float[strWords[i].length()];
+					mPaint.getTextWidths(strWords[i], widths);
+					wf = 0;
+					for (int j = 0; j < widths.length; j++) {
+						wf += (widths[j]);
+					}
+					w += (int) Math.ceil(wf);
+					//Log.d(TAG, "the word " + strWords[i] + ", w " + w + ",width is " + width);
+					if (w > width) {
+						//Log.d(TAG, "the line is " + sb.toString());
+						strings.add(sb.toString());
+						sb.delete(0, sb.length());
+						w = (int) Math.ceil(wf);
+					}
+					if (i == count - 1) {
+						sb.append(strWords[i]);
+						strings.add(sb.toString());
+						sb.delete(0, sb.length());
+						w = 0;
+					} else {
+						sb.append(strWords[i]);
+					}
+					
+				}
+			}
+			//Log.d(TAG, "strings size " + strings.size());
+			return strings;
+		}
+
+		public void onAccuracyChanged(Sensor arg0, int arg1) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void onSensorChanged(SensorEvent event) {
+			synchronized (this){
+				yDegree = event.values[1];
+			}
+		}
+		
+    }   
+    
+    
+}

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/q3_function_page_background" >
+
+    <Button
+        android:id="@+id/q3_erweima_saomiao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/q3_erweima_bendi"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="143dp"
+        android:layout_marginTop="10dp"
+        android:text="扫描" />
+
+    <Button
+        android:id="@+id/q3_erweima_bendi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="本地图片" />
+
+    <ImageView
+        android:id="@+id/q3_erweima_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/q3_erweima_bendi"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:id="@+id/q3_erweima_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/q3_erweima_saomiao"
+        android:layout_alignTop="@+id/q3_erweima_saomiao"
+        android:layout_marginTop="57dp"
+        android:text="个人信息"
+        android:textColor="#000"
+        android:textSize="15sp" />
+
+</RelativeLayout>

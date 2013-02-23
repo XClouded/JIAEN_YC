@@ -1,0 +1,44 @@
+<resources>
+    <dimen name="image_with">68dp</dimen>
+    <dimen name="image_height">91dp</dimen>
+    <dimen name="message_image_with">114dp</dimen>
+    <dimen name="message_image_height">125dp</dimen>
+    <dimen name="gallery_image_with">60dp</dimen>
+    <dimen name="gallery_image_height">90dp</dimen>
+    <dimen name="favorite_image_with">97dp</dimen>
+    <dimen name="favorite_image_height">122dp</dimen>
+    <dimen name="signname_image_with">95dp</dimen>
+    <dimen name="signname_image_height">130dp</dimen>
+    <dimen name="signname_image_download_with">315px</dimen>
+    <dimen name="signname_image_download_height">450px</dimen>
+    <dimen name="gif_with">220dp</dimen>
+    <dimen name="gif_height">220dp</dimen>
+    
+    <dimen name="msg_gif_with">130dp</dimen>
+    <dimen name="msg_gif_height">170dp</dimen>
+    
+    <dimen name="working_image_with">320dp</dimen>
+    <dimen name="working_image_height">420dp</dimen>
+    <dimen name="mms_image_height">103dp</dimen>
+    <dimen name="mms_image_with">103dp</dimen>
+    
+    <dimen name="delete_with">32dp</dimen>
+    <dimen name="delete_height">45dp</dimen>
+    <dimen name="gallery_height">60dp</dimen>
+    <dimen name="multi_msg_with">220dp</dimen>
+    <dimen name="multi_msg_height">218dp</dimen>
+    
+     <dimen name="grid_height">102dp</dimen>
+     
+     <dimen name="blog_width">20dp</dimen>
+     <dimen name="blog_height">40dp</dimen>
+     
+    <dimen name="dialog_left_margin">10dp</dimen>
+    <dimen name="dialog_top_margin">30dp</dimen>
+    <dimen name="dialog_right_margin">10dp</dimen>
+    <dimen name="dialog_bottom_margin">10dp</dimen>     
+    <dimen name="dialog_btn_close_right_margin">10dp</dimen>
+    <dimen name="dialog_btn_close_top_margin">10dp</dimen>
+    <dimen name="dialog_title_logo_left_margin">5dp</dimen>
+    <dimen name="dialog_title_height">30dp</dimen>  
+</resources> 

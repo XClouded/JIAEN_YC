@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg_login" >
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/titlebar" />
+
+    <EditText
+        android:id="@+id/pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:password="true" >
+    </EditText>
+
+    <CheckBox
+        android:id="@+id/auto_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/pwd"
+        android:layout_below="@+id/pwd"
+        android:layout_toLeftOf="@+id/btn_login"
+        android:text="下次自动登录"
+        android:textColor="#000"
+        android:textSize="13sp" />
+
+    <ImageView
+        android:id="@+id/btn_login"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/pwd"
+        android:layout_alignTop="@+id/auto_login"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/button_login" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/pwd"
+        android:layout_alignLeft="@+id/user_name"
+        android:layout_marginBottom="18dp"
+        android:text="密码："
+        android:textColor="#000"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView1"
+        android:layout_alignLeft="@+id/pwd"
+        android:layout_alignRight="@+id/pwd"
+        android:layout_marginBottom="20dp"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/user_name"
+        android:layout_alignLeft="@+id/user_name"
+        android:layout_marginBottom="18dp"
+        android:text="用户名："
+        android:textColor="#000"
+        android:textSize="15sp" />
+
+</RelativeLayout>

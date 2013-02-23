@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/view
+END
+RegisterActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/view/RegisterActivity.java
+END
+ContactMultiPicker.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/cicc.android/!svn/ver/29/YC/src/com/android/photoalbum/view/ContactMultiPicker.java
+END
+AlbumWallpaper.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/view/AlbumWallpaper.java
+END
+BaseLayout.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/cicc.android/!svn/ver/29/YC/src/com/android/photoalbum/view/BaseLayout.java
+END
+YC.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/view/YC.java
+END
+DialogActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/view/DialogActivity.java
+END
+ImageFileManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/view/ImageFileManager.java
+END
+ForgetPwdActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/view/ForgetPwdActivity.java
+END
+SignNameActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/cicc.android/!svn/ver/29/YC/src/com/android/photoalbum/view/SignNameActivity.java
+END
+HomeDownloadTopActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/cicc.android/!svn/ver/29/YC/src/com/android/photoalbum/view/HomeDownloadTopActivity.java
+END
+ImageLayout.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/cicc.android/!svn/ver/29/YC/src/com/android/photoalbum/view/ImageLayout.java
+END
+AbandonGifView.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/cicc.android/!svn/ver/13/YC/src/com/android/photoalbum/view/AbandonGifView.java
+END
+LoginActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/cicc.android/!svn/ver/29/YC/src/com/android/photoalbum/view/LoginActivity.java
+END
+MainTabActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/cicc.android/!svn/ver/29/YC/src/com/android/photoalbum/view/MainTabActivity.java
+END
+SelectPictureActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/cicc.android/!svn/ver/29/YC/src/com/android/photoalbum/view/SelectPictureActivity.java
+END
+PictureWorkingActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/cicc.android/!svn/ver/29/YC/src/com/android/photoalbum/view/PictureWorkingActivity.java
+END

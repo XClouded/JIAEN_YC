@@ -1,0 +1,110 @@
+package com.android.photoalbum.parser;
+
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import android.graphics.Bitmap;
+import android.util.Log;
+
+import com.android.photoalbum.netinfo.ClassificationLocalSiteInfo;
+import com.android.photoalbum.netinfo.ClassificationWebSiteInfo;
+import com.android.photoalbum.netinfo.LocalSiteInfo;
+import com.android.photoalbum.netinfo.MusicLocalSiteInfo;
+import com.android.photoalbum.netinfo.MusicWebsiteInfo;
+import com.android.photoalbum.netinfo.SearchLocalSiteInfo;
+import com.android.photoalbum.netinfo.SearchWebsiteInfo;
+import com.android.photoalbum.netinfo.ServerInfo;
+import com.android.photoalbum.netinfo.WordsAddWebsiteInfo;
+import com.android.photoalbum.netinfo.WebsiteInfo;
+import com.android.photoalbum.utils.NetWorkUtils;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+public class WordsAddWebsiteParser extends WebsiteParser {
+	
+	@Override
+    public WebsiteInfo parseWebsiteInfo(String urlPar) {
+		WordsAddWebsiteInfo nameWebsiteInfo = null;
+		WordsAddWebsiteInfo.ProductInfo nameInfo = null;
+    	WebsiteInfo webinfo = new WebsiteInfo();
+    	 
+        try {
+            URL url = new URL(NetWorkUtils.BASE_URI + urlPar);
+            Log.d("zheng", "parseWebsiteInfo url:" + url.toString());
+            URLConnection connection = url.openConnection();
+            HttpURLConnection httpConnection = (HttpURLConnection)connection;
+            int responseCode = httpConnection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                InputStream in = httpConnection.getInputStream();
+                DocumentBuilderFactory dbfactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder db = dbfactory.newDocumentBuilder();
+                Document dom = db.parse(in);
+                Element docEle = dom.getDocumentElement();
+
+                WebsiteInfo result = getResult(docEle);
+                if (!ServerInfo.SUCCESS.equals(result.result)) {
+                	return result;
+                }
+                
+                NodeList nl = docEle.getElementsByTagName("OutPath");
+                if (nl != null && nl.getLength() > 0) {
+                	nameWebsiteInfo = new WordsAddWebsiteInfo();
+                    Log.d("zheng", "nl.getLength():" + nl.getLength());
+                    for (int i = 0; i < nl.getLength(); i++) {
+                        Element entry = (Element)nl.item(i);
+                        nameInfo = new WordsAddWebsiteInfo.ProductInfo();
+//                    	entry = (Element)nl.item(i);
+                    	nameInfo = (WordsAddWebsiteInfo.ProductInfo)getProductInfo(entry);
+                        
+                        nameWebsiteInfo.newEntry(nameInfo);
+                    }
+                }
+                
+                return nameWebsiteInfo;
+            } else {
+            	webinfo.result = ServerInfo.FAIL;
+            	webinfo.resultdesc = ServerInfo.CONNECT_FAIL + " 返回码:" + responseCode;
+            	return webinfo;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    	webinfo.result = ServerInfo.FAIL;
+    	webinfo.resultdesc = ServerInfo.UNKNOWN_FAIL;
+		return webinfo;
+    }
+
+	private WebsiteInfo getProductInfo(Element entry) {
+//        Element outPath = (Element)entry.getElementsByTagName("OutPath").item(0);
+		
+        WordsAddWebsiteInfo.ProductInfo nodeinfo = new WordsAddWebsiteInfo.ProductInfo();
+        nodeinfo.photoaddress = getNodeValue(entry);
+        return nodeinfo;
+	}
+	
+    protected String getNodeValue(Element element) {
+        String value = null;
+        if (element != null) {
+        	String name = element.getNodeName();
+        	Log.d("zheng", "=========name:" + name);
+//        	value = element.getAttribute("attr");
+        	
+           Node node = element.getFirstChild();
+           if (node != null) {
+        	   value = node.getNodeValue();
+               Log.d("zheng", "=========value:" + value);
+           }
+        }
+        return value;
+    }
+}
