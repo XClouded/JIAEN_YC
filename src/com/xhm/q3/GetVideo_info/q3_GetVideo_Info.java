@@ -28,6 +28,7 @@ public final class q3_GetVideo_Info {
 	public static HttpClient httpClient;
 	public static ArrayList<q3_Haoyou_Info> mHaoyou_Infos;
 
+	// 本地添加
 	// 获取视频的所有信息
 	public static ArrayList<q3_Video_Info> getVideoInfo(String classid,
 			String count, String pageindex, String ordernum, String username,
@@ -391,7 +392,7 @@ public final class q3_GetVideo_Info {
 					Element e = (Element) k.next();
 					String attr = e.attributeValue("attr");
 					str += attr;
-					System.out.println("sttt==="+str);
+					System.out.println("sttt===" + str);
 				}
 				return str;
 			}
