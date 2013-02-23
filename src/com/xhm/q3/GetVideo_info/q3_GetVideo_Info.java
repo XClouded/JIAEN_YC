@@ -28,7 +28,7 @@ public final class q3_GetVideo_Info {
 	public static HttpClient httpClient;
 	public static ArrayList<q3_Haoyou_Info> mHaoyou_Infos;
 	// 网络添加   网络添加1
-	// 本地添加  本地添加1
+	// 本地添加  本地添加1 本地添加2
 	// 获取视频的所有信息
 	public static ArrayList<q3_Video_Info> getVideoInfo(String classid,
 			String count, String pageindex, String ordernum, String username,
