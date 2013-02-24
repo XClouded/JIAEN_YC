@@ -1,5 +1,6 @@
 package com.xhm.q3.view;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,17 +12,20 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.photoalbum.R;
+import com.androids.photoalbum.tab.ui.MessageActivity;
 import com.xhm.q3.GetVideo_info.AsynImageLoader;
 
 public class q3_youcai_item_feixiangtohaoyou extends Activity implements
 		OnClickListener {
 	private ImageView mImageView, mBendi, mFeixiang, mBack;
-	private TextView mName, mShow, mKeep, mShare, mTime, mSize, mPhone;
+	private TextView mName, mShow, mKeep, mShare, mTime, mSize;
 	private Button mShare_button, mExit_button;
+	private EditText mContact;
 	private q3_Video_Info mInfo;
 
 	@Override
@@ -34,7 +38,7 @@ public class q3_youcai_item_feixiangtohaoyou extends Activity implements
 	}
 
 	private void initView() {
-		mPhone = (TextView) findViewById(R.id.q3_youcai_feixiangtohaoyou_phone);
+		mContact = (EditText) findViewById(R.id.q3_youcai_feixiangtohaoyou_phone);
 		mImageView = (ImageView) findViewById(R.id.q3_youcai_feixiangtohaoyou_item_pic);
 		AsynImageLoader loader = new AsynImageLoader(this);
 		loader.showImageAsyn(mImageView, mInfo.getmPic_Path(), R.drawable.icon);
@@ -81,10 +85,15 @@ public class q3_youcai_item_feixiangtohaoyou extends Activity implements
 			startActivity(Intent);
 			break;
 		case R.id.q3_youcai_feixiangtohaoyou_exit:
-			mPhone.setText("");
+			mContact.setText("");
 			break;
 		case R.id.q3_youcai_feixiangtohaoyou_share:
-
+			System.out.println("phone nul==" + mContact.getText().toString());
+			intent = new Intent(android.content.Intent.ACTION_SEND, Uri.parse("smsto:" +null));
+			intent.putExtra("address", mContact.getText().toString());
+			intent.putExtra("sms_body", mInfo.getmDescrib() + mInfo.getmPath());
+			intent.setType("image/*");
+			startActivity(intent);
 			break;
 		case R.id.q3_youcaifeixiang_back:
 			finish();
@@ -94,6 +103,7 @@ public class q3_youcai_item_feixiangtohaoyou extends Activity implements
 		}
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -129,13 +139,14 @@ public class q3_youcai_item_feixiangtohaoyou extends Activity implements
 											.getString(phones
 													.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
 
-									if (mPhone.getEditableText().toString() == null
-											|| mPhone.getEditableText()
+									if (mContact.getEditableText().toString() == null
+											|| mContact.getEditableText()
 													.toString().length() == 0) {
-										mPhone.setText(phoneNumber);
+										mContact.setText(phoneNumber);
 									} else {
-										mPhone.setText(mPhone.getEditableText()
-												.toString() + "," + phoneNumber);
+										mContact.setText(mContact
+												.getEditableText().toString()
+												+ "," + phoneNumber);
 									}
 									Log.d("zheng", "testNum=" + phoneNumber
 											+ "type:" + phoneTpye);

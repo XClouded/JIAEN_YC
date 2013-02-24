@@ -11,6 +11,8 @@ import android.graphics.Camera;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -38,18 +40,17 @@ public class q3_function_activity extends Activity implements OnTouchListener {
 	private ProgressDialog mDialog;
 	private Context mContext;
 	PassWordVerifyLocalSiteInfo localInfo;
+	private Handler mHandler;
 	// 验证登录的线程
 	Thread thread = new Thread(new Runnable() {
 		@Override
 		public void run() {
 			mWebsiteInfo = new PassWordVerifyWebsiteParser().parseWebsiteInfo(
 					NetWorkUtils.IS_EXIST_USER, localInfo);
-			System.out.println("info_hou");
 			if (ServerInfo.SUCCESS.equals(mWebsiteInfo.result)) {
 				mDialog.dismiss();
 				mDialog_login.dismiss();
-				mImageView_login_value
-						.setImageResource(R.drawable.q3_function_page_login_ok);
+				mHandler.sendEmptyMessage(0);
 				notifyToUser("登录成功!");
 				return;
 			} else {
@@ -71,6 +72,7 @@ public class q3_function_activity extends Activity implements OnTouchListener {
 		createDialog();
 		initVar();
 		initView();
+
 	}
 
 	// 初始化成员变量
@@ -78,6 +80,15 @@ public class q3_function_activity extends Activity implements OnTouchListener {
 		mContext = this;
 		mCamera = new Camera();
 		localInfo = new PassWordVerifyLocalSiteInfo();
+		mHandler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				super.handleMessage(msg);
+				mImageView_login_value
+						.setImageResource(R.drawable.q3_function_page_login_ok);
+			}
+		};
+
 	}
 
 	// 控件初始化
@@ -205,11 +216,12 @@ public class q3_function_activity extends Activity implements OnTouchListener {
 					// 获得用户名和密码
 					SharedPreferences editor = getSharedPreferences(
 							MainTabActivity.USER_INFO, MODE_WORLD_READABLE);
+					String auto_login = editor.getString("auto_login", "-2");
 					String name = editor.getString("username", "-1");
 					String pwd = editor.getString("password", "-1");
 					System.out.println("name" + name + "     " + "pwd" + pwd);
-					if (("-1" != (name)) && ("-1" != (pwd))
-							&& (name.length() != 0) && (pwd.length() != 0)) {
+					System.out.println("auto_login===" + auto_login);
+					if (auto_login.equals("1")) {
 						System.out.println("show");
 						// 显示dialog
 						showProgessBarDialog("Loading...");
@@ -311,7 +323,7 @@ public class q3_function_activity extends Activity implements OnTouchListener {
 				if (mDialog == null) {
 					mDialog = new ProgressDialog(mContext);
 				}
-				mDialog.setMessage("登陆中... ");
+				mDialog.setMessage("登录中... ");
 				mDialog.show();
 			}
 		};

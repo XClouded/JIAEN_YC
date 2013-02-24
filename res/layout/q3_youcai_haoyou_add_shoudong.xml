@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/q3_function_page_background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/q3_youcai_haoyou_add_haoyou" >
+
+        <ImageView
+            android:id="@+id/q3_youcaifeixiang_back"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/q3_fanhui" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/q3_haoyou_add_xbxm"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/q3_haoyou_add_xingming"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:background="#00000000"
+            android:gravity="center"
+            android:textColor="#000"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/q3_haoyou_add_dianhua"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:background="#00000000"
+            android:gravity="center"
+            android:phoneNumber="true"
+            android:textColor="#000"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
+
+        <TableRow android:gravity="center_horizontal" >
+
+            <Button
+                android:id="@+id/q3_haoyou_fanhuitohaoyou"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/q3_fanhuitohaoyou" />
+
+            <Button
+                android:id="@+id/q3_haoyou_wancheng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/q3_youcai_wancheng" />
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

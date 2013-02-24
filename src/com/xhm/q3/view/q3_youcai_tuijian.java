@@ -152,6 +152,8 @@ class TuiJianAdapter extends BaseAdapter {
 				break;
 			case R.id.q3_youcai_tuijian_button_to_haoyou:
 				System.out.println("haoyou");
+				q3_GetVideo_Info.VideoShare(mQ3_Video_Infos.get(position)
+						.getmId(), name, null);
 				intent = new Intent(mContext,
 						q3_youcai_item_feixiangtohaoyou.class);
 				Bundle mBundle = new Bundle();
@@ -171,6 +173,7 @@ class TuiJianAdapter extends BaseAdapter {
 
 				// 增加分享的次数
 				if (("-1" != (name)) && (name.length() != 0)) {
+					System.out.println("fenxiang ==="+name);
 					q3_GetVideo_Info.VideoShare(mQ3_Video_Infos.get(position)
 							.getmId(), name, null);
 					intent = new Intent(Intent.ACTION_SEND);
@@ -210,6 +213,7 @@ class TuiJianAdapter extends BaseAdapter {
 		} else {
 			this.mQ3_Video_Infos = q3_Video_Infos;
 		}
+		notifyDataSetChanged();
 	}
 
 	@Override

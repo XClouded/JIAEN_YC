@@ -13,7 +13,6 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.httpclient.util.EncodingUtil;
-import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -27,8 +26,7 @@ public final class q3_GetVideo_Info {
 	public static ArrayList<q3_Video_Info> mVideo_Infos;
 	public static HttpClient httpClient;
 	public static ArrayList<q3_Haoyou_Info> mHaoyou_Infos;
-	// 网络添加   网络添加1
-	// 本地添加  本地添加1 本地添加2
+
 	// 获取视频的所有信息
 	public static ArrayList<q3_Video_Info> getVideoInfo(String classid,
 			String count, String pageindex, String ordernum, String username,
@@ -131,9 +129,115 @@ public final class q3_GetVideo_Info {
 		return mVideo_Infos;
 	}
 
+	// 获取分享视频的所有信息
+	public static ArrayList<q3_Video_Info> getShareVideoInfo(String url,
+			String count, String pageindex, String username) {
+		mVideo_Infos = new ArrayList<q3_Video_Info>();
+		GetMethod getMethod = null;
+		httpClient = new HttpClient();
+		httpClient.getHttpConnectionManager().getParams()
+				.setConnectionTimeout(50000);
+		NameValuePair[] pairs = new NameValuePair[3];
+		pairs[0] = new NameValuePair("count", count);
+		pairs[1] = new NameValuePair("pageindex", pageindex);
+		pairs[2] = new NameValuePair("username", username);
+
+		getMethod = new GetMethod(url);
+		getMethod.addRequestHeader("Content-Type", "text/html; charset="
+				+ "utf-8");
+		getMethod.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, 50000);
+		getMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
+				new DefaultHttpMethodRetryHandler());
+		getMethod.setQueryString(EncodingUtil.formUrlEncode(pairs, "utf-8"));
+		try {
+			int statusCode = httpClient.executeMethod(getMethod);
+			if (statusCode != HttpStatus.SC_OK) {
+				System.err.println("Method failed: "
+						+ getMethod.getStatusLine());
+			} else {
+				InputStream is = getMethod.getResponseBodyAsStream();
+				SAXReader reader = new SAXReader();
+				Document doc = reader.read(is);
+				Element root = doc.getRootElement();
+				for (Iterator i = root.elementIterator("shareinfo"); i
+						.hasNext();) {
+					Element video = (Element) i.next();
+					for (Iterator j = video.elementIterator("share"); j
+							.hasNext();) {
+						Element ele = (Element) j.next();
+						for (Iterator k = ele.elementIterator("video"); k
+								.hasNext();) {
+							Element kk = (Element) k.next();
+							q3_Video_Info info = new q3_Video_Info();
+							int index = 0;
+							for (Iterator l = ele.elementIterator(); l
+									.hasNext();) {
+								Element e = (Element) l.next();
+								String attr = e.attributeValue("attr");
+								switch (index) {
+								case 0:
+									info.setmId(attr);
+									break;
+								case 1:
+									info.setmClassid(attr);
+									break;
+								case 2:
+									info.setmPath(attr);
+									info.setmPic_Path(attr
+											.replace("mp4", "jpg"));
+									break;
+								case 3:
+									info.setmName(attr);
+									break;
+								case 4:
+									info.setmDescrib(attr);
+									break;
+								case 5:
+									info.setmTime(attr);
+									break;
+								case 6:
+									info.setmShow(attr);
+									break;
+								case 7:
+									info.setmSize(attr);
+									break;
+								case 8:
+									info.setmKeep(attr);
+									break;
+								case 9:
+									info.setmShare(attr);
+									break;
+								default:
+									break;
+
+								}
+
+								index++;
+							
+							}
+							mVideo_Infos.add(info);
+						}
+					}
+				}
+
+			}
+		} catch (HttpException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		q3_youcai_activity.pd.dismiss();
+		return mVideo_Infos;
+	}
+
 	// 分享次数的增加
 	public static String VideoShare(String id, String OriNum, String DestNum) {
-		String url = "http://www.uuunm.com/getVideo.jsp";
+		String url = "http://www.uuunm.com/setVideoshare.jsp";
 		GetMethod getMethod = null;
 		httpClient = new HttpClient();
 		httpClient.getHttpConnectionManager().getParams()

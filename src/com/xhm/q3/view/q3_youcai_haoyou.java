@@ -3,7 +3,9 @@ package com.xhm.q3.view;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,14 +13,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.photoalbum.R;
 import com.xhm.q3.GetVideo_info.q3_GetVideo_Info;
-import com.xhm.q3.view.TuiJianAdapter.ViewHolder;
 
 public class q3_youcai_haoyou extends Activity implements OnClickListener {
 	private ImageView mBack, mAdd;
@@ -130,17 +131,37 @@ class HaoYou_Adapter extends BaseAdapter implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		ViewHolder holder = getViewHolder(v);
+		final ViewHolder holder = getViewHolder(v);
 		switch (v.getId()) {
 		case R.id.q3_youcai_haoyou_delete:
-			System.out.println("positon===" + holder.position);
+			new AlertDialog.Builder(mContext)
+					.setIcon(R.drawable.ic_launcher)
+					.setTitle("提示：")
+					.setMessage("是否删除好友？")
+					.setPositiveButton("确定",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int whichButton) {
+									String str = q3_GetVideo_Info
+											.Delfriend(mHaoyou_Infos.get(
+													holder.position).getmID());
+									if (str.contains("成功")) {
+										Toast.makeText(mContext, "删除成功！",
+												Toast.LENGTH_LONG).show();
+										mHaoyou_Infos.remove(holder.position);
+										notifyDataSetChanged();
+									}
+								}
+							})
+					.setNegativeButton("取消",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int whichButton) {
 
-			String str = q3_GetVideo_Info.Delfriend(mHaoyou_Infos.get(
-					holder.position).getmID());
-			// mHaoyou_Infos = q3_GetVideo_Info.GetfriendsInfo(null, null,
-			// getIntent()
-			// .getStringExtra("name"));
-			notifyDataSetChanged();
+									/* User clicked Cancel so do some stuff */
+								}
+							}).create().show();
+
 			break;
 		case R.id.q3_youcai_haoyou_xiugai:
 			System.out.println("positon===" + holder.position);

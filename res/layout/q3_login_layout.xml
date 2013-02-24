@@ -53,7 +53,8 @@
         android:layout_alignLeft="@+id/q3_edit_pwd"
         android:layout_alignRight="@+id/q3_edit_pwd"
         android:layout_marginBottom="20dp"
-        android:ems="10" >
+        android:ems="10"
+        android:phoneNumber="true" >
 
         <requestFocus />
     </EditText>

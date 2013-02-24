@@ -10,12 +10,12 @@ public final class R {
 	public static final class id {
 		public static final int llImage = 0x7f090054;
 		public static final int flPic = 0x7f090057;
-		public static final int etEdit = 0x7f090187;
+		public static final int etEdit = 0x7f09018b;
 		public static final int ivDelPic = 0x7f090059;
 		public static final int ivImage = 0x7f090058;
 		public static final int tv_text_limit = 0x7f090056;
-		public static final int btnSend = 0x7f090186;
-		public static final int rlTotal = 0x7f09017e;
+		public static final int btnSend = 0x7f09018a;
+		public static final int rlTotal = 0x7f090182;
 		public static final int rlTitle = 0x7f090051;
 		public static final int btnClose = 0x7f090052;
 		public static final int ll_text_limit_unit = 0x7f090055;
@@ -44,7 +44,7 @@ public final class R {
 		public static final int share_dialog_title = 0x7f0a00a3;
 	}
 	public static final class layout {
-		public static final int share_mblog_view = 0x7f03005c;
+		public static final int share_mblog_view = 0x7f03005d;
 	}
 	public static final class drawable {
 		public static final int bg_content = 0x7f020009;
@@ -55,7 +55,7 @@ public final class R {
 		public static final int dota = 0x7f02003c;
 		public static final int image_background = 0x7f02004c;
 		public static final int bg_delwords_sel = 0x7f02000c;
-		public static final int title_logo = 0x7f020150;
+		public static final int title_logo = 0x7f020154;
 		public static final int bg_delwords_nor = 0x7f02000b;
 		public static final int close_press = 0x7f02002d;
 		public static final int dialog_bg = 0x7f02003a;

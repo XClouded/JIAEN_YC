@@ -667,8 +667,14 @@
             android:configChanges="orientation|keyboard"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
-     <activity
+        <activity
             android:name="com.xhm.q3.view.q3_youcai_feixiangtohaoyou_add_feixiang"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.xhm.q3.view.q3_haoyou_add_haoyou"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboard"
             android:screenOrientation="portrait"

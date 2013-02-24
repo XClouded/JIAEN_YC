@@ -1,32 +1,20 @@
 package com.androids.photoalbum.parser;
 
+import java.io.InputStream;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import android.graphics.Bitmap;
 import android.util.Log;
 
-import com.androids.photoalbum.netinfo.ClassificationLocalSiteInfo;
-import com.androids.photoalbum.netinfo.ClassificationWebSiteInfo;
-import com.androids.photoalbum.netinfo.LocalSiteInfo;
-import com.androids.photoalbum.netinfo.MusicLocalSiteInfo;
-import com.androids.photoalbum.netinfo.MusicWebsiteInfo;
-import com.androids.photoalbum.netinfo.SearchLocalSiteInfo;
-import com.androids.photoalbum.netinfo.SearchWebsiteInfo;
 import com.androids.photoalbum.netinfo.ServerInfo;
 import com.androids.photoalbum.netinfo.WebsiteInfo;
 import com.androids.photoalbum.netinfo.WordsAddWebsiteInfo;
-import com.androids.photoalbum.utils.NetWorkUtils;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 public class WorkingPhotoWebsiteParser extends WebsiteParser {
 
@@ -43,6 +31,7 @@ public class WorkingPhotoWebsiteParser extends WebsiteParser {
 			Document dom = db.parse(in);
 			Element docEle = dom.getDocumentElement();
 			WebsiteInfo result = getResult(docEle);
+			System.out.println("result.resultdesc=="+result.resultdesc);
 			if (!ServerInfo.SUCCESS.equals(result.result)) {
 				return null;
 			}

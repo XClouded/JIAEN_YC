@@ -117,9 +117,9 @@ public class q3_login_activity extends BaseActivity implements OnTouchListener,
 				showProgessBarDialog("Loading...");
 				mUsername = params[0];
 				mPassword = params[1];
-				
+
 				parseLoginWebsiteInfo(mUsername, mPassword);
-				
+
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
@@ -144,6 +144,7 @@ public class q3_login_activity extends BaseActivity implements OnTouchListener,
 					SharedPreferences.Editor editor = getSharedPreferences(
 							MainTabActivity.USER_INFO, MODE_WORLD_READABLE)
 							.edit();
+					editor.putString("auto_login", "1");
 					editor.putString("username", StaticInfo.mUsername);
 					editor.putString("password", StaticInfo.mPassword);
 					editor.putString("server_userid",
@@ -155,8 +156,9 @@ public class q3_login_activity extends BaseActivity implements OnTouchListener,
 					SharedPreferences.Editor editor = getSharedPreferences(
 							MainTabActivity.USER_INFO, MODE_WORLD_READABLE)
 							.edit();
+					editor.putString("auto_login", "0");
 					editor.putString("username", StaticInfo.mUsername);
-					editor.putString("password", "");
+					editor.putString("password", StaticInfo.mPassword);
 					editor.putString("server_userid", "");
 					editor.putString("server_username", "");
 					editor.commit();
