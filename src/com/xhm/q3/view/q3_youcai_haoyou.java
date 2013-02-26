@@ -25,6 +25,7 @@ public class q3_youcai_haoyou extends Activity implements OnClickListener {
 	private ImageView mBack, mAdd;
 	private ListView mListView;
 	private ArrayList<q3_Haoyou_Info> mHaoyou_Infos;
+	private HaoYou_Adapter mAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,21 @@ public class q3_youcai_haoyou extends Activity implements OnClickListener {
 		initView();
 	}
 
+	@Override
+	protected void onNewIntent(Intent intent) {
+		// TODO Auto-generated method stub
+		super.onNewIntent(intent);
+		System.out.println("new__intent");
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		mAdapter.DataChange(q3_GetVideo_Info.GetfriendsInfo(null, null,
+				getIntent().getStringExtra("name")));
+	}
+
 	private void initView() {
 		mBack = (ImageView) findViewById(R.id.q3_youcaifeixiang_back);
 		mBack.setOnClickListener(this);
@@ -44,8 +60,8 @@ public class q3_youcai_haoyou extends Activity implements OnClickListener {
 		mAdd.setOnClickListener(this);
 		mListView = (ListView) findViewById(R.id.q3_youcai_haoyou_list);
 		System.out.println("mHaoyou_Infos" + mHaoyou_Infos.size());
-		HaoYou_Adapter adapter = new HaoYou_Adapter(this, mHaoyou_Infos);
-		mListView.setAdapter(adapter);
+		mAdapter = new HaoYou_Adapter(this, mHaoyou_Infos);
+		mListView.setAdapter(mAdapter);
 	}
 
 	@Override
@@ -76,6 +92,15 @@ class HaoYou_Adapter extends BaseAdapter implements OnClickListener {
 			this.mHaoyou_Infos = a;
 		}
 
+	}
+
+	public void DataChange(ArrayList<q3_Haoyou_Info> mHaoyou) {
+		if (mHaoyou == null) {
+			mHaoyou_Infos = new ArrayList<q3_Haoyou_Info>();
+		} else {
+			this.mHaoyou_Infos = mHaoyou;
+		}
+		notifyDataSetChanged();
 	}
 
 	@Override
@@ -164,7 +189,14 @@ class HaoYou_Adapter extends BaseAdapter implements OnClickListener {
 
 			break;
 		case R.id.q3_youcai_haoyou_xiugai:
-			System.out.println("positon===" + holder.position);
+			Intent intent = new Intent(mContext,
+					q3_youcai_genggaihaoyouxinxi.class);
+			intent.putExtra("id", mHaoyou_Infos.get(holder.position).getmID());
+			intent.putExtra("name", mHaoyou_Infos.get(holder.position)
+					.getmName());
+			intent.putExtra("phone", mHaoyou_Infos.get(holder.position)
+					.getmPhone_num());
+			mContext.startActivity(intent);
 			break;
 		default:
 			break;

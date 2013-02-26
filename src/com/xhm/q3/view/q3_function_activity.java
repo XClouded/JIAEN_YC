@@ -72,7 +72,13 @@ public class q3_function_activity extends Activity implements OnTouchListener {
 		createDialog();
 		initVar();
 		initView();
-
+		SharedPreferences editor = getSharedPreferences(
+				MainTabActivity.USER_INFO, MODE_WORLD_READABLE);
+		String name = editor.getString("username", "-1");
+		if (("-1" != (name)) && (name.length() != 0)) {
+			mImageView_login_value
+					.setImageResource(R.drawable.q3_function_page_login_ok);
+		}
 	}
 
 	// 初始化成员变量

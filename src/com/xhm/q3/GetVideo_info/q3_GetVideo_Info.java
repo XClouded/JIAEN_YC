@@ -3,6 +3,7 @@ package com.xhm.q3.GetVideo_info;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
@@ -20,6 +21,7 @@ import org.dom4j.io.SAXReader;
 
 import com.xhm.q3.view.q3_Haoyou_Info;
 import com.xhm.q3.view.q3_Video_Info;
+import com.xhm.q3.view.q3_sharevideo_info;
 import com.xhm.q3.view.q3_youcai_activity;
 
 public final class q3_GetVideo_Info {
@@ -133,6 +135,8 @@ public final class q3_GetVideo_Info {
 	public static ArrayList<q3_Video_Info> getShareVideoInfo(String url,
 			String count, String pageindex, String username) {
 		mVideo_Infos = new ArrayList<q3_Video_Info>();
+		ArrayList<q3_sharevideo_info> mShareVideo_info = new ArrayList<q3_sharevideo_info>();
+		HashMap<Integer, ArrayList<q3_sharevideo_info>> mMap_Share = new HashMap<Integer, ArrayList<q3_sharevideo_info>>();
 		GetMethod getMethod = null;
 		httpClient = new HttpClient();
 		httpClient.getHttpConnectionManager().getParams()
@@ -159,64 +163,105 @@ public final class q3_GetVideo_Info {
 				SAXReader reader = new SAXReader();
 				Document doc = reader.read(is);
 				Element root = doc.getRootElement();
-				for (Iterator i = root.elementIterator("shareinfo"); i
+				for (Iterator shareinfo = root.elementIterator("shareinfo"); shareinfo
 						.hasNext();) {
-					Element video = (Element) i.next();
-					for (Iterator j = video.elementIterator("share"); j
+					Element shareinfo_0 = (Element) shareinfo.next();
+					int position = 0;
+					for (Iterator share = shareinfo_0.elementIterator("video"); share
 							.hasNext();) {
-						Element ele = (Element) j.next();
-						for (Iterator k = ele.elementIterator("video"); k
-								.hasNext();) {
-							Element kk = (Element) k.next();
-							q3_Video_Info info = new q3_Video_Info();
-							int index = 0;
-							for (Iterator l = ele.elementIterator(); l
-									.hasNext();) {
-								Element e = (Element) l.next();
-								String attr = e.attributeValue("attr");
-								switch (index) {
-								case 0:
-									info.setmId(attr);
-									break;
-								case 1:
-									info.setmClassid(attr);
-									break;
-								case 2:
-									info.setmPath(attr);
-									info.setmPic_Path(attr
-											.replace("mp4", "jpg"));
-									break;
-								case 3:
-									info.setmName(attr);
-									break;
-								case 4:
-									info.setmDescrib(attr);
-									break;
-								case 5:
-									info.setmTime(attr);
-									break;
-								case 6:
-									info.setmShow(attr);
-									break;
-								case 7:
-									info.setmSize(attr);
-									break;
-								case 8:
-									info.setmKeep(attr);
-									break;
-								case 9:
-									info.setmShare(attr);
-									break;
-								default:
-									break;
-
+						Element ele = (Element) share.next();
+						q3_Video_Info info = new q3_Video_Info();						
+						int index = 0;
+						
+						for (Iterator l = ele.elementIterator(); l.hasNext();) {
+							Element e = (Element) l.next();
+							String attr = e.attributeValue("attr");
+							switch (index) {
+							case 0:
+								info.setmId(attr);
+								break;
+							case 1:
+								info.setmClassid(attr);
+								break;
+							case 2:
+								info.setmPath(attr);
+								info.setmPic_Path(attr.replace("mp4", "jpg"));
+								break;
+							case 3:
+								info.setmName(attr);
+								break;
+							case 4:
+								info.setmDescrib(attr);
+								break;
+							case 5:
+								info.setmTime(attr);
+								break;
+							case 6:
+								info.setmShow(attr);
+								break;
+							case 7:
+								info.setmSize(attr);
+								break;
+							case 8:
+								info.setmKeep(attr);
+								break;
+							case 9:
+								info.setmShare(attr);
+								break;
+							case 10:
+								for (Iterator loginfo = e
+										.elementIterator("loginfo"); loginfo
+										.hasNext();) {
+									Element loginfo_0 = (Element) loginfo
+											.next();
+									q3_sharevideo_info sharevideo_info = new q3_sharevideo_info();
+									int index_0 = 0;
+									for (Iterator loginfo_0_0 = loginfo_0
+											.elementIterator(); loginfo_0_0
+											.hasNext();) {
+										Element loginfo_0_0_0 = (Element) loginfo_0_0
+												.next();
+										String attr_video = e
+												.attributeValue("attr");
+										switch (index_0) {
+										case 0:
+											sharevideo_info.setmId(attr_video);
+											break;
+										case 1:
+											sharevideo_info
+													.setmUsername(attr_video);
+											break;
+										case 2:
+											sharevideo_info
+													.setmDestnum(attr_video);
+											break;
+										case 3:
+											sharevideo_info
+													.setmTime(attr_video);
+											break;
+										case 4:
+											sharevideo_info
+													.setmResult(attr_video);
+											break;
+										default:
+											break;
+										}
+										index_0++;
+										mShareVideo_info.add(sharevideo_info);
+									}
 								}
+								mMap_Share.put(position, mShareVideo_info);
+								break;
+							default:
+								break;
 
-								index++;
-							
 							}
-							mVideo_Infos.add(info);
+
+							index++;
+
 						}
+						mVideo_Infos.add(info);
+						position++;
 					}
 				}
 
@@ -515,4 +560,58 @@ public final class q3_GetVideo_Info {
 
 	}
 
+	// 修改好友信息
+	public static String alterfriendsinfo(String id, String friendsname,
+			String friendsnum) {
+		String url = "http://www.uuunm.com/alterfriendsinfo.jsp";
+		GetMethod getMethod = null;
+		httpClient = new HttpClient();
+		httpClient.getHttpConnectionManager().getParams()
+				.setConnectionTimeout(50000);
+		NameValuePair[] pairs = new NameValuePair[3];
+		pairs[0] = new NameValuePair("id", id);
+		pairs[1] = new NameValuePair("friendsname", friendsname);
+		pairs[2] = new NameValuePair("friendsnum", friendsnum);
+		getMethod = new GetMethod(url);
+		getMethod.addRequestHeader("Content-Type", "text/html; charset="
+				+ "utf-8");
+		getMethod.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, 50000);
+		getMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
+				new DefaultHttpMethodRetryHandler());
+		getMethod.setQueryString(EncodingUtil.formUrlEncode(pairs, "utf-8"));
+		try {
+			int statusCode = httpClient.executeMethod(getMethod);
+			if (statusCode != HttpStatus.SC_OK) {
+				System.err.println("Method failed: "
+						+ getMethod.getStatusLine());
+			} else {
+				InputStream is = getMethod.getResponseBodyAsStream();
+				SAXReader reader = new SAXReader();
+				Document doc = reader.read(is);
+				Element root = doc.getRootElement();
+				Element opresult = (Element) root.elementIterator("opresult")
+						.next();
+				String str = null;
+				for (Iterator k = opresult.elementIterator(); k.hasNext();) {
+					Element e = (Element) k.next();
+					String attr = e.attributeValue("attr");
+					str += attr;
+					System.out.println("sttt===" + str);
+				}
+				return str;
+			}
+
+		} catch (HttpException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
+	}
 }

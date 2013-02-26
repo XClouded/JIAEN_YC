@@ -1,12 +1,20 @@
 package com.xhm.q3.view;
 
-
 public class q3_Haoyou_Info {
 	private String mName;
 	private String mID;
 	private String mUsernaem;
 	private String mPhone_num;
 	private String mFriendfirstletter;
+	private boolean mIsSelect;
+
+	public boolean getmIsSelect() {
+		return mIsSelect;
+	}
+
+	public void setmIsSelect(boolean mIsSelect) {
+		this.mIsSelect = mIsSelect;
+	}
 
 	public String getmUsernaem() {
 		return mUsernaem;

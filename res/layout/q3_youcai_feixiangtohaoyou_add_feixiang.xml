@@ -66,14 +66,14 @@
         <Button
             android:id="@+id/q3_youcai_feixiangtohaoyou_add_feixiang_selete"
             android:layout_width="80dp"
-            android:layout_height="23dp"
-            android:layout_marginRight="30dp"
+            android:layout_height="33dp"
+            android:layout_marginRight="60dp"
             android:background="@drawable/q3_youcai_feixiangtohaoyou_feixiang_select" />
 
         <Button
             android:id="@+id/q3_youcai_feixiangtohaoyou_add_feixiang_back"
             android:layout_width="80dp"
-            android:layout_height="23dp"
+            android:layout_height="33dp"
             android:background="@drawable/q3_youcai_feixiangtohaoyou_feixiang_back" />
     </LinearLayout>
 

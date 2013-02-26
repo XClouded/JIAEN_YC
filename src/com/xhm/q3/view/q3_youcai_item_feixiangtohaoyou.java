@@ -82,14 +82,15 @@ public class q3_youcai_item_feixiangtohaoyou extends Activity implements
 		case R.id.q3_youcai_feixiangtohaoyou_phone_feixiang:
 			Intent Intent = new Intent(this,
 					q3_youcai_feixiangtohaoyou_add_feixiang.class);
-			startActivity(Intent);
+			startActivityForResult(Intent, 200);
 			break;
 		case R.id.q3_youcai_feixiangtohaoyou_exit:
 			mContact.setText("");
 			break;
 		case R.id.q3_youcai_feixiangtohaoyou_share:
 			System.out.println("phone nul==" + mContact.getText().toString());
-			intent = new Intent(android.content.Intent.ACTION_SEND, Uri.parse("smsto:" +null));
+			intent = new Intent(android.content.Intent.ACTION_SEND,
+					Uri.parse("smsto:" + null));
 			intent.putExtra("address", mContact.getText().toString());
 			intent.putExtra("sms_body", mInfo.getmDescrib() + mInfo.getmPath());
 			intent.setType("image/*");
@@ -107,6 +108,12 @@ public class q3_youcai_item_feixiangtohaoyou extends Activity implements
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == 200 && resultCode == 20) {
+			String phone_num = data.getStringExtra("phone");
+			if (phone_num != null) {
+				mContact.setText(phone_num);
+			}
+		}
 		if (requestCode == 136) {
 			if (data != null) {
 				Uri uri = data.getData();

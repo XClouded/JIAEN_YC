@@ -10,6 +10,8 @@
         android:id="@+id/q3_check_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:button="@drawable/check_box_not_selected"
         android:textColor="#000"
         android:textSize="13sp"
         android:visibility="gone" />

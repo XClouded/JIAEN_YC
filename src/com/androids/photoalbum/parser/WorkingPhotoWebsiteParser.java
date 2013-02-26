@@ -45,16 +45,38 @@ public class WorkingPhotoWebsiteParser extends WebsiteParser {
 			}
 			return null;
 		} catch (Exception e) {
-			System.out.println("yichangl ");
 			e.printStackTrace();
 		}
-
-		System.out.println("yichangl____xia ");
 		webinfo.result = ServerInfo.FAIL;
 		webinfo.resultdesc = ServerInfo.UNKNOWN_FAIL;
 		return null;
 	}
-
+	public String getaddhaoyouinfo(InputStream in) {
+		WordsAddWebsiteInfo nameWebsiteInfo = null;
+		WordsAddWebsiteInfo.ProductInfo nameInfo = null;
+		WebsiteInfo webinfo = new WebsiteInfo();
+		try {
+			DocumentBuilderFactory dbfactory = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder db = dbfactory.newDocumentBuilder();
+			System.out.println("in===" + in.toString());
+			// 解析这个出了问题，然后报了异常
+			Document dom = db.parse(in);
+			Element docEle = dom.getDocumentElement();
+			WebsiteInfo result = getResult(docEle);
+			System.out.println("result.resultdesc=="+result.resultdesc);
+			if (!ServerInfo.SUCCESS.equals(result.result)) {
+				return null;
+			}
+			
+			return result.resultdesc;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		webinfo.result = ServerInfo.FAIL;
+		webinfo.resultdesc = ServerInfo.UNKNOWN_FAIL;
+		return null;
+	}
 	private WebsiteInfo getProductInfo(Element entry) {
 		// Element outPath =
 		// (Element)entry.getElementsByTagName("OutPath").item(0);

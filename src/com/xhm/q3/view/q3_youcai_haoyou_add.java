@@ -47,6 +47,7 @@ import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.photoalbum.R;
 import com.androids.photoalbum.netinfo.WebsiteInfo;
@@ -97,7 +98,6 @@ public class q3_youcai_haoyou_add extends Activity implements OnClickListener {
 		case R.id.q3_youcaifeixiang_back:
 			finish();
 			break;
-
 		case R.id.q3_youcai_haoyou_add_no_1:
 			finish();
 			break;
@@ -127,9 +127,10 @@ public class q3_youcai_haoyou_add extends Activity implements OnClickListener {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == 100) {
-			System.out.println("100");
-			if (data.getStringExtra("name") != null) {
+		System.out.println("resultCode==" + resultCode + "aaaaaaaaa"
+				+ "requestCode===" + requestCode);
+		if (requestCode == 100 && resultCode == 10) {
+			if (data != null && data.getStringExtra("name") != null) {
 				if (mShouDong.getText() == null
 						|| mShouDong.getText().length() == 0) {
 					mShouDong.setText(mShouDong.getText().toString()
@@ -179,6 +180,9 @@ public class q3_youcai_haoyou_add extends Activity implements OnClickListener {
 									String phoneTpye = phones
 											.getString(phones
 													.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
+									if (phoneNumber.contains("+86")) {
+										phoneNumber.replace("+86", "");
+									}
 									q3_Haoyou_Info info = new q3_Haoyou_Info();
 									info.setmName(name);
 									info.setmPhone_num(phoneNumber);
@@ -263,7 +267,6 @@ public class q3_youcai_haoyou_add extends Activity implements OnClickListener {
 	@SuppressLint("NewApi")
 	public static String toStringFromDoc(Document document) {
 		String result = null;
-
 		if (document != null) {
 			StringWriter strWtr = new StringWriter();
 			StreamResult strResult = new StreamResult(strWtr);
@@ -300,14 +303,21 @@ public class q3_youcai_haoyou_add extends Activity implements OnClickListener {
 		try {
 			StringEntity se = new StringEntity(getProductDownAPIXMLString(),
 					HTTP.UTF_8);
+			System.out.println("xml===" + getProductDownAPIXMLString());
 			se.setContentType("text/xml");
 			httppost.setEntity(se);
 			HttpResponse httpresponse = httpclient.execute(httppost);
 			HttpEntity resEntity = httpresponse.getEntity();
 			InputStream is = resEntity.getContent();
 			String address = new WorkingPhotoWebsiteParser()
-					.parseWebsiteInfo(is);
-			System.out.println("address===="+address);
+					.getaddhaoyouinfo(is);
+			if (address.contains("成功")) {
+				Toast.makeText(this, "添加成功！", Toast.LENGTH_LONG).show();
+				finish();
+			} else {
+				Toast.makeText(this, "添加失败！", Toast.LENGTH_LONG).show();
+			}
+			System.out.println("address====" + address);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

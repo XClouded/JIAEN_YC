@@ -626,6 +626,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
         <activity
+            android:launchMode="singleTask"
             android:name="com.xhm.q3.view.q3_youcai_haoyou"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboard"
@@ -675,6 +676,12 @@
             android:theme="@style/ActivityTheme" />
         <activity
             android:name="com.xhm.q3.view.q3_haoyou_add_haoyou"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="com.xhm.q3.view.q3_youcai_genggaihaoyouxinxi"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboard"
             android:screenOrientation="portrait"
